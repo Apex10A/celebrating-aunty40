@@ -12,13 +12,13 @@ export const Footer = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="group bg-black/40 backdrop-blur-lg p-10 rounded-3xl shadow-2xl hover:shadow-[#FFD700]/10 transition-all duration-500 border border-[#FFD700]/10 hover:border-[#FFD700]/30 fade-in">
+            <div className="group bg-black/40 backdrop-blur-lg cursor-pointer p-10 rounded-3xl shadow-2xl hover:shadow-[#FFD700]/10 transition-all duration-500 border border-[#FFD700]/10 hover:border-[#FFD700]/30 fade-in">
               <Phone className="mx-auto text-[#FFD700] mb-6 transform group-hover:scale-110 transition-transform duration-500" size={32} />
               <h3 className="text-2xl font-bold text-[#FFD700] mb-4">Call Us</h3>
               <p className="text-[#FFD700]/70 font-light">+234 xxx xxx xxxx</p>
             </div>
             
-            <div className="group bg-black/40 backdrop-blur-lg p-10 rounded-3xl shadow-2xl hover:shadow-[#FFD700]/10 transition-all duration-500 border border-[#FFD700]/10 hover:border-[#FFD700]/30 fade-in">
+            <div className="group bg-black/40 backdrop-blur-lg cursor-pointer p-10 rounded-3xl shadow-2xl hover:shadow-[#FFD700]/10 transition-all duration-500 border border-[#FFD700]/10 hover:border-[#FFD700]/30 fade-in">
               <Mail className="mx-auto text-[#FFD700] mb-6 transform group-hover:scale-110 transition-transform duration-500" size={32} />
               <h3 className="text-2xl font-bold text-[#FFD700] mb-4">Email Us</h3>
               <p className="text-[#FFD700]/70 font-light">celebration@example.com</p>
