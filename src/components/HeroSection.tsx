@@ -44,11 +44,11 @@ export const HeroSection = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-8">
               <div className="group flex items-center gap-3 bg-black/50 backdrop-blur-lg px-8 py-4 rounded-full border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                 <Calendar className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300" size={24} />
-                <span className="text-lg font-light text-[#FFD700]/90 tracking-wider">December 2024</span>
+                <span className="text-lg font-light text-[#FFD700]/90 tracking-wider">December 2025</span>
               </div>
               <div className="group flex items-center gap-3 bg-black/50 backdrop-blur-lg px-8 py-4 rounded-full border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                 <MapPin className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300" size={24} />
-                <span className="text-lg font-light text-[#FFD700]/90 tracking-wider">Lagos, Nigeria</span>
+                <span className="text-lg font-light text-[#FFD700]/90 tracking-wider">Surulere, Lagos, Nigeria</span>
               </div>
             </div>
 
