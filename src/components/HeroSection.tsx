@@ -54,14 +54,14 @@ export const HeroSection = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
               <a
-                href="#rsvp"
+                href="/rsvp"
                 className="w-full sm:w-auto group relative px-8 sm:px-10 py-4 sm:py-5 overflow-hidden rounded-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black transform hover:scale-105 transition-all duration-500"
               >
                 <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 <span className="relative z-10 text-base sm:text-lg font-medium tracking-wider">RSVP Now</span>
               </a>
               <a
-                href="#gallery"
+                href="/gallery"
                 className="w-full sm:w-auto group px-8 sm:px-10 py-4 sm:py-5 rounded-full text-base sm:text-lg font-medium tracking-wider text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] transition-colors duration-500 transform hover:scale-105"
               >
                 View Gallery
