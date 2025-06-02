@@ -8,17 +8,17 @@ export const Navigation = () => {
   const isActive = (path: string) => router.pathname === path;
   
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-[#FFD700]/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-center h-16">
-          <div className="flex space-x-8">
+        <div className="flex items-center justify-center h-20">
+          <div className="flex space-x-12">
             <Link 
               href="/"
               className={`${
                 isActive('/') 
-                  ? 'text-gold-400 border-b-2 border-gold-400' 
-                  : 'text-gray-300 hover:text-gold-400 hover:border-b-2 hover:border-gold-400'
-              } px-3 py-2 text-sm font-medium transition-all duration-300 ease-in-out`}
+                  ? 'text-[#FFD700] border-b-2 border-[#FFD700]' 
+                  : 'text-gray-300 hover:text-[#FFD700] hover:border-b-2 hover:border-[#FFD700]/50'
+              } px-3 py-2 text-sm font-medium tracking-wider uppercase transition-all duration-300 ease-in-out`}
             >
               Home
             </Link>
@@ -26,9 +26,9 @@ export const Navigation = () => {
               href="/our-story"
               className={`${
                 isActive('/our-story') 
-                  ? 'text-gold-400 border-b-2 border-gold-400' 
-                  : 'text-gray-300 hover:text-gold-400 hover:border-b-2 hover:border-gold-400'
-              } px-3 py-2 text-sm font-medium transition-all duration-300 ease-in-out`}
+                  ? 'text-[#FFD700] border-b-2 border-[#FFD700]' 
+                  : 'text-gray-300 hover:text-[#FFD700] hover:border-b-2 hover:border-[#FFD700]/50'
+              } px-3 py-2 text-sm font-medium tracking-wider uppercase transition-all duration-300 ease-in-out`}
             >
               Our Story
             </Link>
@@ -36,9 +36,9 @@ export const Navigation = () => {
               href="/gallery"
               className={`${
                 isActive('/gallery') 
-                  ? 'text-gold-400 border-b-2 border-gold-400' 
-                  : 'text-gray-300 hover:text-gold-400 hover:border-b-2 hover:border-gold-400'
-              } px-3 py-2 text-sm font-medium transition-all duration-300 ease-in-out`}
+                  ? 'text-[#FFD700] border-b-2 border-[#FFD700]' 
+                  : 'text-gray-300 hover:text-[#FFD700] hover:border-b-2 hover:border-[#FFD700]/50'
+              } px-3 py-2 text-sm font-medium tracking-wider uppercase transition-all duration-300 ease-in-out`}
             >
               Gallery
             </Link>
@@ -46,9 +46,9 @@ export const Navigation = () => {
               href="/rsvp"
               className={`${
                 isActive('/rsvp') 
-                  ? 'text-gold-400 border-b-2 border-gold-400' 
-                  : 'text-gray-300 hover:text-gold-400 hover:border-b-2 hover:border-gold-400'
-              } px-3 py-2 text-sm font-medium transition-all duration-300 ease-in-out`}
+                  ? 'text-[#FFD700] border-b-2 border-[#FFD700]' 
+                  : 'text-gray-300 hover:text-[#FFD700] hover:border-b-2 hover:border-[#FFD700]/50'
+              } px-3 py-2 text-sm font-medium tracking-wider uppercase transition-all duration-300 ease-in-out`}
             >
               RSVP
             </Link>
