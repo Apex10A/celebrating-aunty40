@@ -11,6 +11,7 @@ export default function Document() {
         <meta property="og:title" content="40 & 15 Years Celebration" />
         <meta property="og:description" content="Join us in celebrating 40 years of life and 15 years of love. A special celebration in Lagos, Nigeria." />
         <meta property="og:type" content="website" />
+        <script src="https://checkout.flutterwave.com/v3.js" async />
       </Head>
       <body className="antialiased">
         <Main />
