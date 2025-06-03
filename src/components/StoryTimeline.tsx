@@ -5,33 +5,33 @@ import Image from 'next/image';
 export const StoryTimeline = () => {
   const timelineEvents = [
     {
-      date: 'April 15, 1984',
-      title: 'The Wedding Day',
-      description: 'On this beautiful spring day, we exchanged vows and began our journey of love, trust, and companionship.',
+      date: 'December 2010',
+      title: 'The Beginning',
+      description: 'Our beautiful journey began when we first met and our hearts connected.',
       image: 'https://images.unsplash.com/photo-1460978812857-470ed1c77af0?w=800&auto=format&fit=crop'
     },
     {
-      date: 'April 15, 1994',
-      title: '10 Years of Joy',
-      description: 'A decade of building our home, raising our family, and creating countless memories together.',
+      date: 'December 2011',
+      title: 'Our Wedding Day',
+      description: 'We exchanged vows and began our journey of love, trust, and companionship.',
       image: 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop'
     },
     {
-      date: 'April 15, 2004',
-      title: 'Silver Jubilee',
-      description: 'Twenty years of marriage taught us that love grows stronger with each passing day.',
+      date: 'December 2016',
+      title: '5 Years Together',
+      description: 'Half a decade of building our home, growing together, and creating countless memories.',
       image: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=800&auto=format&fit=crop'
     },
     {
-      date: 'April 15, 2014',
-      title: '30 Years Together',
-      description: 'Three decades of partnership, proving that true love stands the test of time.',
+      date: 'December 2021',
+      title: '10 Years of Love',
+      description: 'A decade of partnership, proving that true love grows stronger with each passing day.',
       image: 'https://images.unsplash.com/photo-1622495966027-e0432bbf5322?w=800&auto=format&fit=crop'
     },
     {
-      date: 'April 15, 2024',
-      title: 'Ruby Anniversary',
-      description: 'Celebrating 40 magnificent years of marriage - a testament to enduring love, friendship, and devotion.',
+      date: 'December 2025',
+      title: '15 Years & 40th Birthday',
+      description: 'Celebrating our 15th wedding anniversary and Funmbi\'s 40th birthday - a double blessing of love and life.',
       image: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&auto=format&fit=crop'
     }
   ];
@@ -45,7 +45,7 @@ export const StoryTimeline = () => {
           transition={{ duration: 0.8 }}
           className="text-4xl md:text-5xl font-bold text-center text-[#FFD700] mb-16"
         >
-          Our Journey Through Time
+          Our Love Story
         </motion.h2>
         
         <div className="relative">
