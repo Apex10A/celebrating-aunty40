@@ -4,14 +4,14 @@ import { GoldParticles } from './GoldParticles';
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6">
+    <section className="relative min-h-screen flex items-center my-16 justify-center overflow-hidden px-4 sm:px-6">
       <div className="absolute inset-0 bg-[#0a0a0a]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#FFD700]/10 via-transparent to-transparent opacity-30"></div>
       </div>
       
       <GoldParticles />
       
-      <div className="relative z-10 text-center w-full max-w-5xl mx-auto">
+      <div className="relative z-10 text-center w-full max-w-5xl mx-auto ">
         <div className="mb-8 sm:mb-16 space-y-8 sm:space-y-12">
           {/* Main Title */}
           <div className="relative inline-block animate-fade-in">
