@@ -52,8 +52,8 @@ const GalleryPage = () => {
   return (
     <>
       <Head>
-        <title>Gallery - 40th Anniversary Celebration</title>
-        <meta name="description" content="Share and view photos from our 40th wedding anniversary celebration" />
+        <title>Gallery - Double Celebration</title>
+        <meta name="description" content="Share and view photos from our double celebration - Funmbi's 40th Birthday and 15 Years of Marriage" />
       </Head>
       <div className="min-h-screen bg-gradient-to-b from-black via-[#1a1a1a] to-black">
         <Navigation />

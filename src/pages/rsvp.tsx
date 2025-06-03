@@ -31,8 +31,8 @@ const RSVPPage = () => {
   return (
     <>
       <Head>
-        <title>RSVP - 40th Anniversary Celebration</title>
-        <meta name="description" content="RSVP to our 40th wedding anniversary celebration" />
+        <title>RSVP - Double Celebration</title>
+        <meta name="description" content="RSVP to Funmbi's 40th Birthday and 15th Wedding Anniversary celebration" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div className="min-h-screen bg-gradient-to-b from-black via-[#1a1a1a] to-black">
@@ -45,8 +45,8 @@ const RSVPPage = () => {
               transition={{ duration: 0.8 }}
               className="text-center mb-8 md:mb-12"
             >
-              <h1 className="font-decorative text-4xl md:text-5xl text-[#FFD700] mb-4">Join Our Celebration</h1>
-              <p className="text-gray-300 text-base md:text-lg">We would be honored to have you join us on this special day</p>
+              <h1 className="font-decorative text-4xl md:text-5xl text-[#FFD700] mb-4">Join Our Double Celebration</h1>
+              <p className="text-gray-300 text-base md:text-lg">We would be honored to have you join us for this special milestone</p>
             </motion.div>
 
             {attending === null && (
