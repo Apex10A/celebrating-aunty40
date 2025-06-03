@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export const GiftSection = () => {
   const [amount, setAmount] = useState<string>('');
   const [isHovered, setIsHovered] = useState(false);
+  const [decorations, setDecorations] = useState<Array<{ left: number; top: number; rotate: number; emoji: string }>>([]);
 
   const predefinedAmounts = [
     { value: '5000', label: '₦5,000' },
@@ -11,6 +12,18 @@ export const GiftSection = () => {
     { value: '20000', label: '₦20,000' },
     { value: '50000', label: '₦50,000' },
   ];
+
+  useEffect(() => {
+    // Generate random decorations only on client-side
+    const emojis = ['🎉', '🎈', '🎊', '✨'];
+    const newDecorations = Array.from({ length: 20 }, () => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      rotate: Math.random() * 360,
+      emoji: emojis[Math.floor(Math.random() * emojis.length)]
+    }));
+    setDecorations(newDecorations);
+  }, []);
 
   const handlePayment = () => {
     // Initialize Flutterwave payment
@@ -46,7 +59,7 @@ export const GiftSection = () => {
     <section className="py-16 md:py-24 bg-black relative overflow-hidden">
       {/* Fun background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {decorations.map((decoration, i) => (
           <motion.div
             key={i}
             className="absolute"
@@ -61,12 +74,12 @@ export const GiftSection = () => {
               ease: "easeInOut"
             }}
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              transform: `rotate(${Math.random() * 360}deg)`,
+              left: `${decoration.left}%`,
+              top: `${decoration.top}%`,
+              transform: `rotate(${decoration.rotate}deg)`,
             }}
           >
-            {['🎉', '🎈', '🎊', '✨'][Math.floor(Math.random() * 4)]}
+            {decoration.emoji}
           </motion.div>
         ))}
       </div>
