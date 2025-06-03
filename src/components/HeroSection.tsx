@@ -21,25 +21,45 @@ export const HeroSection = () => {
                 40
               </span>
               <span className="block text-4xl sm:text-6xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700]/90 to-[#FFA500]/90 mt-4 font-serif">
-                Years
+                & 15
               </span>
             </h1>
           </div>
           
+          {/* Couple Names */}
+          <div className="animate-fade-in-delayed">
+            <h2 className="text-5xl sm:text-3xl md:text-5xl font-light font-serif flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+              <span className="relative group">
+                <span className="absolute -inset-1 bg-gradient-to-r from-[#FFA500]/20 to-[#FFD700]/20 blur-md rounded-lg"></span>
+                <span className="relative bg-gradient-to-r font-decorative from-[#FFA500] to-[#FFD700] bg-clip-text text-transparent px-4 py-2">Funmbi</span>
+              </span>
+              <span className="text-xl sm:text-2xl text-[#FFD700]/70">&</span>
+              <span className="relative group">
+                <span className="absolute -inset-1 bg-gradient-to-r from-[#FFD700]/20 to-[#FFA500]/20 blur-md rounded-lg"></span>
+                <span className="relative bg-gradient-to-r font-decorative from-[#FFD700] to-[#FFA500] bg-clip-text text-transparent px-4 py-2">Tope</span>
+              </span>
+            </h2>
+          </div>
+
           {/* Subtitle */}
           <div className="space-y-4 sm:space-y-6 animate-fade-in-delayed">
             <div className="h-px w-32 sm:w-40 mx-auto bg-gradient-to-r from-transparent via-[#FFD700] to-transparent"></div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.2em] text-[#FFD700]/90 uppercase">
-              Of Excellence
+              A Double Celebration
             </h2>
             <div className="h-px w-32 sm:w-40 mx-auto bg-gradient-to-r from-transparent via-[#FFD700] to-transparent"></div>
           </div>
 
           {/* Content */}
           <div className="space-y-8 sm:space-y-12 animate-fade-in-delayed">
-            <p className="text-lg sm:text-xl md:text-2xl text-[#FFD700]/80 font-light tracking-wide max-w-3xl mx-auto px-4">
-              Join us in celebrating a remarkable journey of love, wisdom, and cherished moments
-            </p>
+            <div className="space-y-4">
+              <p className="text-lg sm:text-xl md:text-2xl text-[#FFD700]/80 font-light tracking-wide max-w-3xl mx-auto px-4">
+                Celebrating Funmbi's 40th Birthday
+              </p>
+              <p className="text-lg sm:text-xl md:text-2xl text-[#FFD700]/80 font-light tracking-wide max-w-3xl mx-auto px-4">
+                & Our 15 Years of Marriage
+              </p>
+            </div>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 px-4">
               <div className="group w-full sm:w-auto flex items-center gap-3 bg-black/50 backdrop-blur-lg px-6 sm:px-8 py-4 rounded-full border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
