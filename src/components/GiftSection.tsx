@@ -28,9 +28,11 @@ export const GiftSection = () => {
   const handlePayment = () => {
     // Initialize Flutterwave payment
     if (typeof window !== 'undefined' && (window as any).FlutterwaveCheckout) {
+      const tx_ref = `gift_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
       (window as any).FlutterwaveCheckout({
-        public_key: 'YOUR_FLUTTERWAVE_PUBLIC_KEY',
-        tx_ref: 'anniversary_gift_' + Date.now(),
+        public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY,
+        tx_ref: tx_ref,
         amount: Number(amount),
         currency: 'NGN',
         payment_options: 'card,ussd,banktransfer',
@@ -40,13 +42,35 @@ export const GiftSection = () => {
           name: '',
         },
         customizations: {
-          title: 'Anniversary Gift',
-          description: 'Gift for the 40th Anniversary Celebration',
-          logo: 'your-logo-url',
+          title: 'Gift for Funmbi & Tope',
+          description: 'Gift for the 40th Birthday & 15th Anniversary Celebration',
+          logo: '/logo.png', // Add your logo to public folder
         },
-        callback: function(response: any) {
-          // Handle successful payment
-          console.log(response);
+        callback: async function(response: any) {
+          // Verify the transaction on your backend
+          try {
+            const verifyResponse = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                transaction_id: response.transaction_id,
+                tx_ref: tx_ref
+              }),
+            });
+            
+            const data = await verifyResponse.json();
+            
+            if (data.status === 'success') {
+              alert('Thank you for your gift! 🎁');
+            } else {
+              alert('There was an issue verifying your payment. Please contact support.');
+            }
+          } catch (error) {
+            console.error('Payment verification error:', error);
+            alert('There was an error processing your payment. Please try again.');
+          }
         },
         onclose: function() {
           // Handle when payment modal is closed

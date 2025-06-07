@@ -1,0 +1,41 @@
+// This is your Prisma schema file
+datasource db {
+  provider = "postgresql" // or "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model RSVP {
+  id                 String   @id @default(cuid())
+  name              String
+  email             String
+  phone             String?
+  numberOfGuests    Int      @default(1)
+  dietaryRestrictions String?
+  message           String?
+  attending         Boolean
+  createdAt         DateTime @default(now())
+}
+
+model Gift {
+  id            String   @id @default(cuid())
+  transactionId String   @unique
+  amount        Float
+  currency      String
+  customerEmail String?
+  customerName  String?
+  status        String
+  createdAt     DateTime @default(now())
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  publicId  String   @unique
+  url       String
+  width     Int?
+  height    Int?
+  createdAt DateTime @default(now())
+} 

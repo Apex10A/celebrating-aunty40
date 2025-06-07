@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/gsap": "^3.0.0",
+    "cloudinary": "^2.6.1",
     "framer-motion": "^12.15.0",
     "gsap": "^3.13.0",
     "lucide-react": "^0.511.0",
