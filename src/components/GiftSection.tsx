@@ -6,13 +6,6 @@ export const GiftSection = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [decorations, setDecorations] = useState<Array<{ left: number; top: number; rotate: number; emoji: string }>>([]);
 
-  const predefinedAmounts = [
-    { value: '5000', label: '₦5,000' },
-    { value: '10000', label: '₦10,000' },
-    { value: '20000', label: '₦20,000' },
-    { value: '50000', label: '₦50,000' },
-  ];
-
   useEffect(() => {
     // Generate random decorations only on client-side
     const emojis = ['🎉', '🎈', '🎊', '✨'];
@@ -130,30 +123,15 @@ export const GiftSection = () => {
           transition={{ duration: 0.5 }}
           className="bg-gradient-to-r from-[#1a1a1a] to-black p-8 rounded-2xl border border-[#FFD700]/20 shadow-xl backdrop-blur-sm"
         >
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            {predefinedAmounts.map((preset) => (
-              <button
-                key={preset.value}
-                onClick={() => setAmount(preset.value)}
-                className={`p-4 rounded-xl transition-all duration-300 ${
-                  amount === preset.value
-                    ? 'bg-[#FFD700] text-black font-semibold scale-105'
-                    : 'bg-black/50 text-[#FFD700] hover:bg-[#FFD700]/10'
-                }`}
-              >
-                {preset.label}
-              </button>
-            ))}
-          </div>
-
           <div className="mb-8">
-            <label className="block text-[#FFD700] mb-2">Custom Amount (₦)</label>
+            <label className="block text-[#FFD700] mb-2 text-lg">Enter Gift Amount (₦)</label>
             <input
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full px-4 py-3 bg-black/50 border border-[#FFD700]/20 rounded-xl text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all"
-              placeholder="Enter amount"
+              className="w-full px-4 py-3 bg-black/50 border border-[#FFD700]/20 rounded-xl text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-lg"
+              placeholder="Enter your gift amount"
+              min="1"
             />
           </div>
 
