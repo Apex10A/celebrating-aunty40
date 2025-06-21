@@ -2,13 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 
-const navItems = [
-  { href: '/', label: 'Home' },
-  { href: '/our-story', label: 'Our Story' },
-  { href: '/rsvp', label: 'RSVP' },
-  { href: '/gallery', label: 'Gallery' }
-];
-
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,39 +16,57 @@ export const Navigation = () => {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[#DC143C]/10 shadow-sm">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      isScrolled 
+        ? 'bg-black/90 backdrop-blur-lg border-b border-[#FFD700]/20' 
+        : 'bg-transparent'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16 lg:h-20">
+        <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
-          <Link
-            href="/"
-            className="font-decorative text-[#DC143C] text-xl sm:text-2xl lg:text-3xl hover:opacity-80 transition-opacity"
-          >
-            40 & 15
+          <Link href="/" className="flex items-center space-x-2 group">
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-30 blur-sm rounded-lg"></div>
+              <div className="relative bg-black/50 backdrop-blur-lg px-3 py-1 rounded-lg border border-[#FFD700]/20">
+                <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#FFD700] to-[#DC143C] bg-clip-text text-transparent">
+                  40 & 15
+                </span>
+              </div>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`relative font-medium transition-all duration-300 text-sm lg:text-base ${
-                  item.href === '/'
-                    ? 'text-[#DC143C] border-b-2 border-[#DC143C]'
-                    : 'text-gray-700 hover:text-[#DC143C] hover:border-b-2 hover:border-[#DC143C]/50'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link 
+              href="/" 
+              className="text-[#FFD700]/80 hover:text-[#FFD700] transition-colors duration-300 font-light tracking-wider text-sm lg:text-base"
+            >
+              Home
+            </Link>
+            <Link 
+              href="/our-story" 
+              className="text-[#FFD700]/80 hover:text-[#FFD700] transition-colors duration-300 font-light tracking-wider text-sm lg:text-base"
+            >
+              Our Story
+            </Link>
+            <Link 
+              href="/gallery" 
+              className="text-[#FFD700]/80 hover:text-[#FFD700] transition-colors duration-300 font-light tracking-wider text-sm lg:text-base"
+            >
+              Gallery
+            </Link>
+            <Link 
+              href="/rsvp" 
+              className="bg-gradient-to-r from-[#FFD700] to-[#DC143C] text-black px-4 py-2 rounded-full text-sm lg:text-base font-medium tracking-wider hover:scale-105 transition-transform duration-300"
+            >
+              RSVP
+            </Link>
           </div>
 
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-md text-gray-700 hover:text-[#DC143C] focus:outline-none focus:ring-2 focus:ring-[#DC143C]/20"
-            aria-label="Toggle menu"
+            className="md:hidden p-2 rounded-lg text-[#FFD700] hover:bg-[#FFD700]/10 transition-colors duration-300"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -63,22 +74,36 @@ export const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden border-t border-[#DC143C]/10 bg-white/95 backdrop-blur-sm">
-            <div className="px-2 pt-2 pb-4 space-y-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
-                    item.href === '/'
-                      ? 'text-[#DC143C] bg-[#DC143C]/10'
-                      : 'text-gray-700 hover:text-[#DC143C] hover:bg-[#DC143C]/5'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-black/95 backdrop-blur-lg rounded-lg border border-[#FFD700]/20 mt-2">
+              <Link 
+                href="/" 
+                className="block px-3 py-2 text-[#FFD700]/80 hover:text-[#FFD700] transition-colors duration-300 font-light tracking-wider"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                href="/our-story" 
+                className="block px-3 py-2 text-[#FFD700]/80 hover:text-[#FFD700] transition-colors duration-300 font-light tracking-wider"
+                onClick={() => setIsOpen(false)}
+              >
+                Our Story
+              </Link>
+              <Link 
+                href="/gallery" 
+                className="block px-3 py-2 text-[#FFD700]/80 hover:text-[#FFD700] transition-colors duration-300 font-light tracking-wider"
+                onClick={() => setIsOpen(false)}
+              >
+                Gallery
+              </Link>
+              <Link 
+                href="/rsvp" 
+                className="block px-3 py-2 bg-gradient-to-r from-[#FFD700] to-[#DC143C] text-black rounded-lg font-medium tracking-wider"
+                onClick={() => setIsOpen(false)}
+              >
+                RSVP
+              </Link>
             </div>
           </div>
         )}

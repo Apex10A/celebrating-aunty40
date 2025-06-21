@@ -1,131 +1,98 @@
-import React, { useState } from 'react';
-import { Gift, CreditCard, Heart } from 'lucide-react';
+import React from 'react';
+import { Gift, Heart, Star } from 'lucide-react';
 
 export const GiftSection = () => {
-  const [giftAmount, setGiftAmount] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
-
-  const handleGiftSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!giftAmount || parseFloat(giftAmount) <= 0) {
-      alert('Please enter a valid gift amount.');
-      return;
+  const gifts = [
+    {
+      id: 1,
+      title: "Cash Gifts",
+      description: "Your presence is our present, but if you'd like to give, cash gifts are appreciated.",
+      icon: Gift,
+      gradient: "from-[#FFD700] to-[#DC143C]"
+    },
+    {
+      id: 2,
+      title: "Prayers & Wishes",
+      description: "Your prayers and well wishes mean the world to us.",
+      icon: Heart,
+      gradient: "from-[#DC143C] to-[#FFD700]"
+    },
+    {
+      id: 3,
+      title: "Memories",
+      description: "Share your favorite memories and moments with us.",
+      icon: Star,
+      gradient: "from-[#FFD700] to-[#DC143C]"
     }
-    
-    setIsProcessing(true);
-    
-    try {
-      // Initialize Flutterwave payment
-      const response = await fetch('/api/verify-payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          amount: parseFloat(giftAmount),
-          currency: 'NGN',
-          tx_ref: `gift_${Date.now()}`,
-          customer: {
-            email: 'guest@example.com',
-            name: 'Guest'
-          }
-        })
-      });
-      
-      if (response.ok) {
-        alert('Thank you for your gift! Payment processed successfully.');
-        setGiftAmount('');
-      } else {
-        alert('Payment failed. Please try again.');
-      }
-    } catch (error) {
-      console.error('Payment error:', error);
-      alert('Payment failed. Please try again.');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  ];
 
   return (
-    <section className="relative py-12 sm:py-16 lg:py-24 px-4 sm:px-6 bg-gradient-to-br from-[#FFF8E1] via-[#FFF3E0] to-[#FFECB3] overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FFD700]/10 to-transparent"></div>
-      
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
-        <div className="mb-8 sm:mb-12 lg:mb-16">
-          <Gift className="mx-auto text-[#DC143C] mb-4 sm:mb-6 transform hover:scale-110 transition-transform duration-500" size={40} />
-          <h2 className="font-decorative text-3xl sm:text-4xl lg:text-5xl text-[#DC143C] mb-3 sm:mb-4">
+    <section className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-[#0a0a0a]">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FFD700]/5 to-transparent"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+          <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-[#FFD700]"></div>
+            <Gift className="text-[#FFD700] w-5 h-5 sm:w-6 sm:h-6" />
+            <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-[#FFD700]"></div>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] mb-4 sm:mb-6 font-serif">
             Gift Registry
           </h2>
-          <div className="h-px w-24 sm:w-32 lg:w-40 mx-auto bg-gradient-to-r from-transparent via-[#DC143C] to-transparent mb-4 sm:mb-6"></div>
-          <p className="text-base sm:text-lg lg:text-xl text-[#DC143C]/80 font-light tracking-wide max-w-2xl mx-auto px-4">
-            Your presence is our greatest gift, but if you'd like to give something special, 
-            we'd be honored by your generosity.
+          <p className="text-base sm:text-lg lg:text-xl text-[#FFD700]/80 max-w-2xl mx-auto font-light tracking-wide">
+            Your presence at our celebration is the greatest gift. However, if you'd like to give something special, here are some ideas.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12 lg:mb-16">
-          {/* Cash Gift */}
-          <div className="group bg-white/80 backdrop-blur-lg p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border border-[#DC143C]/10 hover:border-[#DC143C]/30 transition-all duration-500 shadow-lg">
-            <CreditCard className="mx-auto text-[#DC143C] mb-3 sm:mb-4 lg:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={28} />
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#DC143C] mb-2 sm:mb-4">Cash Gift</h3>
-            <p className="text-[#DC143C]/70 font-light text-sm sm:text-base">
-              Help us create more beautiful memories together
-            </p>
-          </div>
+        {/* Gifts Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+          {gifts.map((gift, index) => {
+            const IconComponent = gift.icon;
+            return (
+              <div
+                key={gift.id}
+                className="group relative p-6 sm:p-8 lg:p-10 rounded-2xl border border-[#FFD700]/20 bg-black/30 backdrop-blur-sm hover:border-[#FFD700]/40 transition-all duration-500 transform hover:scale-105"
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
+                {/* Background Glow */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${gift.gradient} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500`}></div>
+                
+                {/* Icon */}
+                <div className="relative mb-6 sm:mb-8">
+                  <div className={`inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-gradient-to-r ${gift.gradient} p-3 sm:p-4`}>
+                    <IconComponent className="text-black w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10" />
+                  </div>
+                </div>
 
-          {/* Gift Items */}
-          <div className="group bg-white/80 backdrop-blur-lg p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border border-[#DC143C]/10 hover:border-[#DC143C]/30 transition-all duration-500 shadow-lg">
-            <Gift className="mx-auto text-[#DC143C] mb-3 sm:mb-4 lg:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={28} />
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#DC143C] mb-2 sm:mb-4">Gift Items</h3>
-            <p className="text-[#DC143C]/70 font-light text-sm sm:text-base">
-              Choose from our curated gift registry
-            </p>
-          </div>
+                {/* Content */}
+                <div className="relative space-y-3 sm:space-y-4">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#FFD700] font-serif">
+                    {gift.title}
+                  </h3>
+                  <p className="text-sm sm:text-base lg:text-lg text-[#FFD700]/70 font-light leading-relaxed">
+                    {gift.description}
+                  </p>
+                </div>
 
-          {/* Well Wishes */}
-          <div className="group bg-white/80 backdrop-blur-lg p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border border-[#DC143C]/10 hover:border-[#DC143C]/30 transition-all duration-500 shadow-lg sm:col-span-2 lg:col-span-1">
-            <Heart className="mx-auto text-[#DC143C] mb-3 sm:mb-4 lg:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={28} />
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#DC143C] mb-2 sm:mb-4">Well Wishes</h3>
-            <p className="text-[#DC143C]/70 font-light text-sm sm:text-base">
-              Your love and blessings mean the world to us
-            </p>
-          </div>
+                {/* Hover Effect */}
+                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#FFD700]/30 transition-all duration-500"></div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Gift Form */}
-        <div className="bg-white/90 backdrop-blur-lg p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-[#DC143C]/20 shadow-xl">
-          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#DC143C] mb-4 sm:mb-6 lg:mb-8">Send a Gift</h3>
-          
-          <form onSubmit={handleGiftSubmit} className="space-y-4 sm:space-y-6 lg:space-y-8">
-            <div>
-              <label className="block text-[#DC143C] mb-2 text-base sm:text-lg">Enter Gift Amount (₦)</label>
-              <input
-                type="number"
-                value={giftAmount}
-                onChange={(e) => setGiftAmount(e.target.value)}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white/80 border border-[#DC143C]/20 rounded-lg sm:rounded-xl text-gray-800 focus:border-[#DC143C] focus:ring-1 focus:ring-[#DC143C] transition-all text-base sm:text-lg"
-                placeholder="Enter amount"
-                min="100"
-                step="100"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isProcessing}
-              className="relative w-full py-3 sm:py-4 bg-gradient-to-r from-[#FFD700] to-[#DC143C] text-white rounded-lg sm:rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group overflow-hidden shadow-lg"
-            >
-              <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-              <span className="relative z-10">
-                {isProcessing ? 'Processing...' : 'Send Gift'}
-              </span>
-            </button>
-          </form>
-
-          <p className="text-[#DC143C]/60 text-xs sm:text-sm mt-4 sm:mt-6">
-            Secure payment powered by Flutterwave
-          </p>
+        {/* Additional Note */}
+        <div className="mt-12 sm:mt-16 lg:mt-20 text-center">
+          <div className="inline-block p-6 sm:p-8 rounded-2xl border border-[#FFD700]/20 bg-black/20 backdrop-blur-sm">
+            <p className="text-sm sm:text-base lg:text-lg text-[#FFD700]/80 font-light italic">
+              "The greatest gift is not found in a store or under a tree, but in the hearts of true friends."
+            </p>
+          </div>
         </div>
       </div>
     </section>
