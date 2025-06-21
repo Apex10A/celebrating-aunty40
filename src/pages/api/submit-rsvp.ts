@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     // Store RSVP in database
-    const rsvp = await prisma.rsvp.create({
+    const rsvp = await prisma.rSVP.create({
       data: {
         name,
         email,

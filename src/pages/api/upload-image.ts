@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     // Store the image details in your database here
-    // await prisma.image.create({
+    // await prisma.Image.create({
     //   data: {
     //     publicId: uploadResponse.public_id,
     //     url: uploadResponse.secure_url,

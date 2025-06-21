@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       data.data.status === 'successful'
     ) {
       // Store the transaction in your database here
-      // await prisma.gift.create({
+      // await prisma.Gift.create({
       //   data: {
       //     transactionId: transaction_id,
       //     amount: data.data.amount,
