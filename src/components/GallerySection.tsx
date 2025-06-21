@@ -12,53 +12,53 @@ const galleryImages = [
 
 export const GallerySection = () => {
   return (
-    <section className="relative py-16 sm:py-24 px-4 sm:px-6 bg-[#0a0a0a] overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FFD700]/5 to-transparent"></div>
+    <section className="relative py-12 sm:py-16 lg:py-24 px-4 sm:px-6 bg-gradient-to-br from-[#FFF8E1] via-[#FFF3E0] to-[#FFECB3] overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FFD700]/10 to-transparent"></div>
       
       <div className="relative z-10 max-w-6xl mx-auto text-center">
-        <Camera className="mx-auto text-[#FFD700] mb-6 transform hover:scale-110 transition-transform duration-500" size={36} />
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] mb-6 sm:mb-8 font-serif">
+        <Camera className="mx-auto text-[#DC143C] mb-4 sm:mb-6 transform hover:scale-110 transition-transform duration-500" size={32} />
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] mb-4 sm:mb-6 lg:mb-8 font-serif">
           Memory Gallery
         </h2>
         
-        <div className="h-px w-32 sm:w-40 mx-auto bg-gradient-to-r from-transparent via-[#FFD700] to-transparent mb-6 sm:mb-8"></div>
-        <p className="text-base sm:text-lg md:text-xl text-[#FFD700]/80 font-light tracking-wide px-4">
+        <div className="h-px w-24 sm:w-32 lg:w-40 mx-auto bg-gradient-to-r from-transparent via-[#DC143C] to-transparent mb-4 sm:mb-6 lg:mb-8"></div>
+        <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-[#DC143C]/80 font-light tracking-wide px-4 max-w-3xl mx-auto">
           Share your precious moments and memories from our celebration
         </p>
         
-        <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="mt-8 sm:mt-12 lg:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {/* Upload Card */}
-          <div className="group bg-black/30 backdrop-blur-lg p-6 sm:p-8 rounded-2xl border border-[#FFD700]/10 hover:border-[#FFD700]/30 transition-all duration-500 cursor-pointer transform hover:scale-105">
-            <Upload className="mx-auto text-[#FFD700] mb-4 sm:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={32} />
-            <h3 className="text-xl sm:text-2xl font-bold text-[#FFD700] mb-2 sm:mb-4">Upload Photos</h3>
-            <p className="text-base sm:text-lg text-[#FFD700] font-medium tracking-wide">
+          <div className="group bg-white/80 backdrop-blur-lg p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border border-[#DC143C]/10 hover:border-[#DC143C]/30 transition-all duration-500 cursor-pointer transform hover:scale-105 shadow-lg">
+            <Upload className="mx-auto text-[#DC143C] mb-3 sm:mb-4 lg:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={28} />
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#DC143C] mb-2 sm:mb-4">Upload Photos</h3>
+            <p className="text-sm sm:text-base lg:text-lg text-[#DC143C] font-medium tracking-wide">
               Share your memories
             </p>
-            <p className="text-sm sm:text-base text-[#FFD700]/70 font-light mt-2">
+            <p className="text-xs sm:text-sm lg:text-base text-[#DC143C]/70 font-light mt-2">
               Upload photos from the celebration
             </p>
           </div>
           
           {/* View Gallery Card */}
-          <div className="group bg-black/30 backdrop-blur-lg p-6 sm:p-8 rounded-2xl border border-[#FFD700]/10 hover:border-[#FFD700]/30 transition-all duration-500 cursor-pointer transform hover:scale-105">
-            <ImageIcon className="mx-auto text-[#FFD700] mb-4 sm:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={32} />
-            <h3 className="text-xl sm:text-2xl font-bold text-[#FFD700] mb-2 sm:mb-4">View Gallery</h3>
-            <p className="text-base sm:text-lg text-[#FFD700] font-medium tracking-wide">
+          <div className="group bg-white/80 backdrop-blur-lg p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border border-[#DC143C]/10 hover:border-[#DC143C]/30 transition-all duration-500 cursor-pointer transform hover:scale-105 shadow-lg">
+            <ImageIcon className="mx-auto text-[#DC143C] mb-3 sm:mb-4 lg:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={28} />
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#DC143C] mb-2 sm:mb-4">View Gallery</h3>
+            <p className="text-sm sm:text-base lg:text-lg text-[#DC143C] font-medium tracking-wide">
               Browse memories
             </p>
-            <p className="text-sm sm:text-base text-[#FFD700]/70 font-light mt-2">
+            <p className="text-xs sm:text-sm lg:text-base text-[#DC143C]/70 font-light mt-2">
               See all shared photos
             </p>
           </div>
           
           {/* Memories Card */}
-          <div className="group bg-black/30 backdrop-blur-lg p-6 sm:p-8 rounded-2xl border border-[#FFD700]/10 hover:border-[#FFD700]/30 transition-all duration-500 cursor-pointer transform hover:scale-105">
-            <Camera className="mx-auto text-[#FFD700] mb-4 sm:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={32} />
-            <h3 className="text-xl sm:text-2xl font-bold text-[#FFD700] mb-2 sm:mb-4">Our Memories</h3>
-            <p className="text-base sm:text-lg text-[#FFD700] font-medium tracking-wide">
+          <div className="group bg-white/80 backdrop-blur-lg p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border border-[#DC143C]/10 hover:border-[#DC143C]/30 transition-all duration-500 cursor-pointer transform hover:scale-105 shadow-lg sm:col-span-2 lg:col-span-1">
+            <Camera className="mx-auto text-[#DC143C] mb-3 sm:mb-4 lg:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={28} />
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#DC143C] mb-2 sm:mb-4">Our Memories</h3>
+            <p className="text-sm sm:text-base lg:text-lg text-[#DC143C] font-medium tracking-wide">
               Special moments
             </p>
-            <p className="text-sm sm:text-base text-[#FFD700]/70 font-light mt-2">
+            <p className="text-xs sm:text-sm lg:text-base text-[#DC143C]/70 font-light mt-2">
               Curated celebration photos
             </p>
           </div>
