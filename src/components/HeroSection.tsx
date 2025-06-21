@@ -19,10 +19,10 @@ export const HeroSection = () => {
             <div className="relative inline-block animate-fade-in">
               <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-30 blur-xl"></div>
               <h1 className="relative">
-                <span className="block text-[60px] sm:text-[80px] lg:text-[120px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] leading-none font-serif">
+                <span className="text-[60px] sm:text-[80px] lg:text-[120px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] leading-none font-serif">
                   40
                 </span>
-                <span className="block text-2xl sm:text-4xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700]/90 to-[#DC143C]/90 mt-2 lg:mt-4 font-serif">
+                <span className=" text-2xl sm:text-4xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700]/90 to-[#DC143C]/90 mt-2 lg:mt-4 font-serif">
                   & 15
                 </span>
               </h1>
@@ -66,7 +66,7 @@ export const HeroSection = () => {
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 lg:gap-6">
                 <div className="group w-full sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                   <Calendar className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300 min-w-[20px] sm:min-w-[24px]" size={20} />
-                  <span className="text-sm sm:text-base lg:text-lg font-light text-[#FFD700]/90 tracking-wider whitespace-nowrap">December 2025</span>
+                  <span className="text-sm sm:text-base lg:text-lg font-light text-[#FFD700]/90 tracking-wider whitespace-nowrap">This December</span>
                 </div>
                 <div className="group w-full sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                   <MapPin className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300 min-w-[20px] sm:min-w-[24px]" size={20} />
