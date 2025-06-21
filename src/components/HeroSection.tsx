@@ -15,12 +15,12 @@ export const HeroSection = () => {
         <div className="mb-8 sm:mb-16 space-y-8 sm:space-y-12">
           {/* Main Title */}
           <div className="relative inline-block animate-fade-in">
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500] opacity-30 blur-xl"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-30 blur-xl"></div>
             <h1 className="relative">
-              <span className="block text-[90px] sm:text-[120px] md:text-[180px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFA500] leading-none font-serif">
+              <span className="block text-[90px] sm:text-[120px] md:text-[180px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] leading-none font-serif">
                 40
               </span>
-              <span className="block text-4xl sm:text-6xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700]/90 to-[#FFA500]/90 mt-4 font-serif">
+              <span className="block text-4xl sm:text-6xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700]/90 to-[#DC143C]/90 mt-4 font-serif">
                 & 15
               </span>
             </h1>
@@ -30,13 +30,13 @@ export const HeroSection = () => {
           <div className="animate-fade-in-delayed">
             <h2 className="text-5xl sm:text-3xl md:text-5xl font-light font-serif flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
               <span className="relative group">
-                <span className="absolute -inset-1 bg-gradient-to-r from-[#FFA500]/20 to-[#FFD700]/20 blur-md rounded-lg"></span>
-                <span className="relative bg-gradient-to-r font-decorative from-[#FFA500] to-[#FFD700] bg-clip-text text-transparent px-4 py-2">Funmbi</span>
+                <span className="absolute -inset-1 bg-gradient-to-r from-[#DC143C]/20 to-[#FFD700]/20 blur-md rounded-lg"></span>
+                <span className="relative bg-gradient-to-r font-decorative from-[#DC143C] to-[#FFD700] bg-clip-text text-transparent px-4 py-2">Funmbi</span>
               </span>
               <span className="text-xl sm:text-2xl text-[#FFD700]/70">&</span>
               <span className="relative group">
-                <span className="absolute -inset-1 bg-gradient-to-r from-[#FFD700]/20 to-[#FFA500]/20 blur-md rounded-lg"></span>
-                <span className="relative bg-gradient-to-r font-decorative from-[#FFD700] to-[#FFA500] bg-clip-text text-transparent px-4 py-2">Tope</span>
+                <span className="absolute -inset-1 bg-gradient-to-r from-[#FFD700]/20 to-[#DC143C]/20 blur-md rounded-lg"></span>
+                <span className="relative bg-gradient-to-r font-decorative from-[#FFD700] to-[#DC143C] bg-clip-text text-transparent px-4 py-2">Tope</span>
               </span>
             </h2>
           </div>
@@ -75,7 +75,7 @@ export const HeroSection = () => {
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
               <a
                 href="/rsvp"
-                className="w-full sm:w-auto group relative px-8 sm:px-10 py-4 sm:py-5 overflow-hidden rounded-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black transform hover:scale-105 transition-all duration-500"
+                className="w-full sm:w-auto group relative px-8 sm:px-10 py-4 sm:py-5 overflow-hidden rounded-full bg-gradient-to-r from-[#FFD700] to-[#DC143C] text-black transform hover:scale-105 transition-all duration-500"
               >
                 <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 <span className="relative z-10 text-base sm:text-lg font-medium tracking-wider">RSVP Now</span>
