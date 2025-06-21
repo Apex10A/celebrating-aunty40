@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Star, Sparkles } from 'lucide-react';
+import { Heart } from 'lucide-react';
 
 export const LoadingScreen = () => {
   const [progress, setProgress] = useState(0);
@@ -8,10 +8,10 @@ export const LoadingScreen = () => {
   const [fadeOut, setFadeOut] = useState(false);
 
   const loadingTexts = [
-    "Preparing the celebration...",
-    "Gathering memories...",
-    "Setting up the magic...",
-    "Almost ready...",
+    "Preparing our celebration...",
+    "Gathering memories of love...",
+    "Setting up something magical...",
+    "Almost ready for you...",
     "Welcome to our special day!"
   ];
 
@@ -47,38 +47,29 @@ export const LoadingScreen = () => {
 
   return (
     <div className={`fixed inset-0 bg-[#0a0a0a] flex items-center justify-center z-50 transition-opacity duration-1000 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
-      {/* Animated Background Particles */}
+      {/* Subtle Background Hearts */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-[#FFD700] rounded-full animate-pulse"
+            className="absolute text-[#FFD700]/10 animate-pulse"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
-            }}
-          />
-        ))}
-        {[...Array(10)].map((_, i) => (
-          <div
-            key={`star-${i}`}
-            className="absolute w-0.5 h-0.5 bg-[#DC143C] rounded-full animate-ping"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              fontSize: `${20 + Math.random() * 30}px`,
               animationDelay: `${Math.random() * 3}s`,
               animationDuration: `${3 + Math.random() * 2}s`
             }}
-          />
+          >
+            ❤️
+          </div>
         ))}
       </div>
 
       <div className="relative z-10 text-center">
-        {/* Main Title with Glow Effect */}
+        {/* Main Title with Elegant Glow */}
         <div className="mb-12 relative">
-          <div className="absolute -inset-4 bg-gradient-to-r from-[#FFD700]/20 to-[#DC143C]/20 blur-2xl rounded-full"></div>
+          <div className="absolute -inset-4 bg-gradient-to-r from-[#FFD700]/10 to-[#DC143C]/10 blur-2xl rounded-full"></div>
           <div className="relative">
             <h1 className="font-decorative text-7xl md:text-8xl lg:text-9xl font-bold">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFD700] to-[#DC143C] animate-pulse">
@@ -101,7 +92,7 @@ export const LoadingScreen = () => {
               className="h-full bg-gradient-to-r from-[#FFD700] via-[#DC143C] to-[#FFD700] rounded-full transition-all duration-300 ease-out relative overflow-hidden"
               style={{ width: `${progress}%` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
             </div>
           </div>
           <div className="absolute -top-8 left-0 right-0 text-center">
@@ -111,32 +102,36 @@ export const LoadingScreen = () => {
           </div>
         </div>
 
-        {/* Animated Loading Spinner */}
+        {/* Heart Loading Animation */}
         <div className="relative mb-12">
           <div className="relative w-24 h-24 mx-auto">
-            {/* Outer Ring */}
-            <div className="absolute inset-0 border-4 border-[#FFD700]/30 rounded-full">
-              <div className="absolute inset-0 border-4 border-transparent border-t-[#FFD700] rounded-full animate-spin" style={{ animationDuration: '2s' }} />
+            {/* Pulsing Heart Background */}
+            <div className="absolute inset-0 text-[#FFD700]/20 text-6xl animate-ping">
+              ❤️
             </div>
             
-            {/* Middle Ring */}
-            <div className="absolute inset-2 border-4 border-[#DC143C]/20 rounded-full">
-              <div className="absolute inset-0 border-4 border-transparent border-t-[#DC143C] rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
-            </div>
-            
-            {/* Inner Ring */}
-            <div className="absolute inset-4 border-4 border-[#FFD700]/10 rounded-full">
-              <div className="absolute inset-0 border-4 border-transparent border-t-[#FFD700] rounded-full animate-spin" style={{ animationDuration: '1s' }} />
-            </div>
-            
-            {/* Center Icon */}
+            {/* Main Heart */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <Heart className="text-[#DC143C] w-8 h-8 animate-pulse" />
+              <Heart className="text-[#DC143C] w-12 h-12 animate-pulse" fill="currentColor" />
+            </div>
+            
+            {/* Small Hearts Around */}
+            <div className="absolute -top-2 -right-2 text-[#FFD700] text-lg animate-bounce" style={{ animationDelay: '0.2s' }}>
+              ❤️
+            </div>
+            <div className="absolute -bottom-2 -left-2 text-[#DC143C] text-lg animate-bounce" style={{ animationDelay: '0.4s' }}>
+              ❤️
+            </div>
+            <div className="absolute top-1/2 -right-6 text-[#FFD700] text-sm animate-bounce" style={{ animationDelay: '0.6s' }}>
+              ❤️
+            </div>
+            <div className="absolute top-1/2 -left-6 text-[#DC143C] text-sm animate-bounce" style={{ animationDelay: '0.8s' }}>
+              ❤️
             </div>
           </div>
         </div>
 
-        {/* Animated Loading Text */}
+        {/* Elegant Loading Text */}
         <div className="mb-8 h-16 flex items-center justify-center">
           <div className="relative">
             <p className="text-[#FFD700]/90 text-lg md:text-xl font-light tracking-wide transition-all duration-500">
@@ -146,18 +141,18 @@ export const LoadingScreen = () => {
           </div>
         </div>
 
-        {/* Decorative Elements */}
-        <div className="flex items-center justify-center gap-4 md:gap-6">
+        {/* Love-themed Decorative Elements */}
+        <div className="flex items-center justify-center gap-6 md:gap-8">
           <div className="flex items-center gap-2 animate-bounce" style={{ animationDelay: '0.2s' }}>
-            <Star className="text-[#FFD700] w-5 h-5" />
+            <span className="text-[#FFD700] text-xl">❤️</span>
             <span className="text-[#FFD700]/60 text-sm font-light">Love</span>
           </div>
           <div className="flex items-center gap-2 animate-bounce" style={{ animationDelay: '0.4s' }}>
-            <Sparkles className="text-[#DC143C] w-5 h-5" />
+            <span className="text-[#DC143C] text-xl">💕</span>
             <span className="text-[#DC143C]/60 text-sm font-light">Joy</span>
           </div>
           <div className="flex items-center gap-2 animate-bounce" style={{ animationDelay: '0.6s' }}>
-            <Heart className="text-[#FFD700] w-5 h-5" />
+            <span className="text-[#FFD700] text-xl">💖</span>
             <span className="text-[#FFD700]/60 text-sm font-light">Life</span>
           </div>
         </div>
