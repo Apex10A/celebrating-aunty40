@@ -123,7 +123,7 @@ export const GiftSection = () => {
           transition={{ duration: 0.5 }}
           className="bg-gradient-to-r from-[#1a1a1a] to-black p-8 rounded-2xl border border-[#FFD700]/20 shadow-xl backdrop-blur-sm"
         >
-          <div className="mb-8">
+          {/* <div className="mb-8">
             <label className="block text-[#FFD700] mb-2 text-lg">Enter Gift Amount (₦)</label>
             <input
               type="number"
@@ -133,15 +133,14 @@ export const GiftSection = () => {
               placeholder="Enter your gift amount"
               min="1"
             />
-          </div>
+          </div> */}
 
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
-            onClick={handlePayment}
-            disabled={!amount}
+            onClick={() => window.open('https://flutterwave.com/pay/geqbpo145yyd', '_blank')}
             className="relative w-full py-4 bg-[#FFD700] text-black rounded-xl font-semibold text-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group overflow-hidden"
           >
             <span className="relative z-10">Send Anniversary Gift 🎁</span>
