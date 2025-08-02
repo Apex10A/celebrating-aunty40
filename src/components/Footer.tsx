@@ -1,48 +1,114 @@
 import React from 'react';
-import { Heart, Phone, Mail } from 'lucide-react';
+import { Heart, Mail, Phone, MapPin } from 'lucide-react';
 
 export const Footer = () => {
   return (
-    <>
-      {/* Contact Section */}
-      <section className="py-16 sm:py-32 px-4 sm:px-6 bg-[#0a0a0a]">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FFA500] mb-8 sm:mb-12 font-serif fade-in">
-            Get In Touch
-          </h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
-            <a href="tel:+234xxxxxxxx" className="group bg-black/40 backdrop-blur-lg cursor-pointer p-6 sm:p-10 rounded-2xl sm:rounded-3xl shadow-2xl hover:shadow-[#FFD700]/10 transition-all duration-500 border border-[#FFD700]/10 hover:border-[#FFD700]/30 fade-in">
-              <Phone className="mx-auto text-[#FFD700] mb-4 sm:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={28} />
-              <h3 className="text-xl sm:text-2xl font-bold text-[#FFD700] mb-2 sm:mb-4">Call Us</h3>
-              <p className="text-[#FFD700]/70 font-light text-sm sm:text-base">+234 xxx xxx xxxx</p>
-            </a>
+    <footer className="relative bg-[#0a0a0a] border-t border-[#FFD700]/20 overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FFD700]/5 to-transparent"></div>
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16">
+          {/* Main Info */}
+          <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] font-serif">
+                40 & 15
+              </h3>
+              <div className="h-px w-16 sm:w-20 bg-gradient-to-r from-[#FFD700] to-transparent"></div>
+              <p className="text-base sm:text-lg text-[#FFD700]/80 font-light leading-relaxed max-w-md">
+                Celebrating Funmbi's 40th Birthday and our 15 years of marriage. 
+                A journey of love, growth, and beautiful memories.
+              </p>
+            </div>
             
-            <a href="mailto:celebration@example.com" className="group bg-black/40 backdrop-blur-lg cursor-pointer p-6 sm:p-10 rounded-2xl sm:rounded-3xl shadow-2xl hover:shadow-[#FFD700]/10 transition-all duration-500 border border-[#FFD700]/10 hover:border-[#FFD700]/30 fade-in">
-              <Mail className="mx-auto text-[#FFD700] mb-4 sm:mb-6 transform group-hover:scale-110 transition-transform duration-500" size={28} />
-              <h3 className="text-xl sm:text-2xl font-bold text-[#FFD700] mb-2 sm:mb-4">Email Us</h3>
-              <p className="text-[#FFD700]/70 font-light text-sm sm:text-base">celebration@example.com</p>
-            </a>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Heart className="text-[#DC143C] w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
+              <span className="text-sm sm:text-base text-[#FFD700]/70 font-light">
+                Made with love for our special celebration
+              </span>
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="py-12 sm:py-20 px-4 sm:px-6 bg-[#0a0a0a] border-t border-[#FFD700]/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="flex justify-center items-center mb-6 sm:mb-8">
-            <Heart className="text-[#FFD700] mr-2 sm:mr-3" size={20} />
-            <span className="text-xl sm:text-2xl font-bold text-[#FFD700]">40 & 15 Years Celebration</span>
-            <Heart className="text-[#FFD700] ml-2 sm:ml-3" size={20} />
+          {/* Quick Links */}
+          <div className="space-y-6 sm:space-y-8">
+            <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#FFD700] font-serif">
+              Quick Links
+            </h4>
+            <div className="space-y-3 sm:space-y-4">
+              <a 
+                href="/" 
+                className="block text-[#FFD700]/70 hover:text-[#FFD700] transition-colors duration-300 font-light"
+              >
+                Home
+              </a>
+              <a 
+                href="/our-story" 
+                className="block text-[#FFD700]/70 hover:text-[#FFD700] transition-colors duration-300 font-light"
+              >
+                Our Story
+              </a>
+              <a 
+                href="/gallery" 
+                className="block text-[#FFD700]/70 hover:text-[#FFD700] transition-colors duration-300 font-light"
+              >
+                Gallery
+              </a>
+              <a 
+                href="/rsvp" 
+                className="block text-[#FFD700]/70 hover:text-[#FFD700] transition-colors duration-300 font-light"
+              >
+                RSVP
+              </a>
+            </div>
           </div>
-          <p className="text-[#FFD700]/60 mb-3 sm:mb-4 font-light text-sm sm:text-base">
-            Creating timeless memories in Lagos, Nigeria
-          </p>
-          <p className="text-[#FFD700]/40 text-xs sm:text-sm">
-            © 2024 - Crafted with love for a golden celebration
-          </p>
+
+          {/* Contact Info */}
+          <div className="space-y-6 sm:space-y-8">
+            <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#FFD700] font-serif">
+              Contact
+            </h4>
+            <div className="space-y-3 sm:space-y-4">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <Mail className="text-[#FFD700] w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-sm sm:text-base text-[#FFD700]/70 font-light">
+                  funmbi@example.com
+                </span>
+              </div>
+              <div className="flex items-center gap-3 sm:gap-4">
+                <Phone className="text-[#FFD700] w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-sm sm:text-base text-[#FFD700]/70 font-light">
+                  +234 123 456 7890
+                </span>
+              </div>
+              <div className="flex items-center gap-3 sm:gap-4">
+                <MapPin className="text-[#FFD700] w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-sm sm:text-base text-[#FFD700]/70 font-light">
+                  Surulere, Lagos
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-      </footer>
-    </>
+
+        {/* Bottom Section */}
+        <div className="mt-12 sm:mt-16 lg:mt-20 pt-8 sm:pt-12 border-t border-[#FFD700]/20">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+            <p className="text-sm sm:text-base text-[#FFD700]/60 font-light text-center sm:text-left">
+              © 2025 Funmbi & Tope. All rights reserved.
+            </p>
+            <div className="flex items-center gap-4 sm:gap-6">
+              <span className="text-sm sm:text-base text-[#FFD700]/60 font-light">
+                December 2025
+              </span>
+              <div className="w-1 h-1 bg-[#FFD700]/40 rounded-full"></div>
+              <span className="text-sm sm:text-base text-[#FFD700]/60 font-light">
+                Lagos, Nigeria
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }; 
