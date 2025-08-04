@@ -7,7 +7,6 @@ export const GiftSection = () => {
   const [decorations, setDecorations] = useState<Array<{ left: number; top: number; rotate: number; emoji: string }>>([]);
 
   useEffect(() => {
-    // Generate random decorations only on client-side
     const emojis = ['🎉', '🎈', '🎊', '✨'];
     const newDecorations = Array.from({ length: 20 }, () => ({
       left: Math.random() * 100,
@@ -19,7 +18,6 @@ export const GiftSection = () => {
   }, []);
 
   const handlePayment = () => {
-    // Initialize Flutterwave payment
     if (typeof window !== 'undefined' && (window as any).FlutterwaveCheckout) {
       const tx_ref = `gift_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
@@ -30,17 +28,16 @@ export const GiftSection = () => {
         currency: 'NGN',
         payment_options: 'card,ussd,banktransfer',
         customer: {
-          email: '',  // Will be filled by user in Flutterwave form
+          email: '', 
           phone_number: '',
           name: '',
         },
         customizations: {
           title: 'Gift for Funmbi & Tope',
           description: 'Gift for the 40th Birthday & 15th Anniversary Celebration',
-          logo: '/logo.png', // Add your logo to public folder
+          logo: '/logo.png', 
         },
         callback: async function(response: any) {
-          // Verify the transaction on your backend
           try {
             const verifyResponse = await fetch('/api/verify-payment', {
               method: 'POST',
@@ -66,7 +63,7 @@ export const GiftSection = () => {
           }
         },
         onclose: function() {
-          // Handle when payment modal is closed
+
         }
       });
     }
@@ -74,7 +71,6 @@ export const GiftSection = () => {
 
   return (
     <section className="py-16 md:py-24 bg-black relative overflow-hidden">
-      {/* Fun background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {decorations.map((decoration, i) => (
           <motion.div

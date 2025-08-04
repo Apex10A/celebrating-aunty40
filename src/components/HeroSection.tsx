@@ -6,16 +6,14 @@ export const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6">
       <div className="absolute inset-0 bg-[#0a0a0a]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FFD700]/10 via-transparent to-transparent opacity-30"></div>
+        <div className=""></div>
       </div>
       
       <GoldParticles />
       
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Side - Text Content */}
           <div className="text-center lg:text-left space-y-6 sm:space-y-8">
-            {/* Main Title */}
             <div className="relative inline-block animate-fade-in">
               <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-30 blur-xl"></div>
               <h1 className="relative">
@@ -77,7 +75,7 @@ export const HeroSection = () => {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start">
                 <a
                   href="/rsvp"
-                  className="w-full sm:w-auto group relative px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 overflow-hidden rounded-full bg-gradient-to-r from-[#FFD700] to-[#DC143C] text-black transform hover:scale-105 transition-all duration-500"
+                  className="w-full sm:w-auto group relative px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 overflow-hidden rounded-full transform hover:scale-105 transition-all duration-500 bg-[#FFD700]"
                 >
                   <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                   <span className="relative z-10 text-sm sm:text-base lg:text-lg font-medium tracking-wider">RSVP Now</span>
@@ -92,7 +90,6 @@ export const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right Side - Couple Image */}
           <div className="flex justify-center lg:justify-end animate-fade-in-delayed">
             <div className="relative group">
               {/* Image Container */}

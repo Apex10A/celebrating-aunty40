@@ -57,7 +57,7 @@ export const Navigation = () => {
             </Link>
             <Link 
               href="/rsvp" 
-              className="bg-gradient-to-r from-[#FFD700] to-[#DC143C] text-black px-4 py-2 rounded-full text-sm lg:text-base font-medium tracking-wider hover:scale-105 transition-transform duration-300"
+              className="bg-[#FFD700] text px-4 py-2 rounded-full text-sm lg:text-base font-medium tracking-wider hover:scale-105 transition-transform duration-300"
             >
               RSVP
             </Link>
