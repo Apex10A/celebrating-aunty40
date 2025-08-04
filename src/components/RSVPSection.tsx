@@ -14,7 +14,7 @@ export const RSVPSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
+  
   };
 
   const inputClasses = "w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl border border-[#FFD700]/20 bg-black/50 text-[#FFD700] placeholder-[#FFD700]/30 focus:border-[#FFD700] focus:ring-2 focus:ring-[#FFD700]/20 transition-all duration-300 text-base sm:text-lg";
@@ -77,8 +77,7 @@ export const RSVPSection = () => {
               </ul>
             </div>
           </div>
-          
-          {/* RSVP Form */}
+
           <div className="bg-black/30 backdrop-blur-lg p-6 sm:p-8 rounded-2xl border border-[#FFD700]/10">
             <h3 className="text-2xl sm:text-3xl font-bold text-[#FFD700] mb-6 sm:mb-8">RSVP Form</h3>
             
@@ -146,6 +145,7 @@ export const RSVPSection = () => {
                   placeholder="Any dietary restrictions or allergies?"
                 />
               </div>
+              
               
               <div>
                 <label htmlFor="message" className={labelClasses}>Message (Optional)</label>
