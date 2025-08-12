@@ -11,13 +11,28 @@ generator client {
 model RSVP {
   id                 String   @id @default(cuid())
   name              String
-  email             String
+  email             String   @unique
   phone             String?
   numberOfGuests    Int      @default(1)
   dietaryRestrictions String?
   message           String?
   attending         Boolean
+  guestCode         String   @unique
+  hasDriver         Boolean  @default(false)
+  photos            Photo[]
   createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  publicId  String   @unique
+  url       String
+  width     Int?
+  height    Int?
+  rsvpId    String?
+  rsvp      RSVP?    @relation(fields: [rsvpId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 }
 
 model Gift {

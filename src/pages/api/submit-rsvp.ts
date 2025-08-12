@@ -1,5 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../lib/prisma';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { db } from '../../../lib/firebase';
+import { 
+  generateUniqueGuestCode, 
+  sendConfirmationEmail, 
+  sendOrganizerNotification,
+  formatPhoneNumber 
+} from '../../../lib/utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -13,51 +20,89 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     numberOfGuests,
     dietaryRestrictions,
     message,
-    attending
+    attending,
+    hasDriver,
+    photoUrls = []
   } = req.body;
 
-  try {
-    // Store RSVP in database
-    const rsvp = await prisma.rSVP.create({
-      data: {
-        name,
-        email,
-        phone,
-        numberOfGuests,
-        dietaryRestrictions,
-        message,
-        attending,
-      }
+  // Validate required fields
+  if (!name || !email) {
+    return res.status(400).json({ 
+      status: 'error',
+      message: 'Name and email are required' 
     });
+  }
+
+  try {
+    // Check if email already exists
+    const existingRSVPQuery = query(
+      collection(db, 'rsvps'), 
+      where('email', '==', email.toLowerCase())
+    );
+    const existingRSVPs = await getDocs(existingRSVPQuery);
+    
+    if (!existingRSVPs.empty) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'An RSVP with this email already exists. Please contact us if you need to make changes.'
+      });
+    }
+
+    // Generate unique guest code for attending guests
+    const guestCode = attending ? await generateUniqueGuestCode() : null;
+
+    // Prepare RSVP data
+    const rsvpData = {
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      phone: phone ? formatPhoneNumber(phone.trim()) : null,
+      numberOfGuests: attending ? parseInt(numberOfGuests) : 0,
+      dietaryRestrictions: dietaryRestrictions?.trim() || null,
+      message: message?.trim() || null,
+      attending,
+      hasDriver: attending ? hasDriver : false,
+      guestCode,
+      photoUrls: photoUrls || [],
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    // Store RSVP in Firestore
+    const docRef = await addDoc(collection(db, 'rsvps'), rsvpData);
 
     // Send confirmation email
-    // await sendEmail({
-    //   to: email,
-    //   subject: 'Thank you for your RSVP',
-    //   text: `Dear ${name},\n\nThank you for your RSVP to our celebration.\n\n${
-    //     attending
-    //       ? 'We look forward to seeing you!'
-    //       : 'We will miss you, but thank you for letting us know.'
-    //   }\n\nBest regards,\nFunmbi & Tope`
-    // });
+    try {
+      await sendConfirmationEmail(email, name, guestCode || '', attending);
+    } catch (emailError) {
+      console.error('Error sending confirmation email:', emailError);
+      // Don't fail the RSVP if email fails
+    }
 
-    // Notify event organizers
-    // await sendEmail({
-    //   to: process.env.ORGANIZER_EMAIL,
-    //   subject: 'New RSVP Received',
-    //   text: `New RSVP from ${name}\nEmail: ${email}\nAttending: ${attending}\nGuests: ${numberOfGuests}`
-    // });
+    // Send notification to organizers
+    try {
+      await sendOrganizerNotification({
+        ...rsvpData,
+        id: docRef.id
+      });
+    } catch (notificationError) {
+      console.error('Error sending organizer notification:', notificationError);
+      // Don't fail the RSVP if notification fails
+    }
 
     return res.status(200).json({
       status: 'success',
       message: 'RSVP submitted successfully',
-      data: rsvp
+      guestCode: guestCode,
+      data: {
+        id: docRef.id,
+        ...rsvpData
+      }
     });
   } catch (error) {
     console.error('RSVP submission error:', error);
     return res.status(500).json({
       status: 'error',
-      message: 'Error submitting RSVP'
+      message: 'Error submitting RSVP. Please try again.'
     });
   }
 } 
