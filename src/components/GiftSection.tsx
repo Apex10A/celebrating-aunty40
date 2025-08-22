@@ -104,10 +104,10 @@ export const GiftSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="font-decorative text-4xl md:text-5xl text-[#FFD700] mb-4">
+          <h2 className="font-decorative text-3xl md:text-4xl text-[#FFD700] mb-4">
             Celebrate With Us! 🎉
           </h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-300 text-md md:text-lg max-w-2xl mx-auto">
             Your presence is our greatest gift, but if you'd like to contribute to our celebration,
             we've made it easy and fun!
           </p>
