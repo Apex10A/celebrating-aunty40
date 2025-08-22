@@ -1,132 +1,70 @@
-import React, { useState } from 'react';
-import { Navigation } from '../components/Navigation';
-import Head from 'next/head';
-import { motion } from 'framer-motion';
-import { Footer } from '../components/Footer';
-import { Upload, X, Camera } from 'lucide-react';
+import React, { useState } from "react";
+import { Navigation } from "../components/Navigation";
+import Head from "next/head";
+import { motion } from "framer-motion";
+import { Footer } from "../components/Footer";
+import { makeReservation, Reservation } from "@/services/reservations";
+import { Decline, sendDecline } from "@/services/declines";
 
 const RSVPPage = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    numberOfGuests: 1,
-    dietaryRestrictions: '',
-    message: '',
-    attending: true,
-    hasDriver: false
-  });
-
+  const [reservation, setReservation] = useState<Reservation>();
+  const [decline, setDecline] = useState<Decline>();
+  const [attending, setAttending] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [uploadProgress, setUploadProgress] = useState<number>(0);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [guestCode, setGuestCode] = useState<string>('');
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    const validFiles = files.filter(file => {
-      const isValidType = file.type.startsWith('image/');
-      const isValidSize = file.size <= 5 * 1024 * 1024; // 5MB limit
-      return isValidType && isValidSize;
-    });
-    
-    setSelectedFiles(prev => [...prev, ...validFiles].slice(0, 5)); // Max 5 photos
-  };
-
-  const removeFile = (index: number) => {
-    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const uploadPhotos = async (): Promise<string[]> => {
-    if (selectedFiles.length === 0) return [];
-
-    const uploadedUrls: string[] = [];
-    
-    for (let i = 0; i < selectedFiles.length; i++) {
-      const file = selectedFiles[i];
-      const formData = new FormData();
-      formData.append('file', file);
-      
-      try {
-        const response = await fetch('/api/upload-photo', {
-          method: 'POST',
-          body: formData,
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          uploadedUrls.push(data.url);
-        }
-        
-        setUploadProgress(((i + 1) / selectedFiles.length) * 100);
-      } catch (error) {
-        console.error('Photo upload error:', error);
-      }
-    }
-    
-    return uploadedUrls;
-  };
+  function validateForm() {
+    // function to validate goes here praise
+    return true;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setUploadProgress(0);
+    if (!validateForm()) return;
 
     try {
-      // Upload photos first if any
-      const photoUrls = await uploadPhotos();
-      
-      // Submit RSVP with photo URLs
-      const response = await fetch('/api/submit-rsvp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          photoUrls
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setGuestCode(data.guestCode);
-        setShowSuccess(true);
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          numberOfGuests: 1,
-          dietaryRestrictions: '',
-          message: '',
-          attending: true,
-          hasDriver: false
-        });
-        setSelectedFiles([]);
+      setIsSubmitting(true);
+      console.log(reservation, "reservation");
+      console.log(decline, "decline");
+      if (attending) {
+        const res = await makeReservation(reservation as Reservation);
+        if (res?.status === 201) return; // do something on success
+        else return; // do something else, display an error message or something
       } else {
-        const errorData = await response.json();
-        alert(errorData.message || 'There was an error submitting your RSVP. Please try again.');
+        const res = await sendDecline(decline as Decline);
+        // if (res?.status === 201) return; // do something on success
+        // else return; // do something else, display an error message or something
       }
     } catch (error) {
-      console.error('RSVP submission error:', error);
-      alert('There was an error submitting your RSVP. Please try again.');
+      console.error("RSVP submission error:", error);
+      alert("There was an error submitting your RSVP. Please try again.");
     } finally {
       setIsSubmitting(false);
       setUploadProgress(0);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    const checked = (e.target as HTMLInputElement).checked;
-    
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    if (attending)
+      setReservation(
+        (prev) =>
+          ({
+            ...prev,
+            [name]: value,
+          } as Reservation)
+      );
+    else
+      setDecline(
+        (prev) =>
+          ({
+            ...prev,
+            [name]: value,
+          } as Decline)
+      );
   };
 
   // Success Modal Component
@@ -175,7 +113,10 @@ const RSVPPage = () => {
     <>
       <Head>
         <title>RSVP - 40 & 15 Years Celebration</title>
-        <meta name="description" content="RSVP for Funmbi's 40th Birthday and 15th Wedding Anniversary Celebration" />
+        <meta
+          name="description"
+          content="RSVP for Funmbi's 40th Birthday and 15th Wedding Anniversary Celebration"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       
@@ -188,49 +129,54 @@ const RSVPPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-8 md:mb-12"
-            >
-              <h1 className="font-decorative text-4xl md:text-5xl text-[#FFD700] mb-4">Join Our Double Celebration</h1>
+              className="text-center mb-8 md:mb-12">
+              <h1 className="font-decorative text-4xl md:text-5xl text-[#FFD700] mb-4">
+                Join Our Double Celebration
+              </h1>
               <div className="h-px w-32 sm:w-40 mx-auto bg-gradient-to-r from-transparent via-[#FFD700] to-transparent mb-6"></div>
-              <p className="text-gray-300 text-base md:text-lg">Please let us know if you'll be joining us for this special occasion</p>
+              <p className="text-gray-300 text-base md:text-lg">
+                Please let us know if you'll be joining us for this special
+                occasion
+              </p>
             </motion.div>
 
             <div className="flex justify-center mb-8 sm:mb-12">
               <div className="flex bg-black/30 backdrop-blur-lg rounded-full p-1 border border-[#FFD700]/20">
                 <button
-                  onClick={() => setFormData({...formData, attending: true})}
+                  onClick={() => setAttending(true)}
                   className={`px-6 py-2 rounded-full transition-all duration-300 font-medium ${
-                    formData.attending
-                      ? 'bg-[#FFD700] text-black'
-                      : 'text-[#FFD700] hover:bg-[#FFD700]/10'
-                  }`}
-                >
+                    attending
+                      ? "bg-[#FFD700] text-black"
+                      : "text-[#FFD700] hover:bg-[#FFD700]/10"
+                  }`}>
                   I'll Be There!
                 </button>
                 <button
-                  onClick={() => setFormData({...formData, attending: false})}
+                  onClick={() => setAttending(false)}
                   className={`px-6 py-2 rounded-full transition-all duration-300 font-medium ${
-                    !formData.attending
-                      ? 'bg-[#FFD700] text-black'
-                      : 'text-[#FFD700] hover:bg-[#FFD700]/10'
-                  }`}
-                >
+                    !attending
+                      ? "bg-[#FFD700] text-black"
+                      : "text-[#FFD700] hover:bg-[#FFD700]/10"
+                  }`}>
                   Can't Make It
                 </button>
               </div>
             </div>
 
             <div className="text-center mb-8 sm:mb-12">
-              {formData.attending ? (
-                <h2 className="font-decorative text-2xl md:text-3xl text-[#FFD700] mb-2">Yay, party time! 🎉</h2>
+              {attending ? (
+                <h2 className="font-decorative text-2xl md:text-3xl text-[#FFD700] mb-2">
+                  Yay, party time! 🎉
+                </h2>
               ) : (
-                <h2 className="font-decorative text-2xl md:text-3xl text-[#FFD700] mb-2">We'll miss you! 💝</h2>
+                <h2 className="font-decorative text-2xl md:text-3xl text-[#FFD700] mb-2">
+                  We'll miss you! 💝
+                </h2>
               )}
               <p className="text-[#FFD700]/70">
-                {formData.attending 
-                  ? "We're so excited to celebrate with you!" 
-                  : "We understand and appreciate you letting us know."
-                }
+                {attending
+                  ? "We're so excited to celebrate with you!"
+                  : "We understand and appreciate you letting us know."}
               </p>
             </div>
 
@@ -239,16 +185,19 @@ const RSVPPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               onSubmit={handleSubmit}
-              className="bg-black/50 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-[#FFD700]/10 mx-4 sm:mx-0"
-            >
+              className="bg-black/50 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-[#FFD700]/10 mx-4 sm:mx-0">
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-[#FFD700] mb-2 text-sm md:text-base">Name</label>
+                  <label
+                    htmlFor="name"
+                    className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                    Name
+                  </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    value={formData.name}
+                    value={attending ? reservation?.name : decline?.name}
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-base"
                     placeholder="Enter your full name"
@@ -257,12 +206,16 @@ const RSVPPage = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-[#FFD700] mb-2 text-sm md:text-base">Email</label>
+                  <label
+                    htmlFor="email"
+                    className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                    Email
+                  </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    value={formData.email}
+                    value={attending ? reservation?.email : decline?.email}
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-base"
                     placeholder="Enter your email"
@@ -270,15 +223,19 @@ const RSVPPage = () => {
                   />
                 </div>
 
-                {formData.attending && (
+                {attending && (
                   <>
                     <div>
-                      <label htmlFor="phone" className="block text-[#FFD700] mb-2 text-sm md:text-base">Phone Number</label>
+                      <label
+                        htmlFor="phone"
+                        className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                        Phone Number
+                      </label>
                       <input
                         type="tel"
                         id="phone"
-                        name="phone"
-                        value={formData.phone}
+                        name="phoneNumber"
+                        value={reservation?.phoneNumber}
                         onChange={handleInputChange}
                         className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-base"
                         placeholder="Enter your phone number"
@@ -287,27 +244,36 @@ const RSVPPage = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="numberOfGuests" className="block text-[#FFD700] mb-2 text-sm md:text-base">Number of Guests</label>
+                        <label
+                          htmlFor="numOfGuests"
+                          className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                          Number of Guests
+                        </label>
                         <select
-                          id="numberOfGuests"
-                          name="numberOfGuests"
-                          value={formData.numberOfGuests}
+                          id="numOfGuests"
+                          name="numOfGuests"
+                          value={reservation?.numOfGuests}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-base"
-                        >
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
-                            <option key={num} value={num}>{num} {num === 1 ? 'Guest' : 'Guests'}</option>
+                          className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-base">
+                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                            <option key={num} value={num}>
+                              {num} {num === 1 ? "Guest" : "Guests"}
+                            </option>
                           ))}
                         </select>
                       </div>
 
                       <div>
-                        <label htmlFor="dietaryRestrictions" className="block text-[#FFD700] mb-2 text-sm md:text-base">Dietary Restrictions</label>
+                        <label
+                          htmlFor="dietaryRestrictions"
+                          className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                          Dietary Restrictions
+                        </label>
                         <input
                           type="text"
                           id="dietaryRestrictions"
-                          name="dietaryRestrictions"
-                          value={formData.dietaryRestrictions}
+                          name="restrictions"
+                          value={reservation?.restriction}
                           onChange={handleInputChange}
                           className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-base"
                           placeholder="Any dietary restrictions or allergies?"
@@ -390,13 +356,15 @@ const RSVPPage = () => {
                 )}
 
                 <div>
-                  <label htmlFor="message" className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                  <label
+                    htmlFor="message"
+                    className="block text-[#FFD700] mb-2 text-sm md:text-base">
                     Message (Optional)
                   </label>
                   <textarea
                     id="message"
                     name="message"
-                    value={formData.message}
+                    value={attending ? reservation?.message : decline?.message}
                     onChange={handleInputChange}
                     rows={4}
                     className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all resize-none text-base"
@@ -407,9 +375,8 @@ const RSVPPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-[#FFD700] text-black rounded-full hover:bg-[#FFD700]/90 transition-all duration-300 font-medium mt-8 text-base disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit RSVP'}
+                  className="w-full py-3 bg-[#FFD700] text-black rounded-full hover:bg-[#FFD700]/90 transition-all duration-300 font-medium mt-8 text-base disabled:opacity-50 disabled:cursor-not-allowed">
+                  {isSubmitting ? "Submitting..." : "Submit RSVP"}
                 </button>
               </div>
             </motion.form>
@@ -421,4 +388,4 @@ const RSVPPage = () => {
   );
 };
 
-export default RSVPPage; 
+export default RSVPPage;

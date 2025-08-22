@@ -54,7 +54,7 @@ export const AnniversaryComponentsExample = () => {
               required
             />
 
-            <AnniversaryInput
+            {/* <AnniversaryInput
               label="Message"
               placeholder="Your anniversary message..."
               value={inputValue}
@@ -69,16 +69,16 @@ export const AnniversaryComponentsExample = () => {
               value={selectValue}
               onChange={setSelectValue}
               placeholder="Select guest count"
-            />
+            /> */}
 
-            <AnniversaryDropdown
+            {/* <AnniversaryDropdown
               label="Event Type"
               options={eventOptions}
               value={dropdownValue}
               onChange={setDropdownValue}
               placeholder="Choose event type"
               searchable
-            />
+            /> */}
           </div>
 
           <div className="space-y-6">
