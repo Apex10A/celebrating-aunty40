@@ -121,7 +121,7 @@ export const GallerySection = () => {
           <a
             href="/gallery"
             aria-label="View full gallery"
-            className="inline-flex items-center gap-2 sm:gap-3 group px-5 sm:px-8 lg:px-10 py-2.5 sm:py-4 lg:py-5 rounded-full text-sm sm:text-base lg:text-lg font-medium tracking-wider text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] bg-black/30 backdrop-blur-sm transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD700]/50"
+            className="inline-flex items-center gap-2 sm:gap-3 group px-5 sm:px-8 lg:px-10 py-2.5 sm:py-4 lg:py-5 rounded-full text-xs sm:text-base lg:text-base font-medium tracking-wider text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] bg-black/30 backdrop-blur-sm transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD700]/50"
           >
             <span>View Full Gallery</span>
             <Camera className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:scale-110" />
