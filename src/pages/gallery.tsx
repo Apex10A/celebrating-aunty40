@@ -95,7 +95,13 @@ const GalleryPage = () => {
         if (file.type.startsWith("image/")) {
           const reader = new FileReader();
           reader.onloadend = () => {
-            setImages((prev) => [...prev, reader.result as string]);
+            // Append a temporary Picture-like object for local preview
+            const tempPicture: Picture = {
+              _id: `local-${Date.now()}-${Math.random()}`,
+              url: reader.result as string,
+              category: uploadCategory,
+            };
+            setImages((prev) => [...prev, tempPicture]);
           };
           reader.readAsDataURL(file);
         }
@@ -167,7 +173,7 @@ const GalleryPage = () => {
                 <label
                   htmlFor="image-upload"
                   className="w-full py-4 border-dashed border-[#FFD700] border block mb-6 rounded-md bg-[#ddc74c34]">
-                  {!(uploadImage?.length as number) > 0 ? (
+                  {(uploadImage?.length ?? 0) === 0 ? (
                     <div className="h-full w-full flex items-center justify-center flex-col gap-2">
                       <FileImageIcon className="text-[#FFD700] w-9 h-9" />
                       <div>

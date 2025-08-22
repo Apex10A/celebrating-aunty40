@@ -14,8 +14,8 @@ type Status = "pending" | "accepted" | "declined" | "all-reservations";
 export default function Index() {
   useProtected();
   const [search, setSearch] = useState("");
-  const [reservations, setReservations] = useState<Record<string, any>[]>();
-  const [declines, setDeclines] = useState<Record<string, any>[]>();
+  const [reservations, setReservations] = useState<Record<string, any>[]>([]);
+  const [declines, setDeclines] = useState<Record<string, any>[]>([]);
   const [filter, setFilter] = useState<Status>("all-reservations");
   const [isLoading, setIsLoading] = useState(false);
 
