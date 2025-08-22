@@ -61,28 +61,28 @@ export const HeroSection = () => {
                 </p>
               </div>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 lg:gap-6">
-                <div className="group w-full sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2 sm:gap-4 lg:gap-6">
+                <div className="group w-[40%] sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                   <Calendar className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300 min-w-[20px] sm:min-w-[24px]" size={20} />
                   <span className="text-sm sm:text-base lg:text-lg font-light text-[#FFD700]/90 tracking-wider whitespace-nowrap">This December</span>
                 </div>
-                <div className="group w-full sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-xl border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
+                <div className="group w-[40%] mx-auto sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-xl border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                   <MapPin className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300 min-w-[20px] sm:min-w-[24px]" size={20} />
                   <span className="text-sm sm:text-base lg:text-lg font-light text-[#FFD700]/90 tracking-wider">Surulere, Lagos</span>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start ">
                 <a
                   href="/rsvp"
-                  className="w-full sm:w-auto group relative px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 overflow-hidden rounded-xl transform hover:scale-105 transition-all duration-500 bg-[#FFD700]"
+                  className="w-[70%] mx-auto sm:w-auto group relative px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 overflow-hidden rounded-xl transform hover:scale-105 transition-all duration-500 bg-[#FFD700]"
                 >
                   <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                   <span className="relative z-10 text-sm sm:text-base lg:text-lg font-medium tracking-wider">RSVP Now</span>
                 </a>
                 <a
                   href="/gallery"
-                  className="w-full sm:w-auto group px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-lg text-sm sm:text-base lg:text-lg font-medium tracking-wider text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] transition-colors duration-500 transform hover:scale-105"
+                  className="w-[70%] mx-auto sm:w-auto group px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-lg text-sm sm:text-base lg:text-lg font-medium tracking-wider text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] transition-colors duration-500 transform hover:scale-105"
                 >
                   View Gallery
                 </a>
