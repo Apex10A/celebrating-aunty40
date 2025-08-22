@@ -16,7 +16,7 @@ export const Navigation = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-5 ${
       isScrolled 
         ? 'bg-black/90 backdrop-blur-lg border-b border-[#FFD700]/20' 
         : 'bg-transparent'
@@ -29,7 +29,7 @@ export const Navigation = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-30 blur-sm rounded-lg"></div>
               <div className="relative bg-black/50 backdrop-blur-lg px-3 py-1 rounded-lg border border-[#FFD700]/20">
                 <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#FFD700] to-[#DC143C] bg-clip-text text-transparent">
-                  40 & 15
+                  TopFun@40
                 </span>
               </div>
             </div>
@@ -57,7 +57,7 @@ export const Navigation = () => {
             </Link>
             <Link 
               href="/rsvp" 
-              className="bg-[#FFD700] text px-4 py-2 rounded-full text-sm lg:text-base font-medium tracking-wider hover:scale-105 transition-transform duration-300"
+              className="bg-[#FFD700] text px-5 py-3 rounded-lg text-sm lg:text-base font-medium tracking-wider hover:scale-105 transition-transform duration-300"
             >
               RSVP
             </Link>

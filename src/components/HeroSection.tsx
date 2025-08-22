@@ -4,7 +4,7 @@ import { GoldParticles } from './GoldParticles';
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 pt-32">
       <div className="absolute inset-0 bg-[#0a0a0a]">
         <div className=""></div>
       </div>
@@ -17,7 +17,7 @@ export const HeroSection = () => {
             <div className="relative inline-block animate-fade-in">
               <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-30 blur-xl"></div>
               <h1 className="relative">
-                <span className="text-[60px] sm:text-[80px] lg:text-[120px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] leading-none font-serif">
+                <span className="text-[70px] sm:text-[80px] lg:text-[120px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] leading-none font-serif">
                   40
                 </span>
                 <span className=" text-2xl sm:text-4xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700]/90 to-[#DC143C]/90 mt-2 lg:mt-4 font-serif">
@@ -28,7 +28,7 @@ export const HeroSection = () => {
             
             {/* Couple Names */}
             <div className="animate-fade-in-delayed">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light font-serif flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2 sm:gap-3 lg:gap-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light font-serif flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2 sm:gap-3 lg:gap-6 flex">
                 <span className="relative group">
                   <span className="absolute -inset-1 bg-gradient-to-r from-[#DC143C]/20 to-[#FFD700]/20 blur-md rounded-lg"></span>
                   <span className="relative bg-gradient-to-r font-decorative from-[#DC143C] to-[#FFD700] bg-clip-text text-transparent px-3 py-1 lg:px-4 lg:py-2">Funmbi</span>
@@ -62,11 +62,11 @@ export const HeroSection = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 lg:gap-6">
-                <div className="group w-full sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
+                <div className="group w-full sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                   <Calendar className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300 min-w-[20px] sm:min-w-[24px]" size={20} />
                   <span className="text-sm sm:text-base lg:text-lg font-light text-[#FFD700]/90 tracking-wider whitespace-nowrap">This December</span>
                 </div>
-                <div className="group w-full sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
+                <div className="group w-full sm:w-auto flex items-center gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-xl border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                   <MapPin className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300 min-w-[20px] sm:min-w-[24px]" size={20} />
                   <span className="text-sm sm:text-base lg:text-lg font-light text-[#FFD700]/90 tracking-wider">Surulere, Lagos</span>
                 </div>
@@ -75,14 +75,14 @@ export const HeroSection = () => {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start">
                 <a
                   href="/rsvp"
-                  className="w-full sm:w-auto group relative px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 overflow-hidden rounded-full transform hover:scale-105 transition-all duration-500 bg-[#FFD700]"
+                  className="w-full sm:w-auto group relative px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 overflow-hidden rounded-xl transform hover:scale-105 transition-all duration-500 bg-[#FFD700]"
                 >
                   <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                   <span className="relative z-10 text-sm sm:text-base lg:text-lg font-medium tracking-wider">RSVP Now</span>
                 </a>
                 <a
                   href="/gallery"
-                  className="w-full sm:w-auto group px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full text-sm sm:text-base lg:text-lg font-medium tracking-wider text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] transition-colors duration-500 transform hover:scale-105"
+                  className="w-full sm:w-auto group px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-lg text-sm sm:text-base lg:text-lg font-medium tracking-wider text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] transition-colors duration-500 transform hover:scale-105"
                 >
                   View Gallery
                 </a>
@@ -93,7 +93,7 @@ export const HeroSection = () => {
           <div className="flex justify-center lg:justify-end animate-fade-in-delayed">
             <div className="relative group">
               {/* Image Container */}
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl border-4 border-[#FFD700]/20">
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[550px] lg:h-[550px] rounded-full overflow-hidden shadow-2xl border-4 border-[#FFD700]/20 cursor-pointer">
                 <img
                   src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&crop=face"
                   alt="Funmbi & Tope"
