@@ -56,7 +56,7 @@ function Body<T>({
   render,
 }: {
   data: T[];
-  render: (item: T) => ReactNode;
+  render: (item: T, index: number) => ReactNode;
 }) {
   if (!data?.length) {
     return (

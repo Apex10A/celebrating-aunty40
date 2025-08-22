@@ -1,30 +1,39 @@
 import { Check, Trash2Icon } from "lucide-react";
 import Table from "./Table";
 import Tag from "./Tag";
+import { acceptReservation, deleteReservation } from "@/services/reservations";
 
-export default function ReservationsTable() {
-  const reservations = [
-    {
-      _id: "68a42d9bbcd1548a4cd892b1",
-      name: "Lex luthor",
-      email: "test@gmail.com",
-      status: "pending",
-      numberOfGuests: 3,
-      phoneNumber: "08157093021",
-      __v: 0,
-      invitationCode: "INV-d8640d2-01669",
-    },
-    {
-      _id: "68a42d9bbcd1548a4cd892b1",
-      name: "Lex luthor",
-      email: "test@gmail.com",
-      status: "accepted",
-      phoneNumber: "08157093021",
-      numberOfGuests: 3,
-      __v: 0,
-      invitationCode: "INV-d8640d2-01669",
-    },
-  ];
+export default function ReservationsTable({
+  data,
+  refresh,
+}: {
+  data: Record<string, any>[];
+  refresh: () => void;
+}) {
+  async function accept(id: string) {
+    try {
+      const res = await acceptReservation(id);
+      if (res?.status == 200) {
+        alert("Accepted successfully");
+        refresh();
+      } else alert("An error");
+    } catch (error) {
+      console.error("An error");
+    }
+  }
+
+  async function deleteItem(id: string) {
+    try {
+      const res = await deleteReservation(id);
+      if (res?.status == 200) {
+        alert("Accepted successfully");
+        refresh();
+      } else alert("An error");
+    } catch (error) {
+      console.error("An error");
+    }
+  }
+
   return (
     <Table columns="1fr 1fr 1fr 1fr 0.5fr">
       <Table.Header>
@@ -35,10 +44,10 @@ export default function ReservationsTable() {
         <div></div>
       </Table.Header>
       <Table.Body
-        data={reservations}
+        data={data}
         render={(item) => (
-          <Table.Row>
-            <div>{item.invitationCode}</div>
+          <Table.Row key={item?._id}>
+            <div>{item.invitationCode ? item.invitationCode : "-"}</div>
             <div className="flex flex-col gap-1">
               <span>{item.name}</span>
               <span>{item.email}</span>
@@ -48,12 +57,18 @@ export default function ReservationsTable() {
                 {item.status}
               </Tag>
             </div>
-            <div>{item.numberOfGuests}</div>
-            <div className="flex flex-row items-center gap-6">
-              <span className="hover:bg-green-100 p-2 rounded-full hover:text-green-600">
-                <Check />
-              </span>
-              <span className="hover:bg-red-100 p-2 rounded-full hover:text-red-600">
+            <div>{item.numOfGuests}</div>
+            <div className="flex flex-row items-center gap-6 justify-end">
+              {item.status === "pending" && (
+                <span
+                  className="hover:bg-green-100 p-2 rounded-full hover:text-green-600"
+                  onClick={() => accept(item._id)}>
+                  <Check />
+                </span>
+              )}
+              <span
+                className="hover:bg-red-100 p-2 rounded-full hover:text-red-600"
+                onClick={() => deleteItem(item._id)}>
                 <Trash2Icon />
               </span>
             </div>
