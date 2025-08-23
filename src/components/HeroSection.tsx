@@ -76,7 +76,7 @@ export const HeroSection = () => {
                 <div className="group w-full mx-auto sm:mx-0 sm:w-auto max-w-xs sm:max-w-none flex items-center justify-center sm:justify-start gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                   <Calendar className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300 min-w-[20px] sm:min-w-[24px]" size={20} />
                   <span className="text-sm sm:text-base lg:text-lg font-light text-[#FFD700]/90 tracking-wider whitespace-nowrap">
-                    This December
+                    December 27, 12:00pm
                   </span>
                 </div>
                 <div className="group w-full mx-auto sm:mx-0 sm:w-auto max-w-xs sm:max-w-none flex items-center justify-center sm:justify-start gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">

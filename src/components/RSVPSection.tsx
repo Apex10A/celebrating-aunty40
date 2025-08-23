@@ -21,7 +21,7 @@ export const RSVPSection = () => {
   const labelClasses = "block text-[#FFD700] font-medium mb-2 sm:mb-3 text-sm sm:text-base";
 
   return (
-    <section className="relative py-16 sm:py-24 px-4 sm:px-6 bg-[#0a0a0a] overflow-hidden">
+    <section className="relative py-16 sm:py-24 px-4 sm:px-6 bg-[#0a0a0a] overflow-hidden ">
       <div className="absolute inset-0 bg-[url('/gold-pattern.png')] opacity-5"></div>
       
       <div className="relative z-10 max-w-4xl mx-auto">
