@@ -32,8 +32,10 @@ const RSVPPage = () => {
         const res = await makeReservation(reservation as Reservation);
         if (res?.status === 201) {
           setModalStatus("success");
-          setModalTitle("RSVP Received");
-          setModalDesc("Thank you! We can't wait to celebrate with you.");
+          setModalTitle("RSVP Submitted");
+          setModalDesc(
+            "We’ll review your RSVP. If accepted, you’ll receive an email with your invitation code and QR code."
+          );
           setModalOpen(true);
           return;
         } else {
@@ -48,7 +50,9 @@ const RSVPPage = () => {
         if (res?.status === 201) {
           setModalStatus("success");
           setModalTitle("Response Received");
-          setModalDesc("Thank you for letting us know. You'll be in our hearts.");
+          setModalDesc(
+            "Thank you for letting us know. You'll be in our hearts."
+          );
           setModalOpen(true);
           return;
         } else {
@@ -63,7 +67,9 @@ const RSVPPage = () => {
       console.error("RSVP submission error:", error);
       setModalStatus("error");
       setModalTitle("Network or server error");
-      setModalDesc("There was an error submitting your RSVP. Please try again.");
+      setModalDesc(
+        "There was an error submitting your RSVP. Please try again."
+      );
       setModalOpen(true);
     } finally {
       setIsSubmitting(false);
@@ -112,7 +118,8 @@ const RSVPPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-8 md:mb-12">
+              className="text-center mb-8 md:mb-12"
+            >
               <h1 className="font-decorative text-3xl md:text-5xl text-[#FFD700] mb-4">
                 Join Our Double Celebration
               </h1>
@@ -131,7 +138,8 @@ const RSVPPage = () => {
                     attending
                       ? "bg-[#FFD700] text-black"
                       : "text-[#FFD700] hover:bg-[#FFD700]/10"
-                  }`}>
+                  }`}
+                >
                   I'll Be There!
                 </button>
                 <button
@@ -140,7 +148,8 @@ const RSVPPage = () => {
                     !attending
                       ? "bg-[#FFD700] text-black"
                       : "text-[#FFD700] hover:bg-[#FFD700]/10"
-                  }`}>
+                  }`}
+                >
                   Can't Make It
                 </button>
               </div>
@@ -168,12 +177,14 @@ const RSVPPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               onSubmit={handleSubmit}
-              className="bg-black/50 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-[#FFD700]/10 mx-4 sm:mx-0">
+              className="bg-black/50 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-[#FFD700]/10 mx-4 sm:mx-0"
+            >
               <div className="space-y-6">
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                    className="block text-[#FFD700] mb-2 text-sm md:text-base"
+                  >
                     Name
                   </label>
                   <input
@@ -191,7 +202,8 @@ const RSVPPage = () => {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                    className="block text-[#FFD700] mb-2 text-sm md:text-base"
+                  >
                     Email
                   </label>
                   <input
@@ -211,7 +223,8 @@ const RSVPPage = () => {
                     <div>
                       <label
                         htmlFor="phone"
-                        className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                        className="block text-[#FFD700] mb-2 text-sm md:text-base"
+                      >
                         Phone Number
                       </label>
                       <input
@@ -229,7 +242,8 @@ const RSVPPage = () => {
                       <div>
                         <label
                           htmlFor="numOfGuests"
-                          className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                          className="block text-[#FFD700] mb-2 text-sm md:text-base"
+                        >
                           Number of Guests
                         </label>
                         <select
@@ -237,7 +251,8 @@ const RSVPPage = () => {
                           name="numOfGuests"
                           value={reservation?.numOfGuests}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#555454]focus:ring-1 focus:ring-[#FFD700] transition-all text-sm md:text-base">
+                          className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#555454]focus:ring-1 focus:ring-[#FFD700] transition-all text-sm md:text-base"
+                        >
                           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                             <option key={num} value={num}>
                               {num} {num === 1 ? "Guest" : "Guests"}
@@ -249,7 +264,8 @@ const RSVPPage = () => {
                       <div>
                         <label
                           htmlFor="dietaryRestrictions"
-                          className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                          className="block text-[#FFD700] mb-2 text-sm md:text-base"
+                        >
                           Dietary Restrictions
                         </label>
                         <input
@@ -269,7 +285,8 @@ const RSVPPage = () => {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-[#FFD700] mb-2 text-sm md:text-base">
+                    className="block text-[#FFD700] mb-2 text-sm md:text-base"
+                  >
                     Message (Optional)
                   </label>
                   <textarea
@@ -286,7 +303,8 @@ const RSVPPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-[#FFD700] text-black rounded-xl hover:bg-[#FFD700]/90 transition-all duration-300 mt-8  disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-widest uppercase text-sm md:text-base">
+                  className="w-full py-3 bg-[#FFD700] text-black rounded-xl hover:bg-[#FFD700]/90 transition-all duration-300 mt-8  disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-widest uppercase text-sm md:text-base"
+                >
                   {isSubmitting ? "Submitting..." : "Submit RSVP"}
                 </button>
               </div>
@@ -304,8 +322,13 @@ const RSVPPage = () => {
         description={modalDesc}
         onClose={() => setModalOpen(false)}
         primaryAction={
-          modalStatus === 'success'
-            ? { label: 'View Gallery', onClick: () => { window.location.href = '/gallery'; } }
+          modalStatus === "success"
+            ? {
+                label: "View Gallery",
+                onClick: () => {
+                  window.location.href = "/gallery";
+                },
+              }
             : undefined
         }
       />

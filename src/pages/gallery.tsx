@@ -28,6 +28,14 @@ const GalleryPage = () => {
     "others",
   ];
 
+  // Ensure the upload category always maps to a visible filter
+  useEffect(() => {
+    if (uploadCategory && selectedCategory !== uploadCategory) {
+      setSelectedCategory(uploadCategory);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uploadCategory]);
+
   async function getAllImages() {
     try {
       const res = await getPictures();
@@ -141,7 +149,7 @@ const GalleryPage = () => {
               {categories?.map((category) => (
                 <button
                   key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => { setSelectedCategory(category); if (category !== "all") setUploadCategory(category); }}
                   className={`px-6 py-3 rounded-full transition-all duration-300 font-medium ${
                     selectedCategory === category
                       ? "border-[#FFD700] bg-[#FFD700]/10"
@@ -155,6 +163,9 @@ const GalleryPage = () => {
             {/* Upload Section */}
             <div className="text-center mb-12 sm:mb-16">
               <div className="bg-black/30 backdrop-blur-lg p-8 sm:p-12 rounded-2xl border border-[#FFD700]/10">
+                <div className="mb-4 text-[#FFD700]/80 text-sm">
+                  Uploading to: <span className="text-[#FFD700] font-semibold">{uploadCategory}</span>
+                </div>
                 <span className="text-[#FFD700] text-4xl">📸</span>
                 <h3 className="text-2xl sm:text-3xl font-bold text-[#FFD700] mt-4 mb-2">
                   Share Your Memories
@@ -202,6 +213,9 @@ const GalleryPage = () => {
               </div>
 
               <div className="flex flex-row gap-6 mt-4 items-center">
+                <span className="text-xs md:text-sm text-[#FFD700]/70 -mt-2 block w-full">
+                  Tip: The selected filter becomes your upload category, and changing the upload category updates the filter.
+                </span>
                 <label
                   htmlFor="selectCategory"
                   className="block text-[#FFD700] mb-2 text-sm md:text-base whitespace-nowrap">
@@ -210,7 +224,7 @@ const GalleryPage = () => {
                 <select
                   id="selectCategory"
                   value={uploadCategory}
-                  onChange={(e) => setUploadCategory(e.target.value)}
+                  onChange={(e) => { const v = e.target.value; setUploadCategory(v); setSelectedCategory(v); }}
                   className="px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-base">
                   {possibleCategories.map((item) => (
                     <option value={item} key={item}>
