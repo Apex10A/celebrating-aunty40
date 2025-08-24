@@ -213,8 +213,8 @@ const GalleryPage = () => {
                 </button>
               </div>
 
-              <div className="flex flex-row gap-4 md:gap-6 mt-4 items-center">
-                <span className="text-xs md:text-sm text-[#FFD700]/70 -mt-2 block w-full">
+              <div className="sm:flex flex-row gap-4 md:gap-6 mt-4 items-center">
+                <span className="text-xs md:text-sm text-[#FFD700]/70 -mt-2 block w-full mb-2 sm:mb-0 max-w-sm sm:max-w-auto mx-auto sm:mx-0">
                   Tip: The selected filter becomes your upload category, and changing the upload category updates the filter.
                 </span>
                 <label
