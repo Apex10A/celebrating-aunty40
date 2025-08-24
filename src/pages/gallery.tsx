@@ -125,32 +125,33 @@ const GalleryPage = () => {
           name="description"
           content="Memory gallery from Funmbi's 40th Birthday and 15th Wedding Anniversary Celebration"
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div className="min-h-screen bg-gradient-to-b from-black via-[#1a1a1a] to-black">
         <Navigation />
-        <div className="pt-32 pb-24 px-4">
+        <div className="pt-44 md:pt-[250px] pb-16 md:pb-24 px-4">
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-12">
-              <h1 className="font-decorative text-5xl text-[#FFD700] mb-4">
+              className="text-center mb-8 md:mb-12">
+              <h1 className="font-decorative text-3xl md:text-5xl text-[#FFD700] mb-4">
                 Memory Gallery
               </h1>
               <div className="h-px w-32 sm:w-40 mx-auto bg-gradient-to-r from-transparent via-[#FFD700] to-transparent mb-6"></div>
-              <p className="text-lg sm:text-xl text-[#FFD700]/80 font-light tracking-wide">
+              <p className="text-gray-300 text-sm md:text-lg max-w-[70%] md:max-w-full mx-auto">
                 Relive the beautiful moments from our celebration
               </p>
             </motion.div>
 
             {/* Category Filter */}
-            <div className="flex flex-wrap justify-center gap-4 mb-12 sm:mb-16">
+            <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 md:mb-12">
               {categories?.map((category) => (
                 <button
                   key={category}
                   onClick={() => { setSelectedCategory(category); if (category !== "all") setUploadCategory(category); }}
-                  className={`px-6 py-3 rounded-full transition-all duration-300 font-medium ${
+                  className={`px-4 md:px-6 py-2 md:py-3 rounded-full transition-all duration-300 font-medium text-sm md:text-md ${
                     selectedCategory === category
                       ? "border-[#FFD700] bg-[#FFD700]/10"
                       : "border-[#FFD700]/30 hover:border-[#FFD700]/50"
@@ -161,16 +162,16 @@ const GalleryPage = () => {
             </div>
 
             {/* Upload Section */}
-            <div className="text-center mb-12 sm:mb-16">
+            <div className="text-center mb-8 sm:mb-12">
               <div className="bg-black/30 backdrop-blur-lg p-8 sm:p-12 rounded-2xl border border-[#FFD700]/10">
                 <div className="mb-4 text-[#FFD700]/80 text-sm">
                   Uploading to: <span className="text-[#FFD700] font-semibold">{uploadCategory}</span>
                 </div>
-                <span className="text-[#FFD700] text-4xl">📸</span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#FFD700] mt-4 mb-2">
+                <span className="text-[#FFD700] text-3xl md:text-4xl">📸</span>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#FFD700] mt-4 mb-2">
                   Share Your Memories
                 </h3>
-                <p className="text-[#FFD700]/70 mb-6">
+                <p className="text-[#FFD700]/70 mb-4 md:mb-6 text-sm md:text-base">
                   Upload photos from the celebration to add to our gallery
                 </p>
                 <input
@@ -183,7 +184,7 @@ const GalleryPage = () => {
                 />
                 <label
                   htmlFor="image-upload"
-                  className="w-full py-4 border-dashed border-[#FFD700] border block mb-6 rounded-md bg-[#ddc74c34]">
+                  className="w-full py-3 md:py-4 border-dashed border-[#FFD700] border block mb-6 rounded-md bg-[#ddc74c34]">
                   {(uploadImage?.length ?? 0) === 0 ? (
                     <div className="h-full w-full flex items-center justify-center flex-col gap-2">
                       <FileImageIcon className="text-[#FFD700] w-9 h-9" />
@@ -212,7 +213,7 @@ const GalleryPage = () => {
                 </button>
               </div>
 
-              <div className="flex flex-row gap-6 mt-4 items-center">
+              <div className="flex flex-row gap-4 md:gap-6 mt-4 items-center">
                 <span className="text-xs md:text-sm text-[#FFD700]/70 -mt-2 block w-full">
                   Tip: The selected filter becomes your upload category, and changing the upload category updates the filter.
                 </span>
@@ -225,7 +226,8 @@ const GalleryPage = () => {
                   id="selectCategory"
                   value={uploadCategory}
                   onChange={(e) => { const v = e.target.value; setUploadCategory(v); setSelectedCategory(v); }}
-                  className="px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-base">
+                  className="px-3 md:px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700] transition-all text-sm md:text-base"
+                >
                   {possibleCategories.map((item) => (
                     <option value={item} key={item}>
                       {item}
