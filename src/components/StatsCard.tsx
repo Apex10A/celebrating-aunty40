@@ -20,52 +20,32 @@ export interface StatsCard {
 }
 
 export default function StatsCard({ status, label, value }: StatsCard) {
-  const color: Record<CardStatus, any> = {
-    base: {
-      background: "bg-blue-50",
-      label: "text-blue-500",
-      value: "text-blue-900",
-      icon: "bg-blue-100",
-    },
-    accepted: {
-      background: "bg-green-50",
-      label: "text-green-500",
-      value: "text-green-800",
-      icon: "bg-green-100",
-    },
-    declined: {
-      background: "bg-red-50",
-      label: "text-red-500",
-      value: "text-red-800",
-      icon: "bg-red-100",
-    },
-    pending: {
-      background: "bg-yellow-50",
-      label: "text-yellow-500",
-      value: "text-yellow-800",
-      icon: "bg-yellow-100",
-    },
+  const iconColor: Record<CardStatus, string> = {
+    base: "text-[#FFD700]",
+    accepted: "text-emerald-400",
+    declined: "text-rose-400",
+    pending: "text-yellow-400",
   };
+
   return (
-    <div
-      className={`${color[status].background} shadow rounded-2xl p-6 flex items-center gap-4`}>
-      <div className={`p-3 ${color[status].icon} rounded-full`}>
+    <div className="bg-black/50 backdrop-blur-sm border border-[#FFD700]/10 rounded-2xl p-6 flex items-center gap-4">
+      <div className="p-3 bg-black/60 border border-[#FFD700]/20 rounded-full">
         {status === "base" && (
-          <LucideBookOpenText className="h-8 w-8 text-blue-600" />
+          <LucideBookOpenText className={`h-8 w-8 ${iconColor[status]}`} />
         )}
         {status === "accepted" && (
-          <CalendarCheck className="h-8 w-8 text-green-700" />
+          <CalendarCheck className={`h-8 w-8 ${iconColor[status]}`} />
         )}
         {status === "declined" && (
-          <LucideHeartHandshake className="h-8 w-8 text-red-700" />
+          <LucideHeartHandshake className={`h-8 w-8 ${iconColor[status]}`} />
         )}
         {status === "pending" && (
-          <LucideClockFading className="h-8 w-8 text-yellow-700" />
+          <LucideClockFading className={`h-8 w-8 ${iconColor[status]}`} />
         )}
       </div>
       <div>
-        <p className={`${color[status].label} text-sm font-medium`}>{label}</p>
-        <p className={`text-3xl font-bold ${color[status].value}`}>{value}</p>
+        <p className="text-[#FFD700]/80 text-sm font-medium">{label}</p>
+        <p className="text-3xl font-bold text-white">{value}</p>
       </div>
     </div>
   );
