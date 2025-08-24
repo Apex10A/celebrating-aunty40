@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Navigation } from "../components/Navigation";
 import Head from "next/head";
 import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { Footer } from "../components/Footer";
 import { makeReservation, Reservation } from "@/services/reservations";
 import { Decline, sendDecline } from "@/services/declines";
@@ -11,6 +12,7 @@ const RSVPPage = () => {
   const [reservation, setReservation] = useState<Reservation>();
   const [decline, setDecline] = useState<Decline>();
   const [attending, setAttending] = useState<boolean>(true);
+  const [comingSolo, setComingSolo] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalStatus, setModalStatus] = useState<StatusType>("success");
@@ -20,6 +22,13 @@ const RSVPPage = () => {
   function validateForm() {
     // function to validate goes here praise
     return true;
+  }
+
+  // Reset all form fields back to empty
+  function resetForm() {
+    setReservation(undefined);
+    setDecline(undefined);
+    setComingSolo(false);
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,6 +45,7 @@ const RSVPPage = () => {
           setModalDesc(
             "We’ll review your RSVP. If accepted, you’ll receive an email with your invitation code and QR code."
           );
+          resetForm();
           setModalOpen(true);
           return;
         } else {
@@ -47,12 +57,13 @@ const RSVPPage = () => {
         }
       } else {
         const res = await sendDecline(decline as Decline);
-        if (res?.status === 201) {
+        if ((res as any)?.status === 201 || res) {
           setModalStatus("success");
           setModalTitle("Response Received");
           setModalDesc(
             "Thank you for letting us know. You'll be in our hearts."
           );
+          resetForm();
           setModalOpen(true);
           return;
         } else {
@@ -82,12 +93,13 @@ const RSVPPage = () => {
     >
   ) => {
     const { name, value } = e.target;
+    const normalizedValue: any = name === "numOfGuests" ? Number(value) : value;
     if (attending)
       setReservation(
         (prev) =>
           ({
             ...prev,
-            [name]: value,
+            [name]: normalizedValue,
           } as Reservation)
       );
     else
@@ -95,7 +107,7 @@ const RSVPPage = () => {
         (prev) =>
           ({
             ...prev,
-            [name]: value,
+            [name]: normalizedValue,
           } as Decline)
       );
   };
@@ -244,21 +256,30 @@ const RSVPPage = () => {
                           htmlFor="numOfGuests"
                           className="block text-[#FFD700] mb-2 text-sm md:text-base"
                         >
-                          Number of Guests
+                          Number of Guests (put 0 if you're coming alone)
                         </label>
-                        <select
-                          id="numOfGuests"
-                          name="numOfGuests"
-                          value={reservation?.numOfGuests}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#555454]focus:ring-1 focus:ring-[#FFD700] transition-all text-sm md:text-base"
-                        >
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                            <option key={num} value={num}>
-                              {num} {num === 1 ? "Guest" : "Guests"}
+                        <div className="relative group">
+                          <select
+                            id="numOfGuests"
+                            name="numOfGuests"
+                            value={comingSolo ? 0 : reservation?.numOfGuests ?? ""}
+                            onChange={handleInputChange}
+                            className="appearance-none w-full px-4 py-2 pr-10 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700]/60 transition-all text-sm md:text-base hover:border-[#FFD700]/40 disabled:opacity-60 disabled:cursor-not-allowed"
+                            disabled={comingSolo}
+                          >
+                            <option value="" disabled>
+                              Select no of guests
                             </option>
-                          ))}
-                        </select>
+                            <option value={0}>0</option>
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                              <option key={num} value={num}>
+                                {num}
+                              </option>
+                            ))}
+                          </select>
+                          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#FFD700]/70 group-focus-within:text-[#FFD700]" />
+                        </div>
+                       
                       </div>
 
                       <div>
@@ -266,7 +287,7 @@ const RSVPPage = () => {
                           htmlFor="dietaryRestrictions"
                           className="block text-[#FFD700] mb-2 text-sm md:text-base"
                         >
-                          Dietary Restrictions
+                          Dietary Restrictions 
                         </label>
                         <input
                           type="text"
@@ -321,16 +342,7 @@ const RSVPPage = () => {
         title={modalTitle}
         description={modalDesc}
         onClose={() => setModalOpen(false)}
-        primaryAction={
-          modalStatus === "success"
-            ? {
-                label: "View Gallery",
-                onClick: () => {
-                  window.location.href = "/gallery";
-                },
-              }
-            : undefined
-        }
+       
       />
     </>
   );
