@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 interface AnniversaryModalProps {
@@ -22,57 +23,53 @@ export const AnniversaryModal: React.FC<AnniversaryModalProps> = ({
   closeOnOverlayClick = true,
   className = '',
 }) => {
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+  // Ensure portal only runs on client to avoid SSR mismatches
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
+  useEffect(() => {
+    if (!mounted) return;
+    if (isOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'unset';
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen]);
+  }, [isOpen, mounted]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
-      }
+      if (e.key === 'Escape' && isOpen) onClose();
     };
-
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const sizeClasses = {
     sm: 'max-w-md',
     md: 'max-w-lg',
     lg: 'max-w-2xl',
     xl: 'max-w-4xl',
-  };
+  } as const;
 
   const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && closeOnOverlayClick) {
-      onClose();
-    }
+    if (e.target === e.currentTarget && closeOnOverlayClick) onClose();
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+  const modalContent = (
+    <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
       {/* Overlay */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300"
         onClick={handleOverlayClick}
       />
-      
+
       {/* Modal */}
-      <div 
+      <div
         className={`
-          relative w-full ${sizeClasses[size]} max-h-[90vh] 
-          bg-black/90 backdrop-blur-lg border border-[#FFD700]/20 
+          relative w-full ${sizeClasses[size]} max-h-[90vh]
+          bg-black/90 backdrop-blur-lg border border-[#FFD700]/20
           rounded-2xl shadow-2xl overflow-hidden
           transform transition-all duration-300 scale-100 opacity-100
           ${className}
@@ -82,9 +79,7 @@ export const AnniversaryModal: React.FC<AnniversaryModalProps> = ({
         {(title || showCloseButton) && (
           <div className="flex items-center justify-between p-6 border-b border-[#FFD700]/10">
             {title && (
-              <h2 className="text-xl sm:text-2xl font-bold text-[#FFD700]">
-                {title}
-              </h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-[#FFD700]">{title}</h2>
             )}
             {showCloseButton && (
               <button
@@ -97,14 +92,14 @@ export const AnniversaryModal: React.FC<AnniversaryModalProps> = ({
             )}
           </div>
         )}
-        
+
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-8rem)]">
-          {children}
-        </div>
+        <div className="p-6 overflow-y-auto max-h-[calc(90vh-8rem)]">{children}</div>
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 export default AnniversaryModal;

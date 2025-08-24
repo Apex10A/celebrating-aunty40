@@ -8,9 +8,12 @@ import { getDeclines } from "@/services/declines";
 import { getReservations } from "@/services/reservations";
 import { RefreshCcw } from "lucide-react";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { StatusModal, type StatusType } from "@/components/StatusModal";
 
 type Status = "pending" | "accepted" | "declined" | "all-reservations";
+
+type ToastType = "success" | "error";
 
 export default function Index() {
   useProtected();
@@ -20,56 +23,85 @@ export default function Index() {
   const [filter, setFilter] = useState<Status>("all-reservations");
   const [isLoading, setIsLoading] = useState(false);
 
-  const status: Status[] = [
-    "all-reservations",
-    "accepted",
-    "pending",
-    "declined",
-  ];
+  // Toast state
+  const [toast, setToast] = useState<{ show: boolean; message: string; type: ToastType }>({
+    show: false,
+    message: "",
+    type: "success",
+  });
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function showToast(message: string, type: ToastType = "success") {
+    setToast({ show: true, message, type });
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = setTimeout(() => {
+      setToast((t) => ({ ...t, show: false }));
+    }, 2500);
+  }
+
+  // Modal state (for important errors)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalStatus, setModalStatus] = useState<StatusType>("error");
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalDescription, setModalDescription] = useState<string | undefined>(undefined);
+
+  const status: Status[] = ["all-reservations", "accepted", "pending", "declined"];
 
   const accepted = reservations?.filter((item) => item.status === "accepted");
   const pending = reservations?.filter((item) => item.status === "pending");
   const data =
-    filter === "all-reservations"
-      ? reservations
-      : filter === "accepted"
-      ? accepted
-      : pending;
+    filter === "all-reservations" ? reservations : filter === "accepted" ? accepted : pending;
   const filteredData = data?.filter((item) => {
     if (item?.invitationCode)
       return item.invitationCode.toLowerCase().includes(search.toLowerCase());
     else return item;
   });
 
-  async function fetchReservations() {
+  async function fetchReservations(): Promise<boolean> {
     try {
       setIsLoading(true);
       const data = await getReservations();
       if (data) setReservations(data.data.reservations);
-    } catch (error) {
+      return true;
+    } catch (error: any) {
       console.log(error);
+      setModalStatus("error");
+      setModalTitle("Failed to fetch reservations");
+      setModalDescription(error?.message || "An unexpected error occurred while loading reservations.");
+      setModalOpen(true);
+      return false;
     } finally {
       setIsLoading(false);
     }
   }
 
-  async function fetchDeclines() {
+  async function fetchDeclines(): Promise<boolean> {
     try {
       const data = await getDeclines();
       if (data) setDeclines(data.data);
-    } catch (error) {
+      return true;
+    } catch (error: any) {
       console.log(error);
+      setModalStatus("error");
+      setModalTitle("Failed to fetch declines");
+      setModalDescription(error?.message || "An unexpected error occurred while loading declines.");
+      setModalOpen(true);
+      return false;
     }
   }
 
-  function handleRefresh() {
-    fetchReservations();
-    fetchDeclines();
+  async function handleRefresh() {
+    const [ok1, ok2] = await Promise.all([fetchReservations(), fetchDeclines()]);
+    if (ok1 && ok2) showToast("Data refreshed", "success");
+    else showToast("Some data failed to refresh", "error");
   }
 
   useEffect(function () {
     fetchReservations();
     fetchDeclines();
+    // Cleanup toast timer on unmount
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
   }, []);
 
   return (
@@ -91,26 +123,10 @@ export default function Index() {
         <div className="max-w-7xl mx-auto p-6">
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatsCard
-              status="base"
-              label="Total Reservations"
-              value={reservations ? reservations?.length : 0}
-            />
-            <StatsCard
-              status="accepted"
-              label="Accepted Invitees"
-              value={accepted ? accepted?.length : 0}
-            />
-            <StatsCard
-              status="pending"
-              label="Pending Reservations"
-              value={pending ? pending?.length : 0}
-            />
-            <StatsCard
-              status="declined"
-              label="We won't be present"
-              value={declines ? declines?.length : 0}
-            />
+            <StatsCard status="base" label="Total Reservations" value={reservations ? reservations?.length : 0} />
+            <StatsCard status="accepted" label="Accepted Invitees" value={accepted ? accepted?.length : 0} />
+            <StatsCard status="pending" label="Pending Reservations" value={pending ? pending?.length : 0} />
+            <StatsCard status="declined" label="We won't be present" value={declines ? declines?.length : 0} />
           </div>
 
           {/* Filters + Search */}
@@ -141,9 +157,7 @@ export default function Index() {
                 <span>Refresh</span>
               </button>
             </div>
-            {filter === "accepted" && (
-              <SearchBar value={search} setValue={setSearch} />
-            )}
+            {filter === "accepted" && <SearchBar value={search} setValue={setSearch} />}
           </div>
 
           {/* Reservations Table */}
@@ -153,10 +167,9 @@ export default function Index() {
                 <ReservationsTable
                   refresh={handleRefresh}
                   data={
-                    filter === "accepted" || filter === "all-reservations"
-                      ? filteredData
-                      : data
+                    filter === "accepted" || filter === "all-reservations" ? filteredData : data
                   }
+                  notify={showToast}
                 />
               ) : (
                 <DeclineTable data={declines} />
@@ -166,6 +179,30 @@ export default function Index() {
             )}
           </div>
         </div>
+
+        {/* Toast */}
+        {toast.show && (
+          <div className="fixed top-4 right-4 z-[200]">
+            <div
+              className={`px-4 py-3 rounded-md shadow-lg border ${
+                toast.type === "success"
+                  ? "bg-black/70 border-emerald-500/40 text-emerald-300"
+                  : "bg-black/70 border-rose-500/40 text-rose-300"
+              }`}
+            >
+              {toast.message}
+            </div>
+          </div>
+        )}
+
+        {/* Status Modal for errors */}
+        <StatusModal
+          open={modalOpen}
+          status={modalStatus}
+          title={modalTitle}
+          description={modalDescription}
+          onClose={() => setModalOpen(false)}
+        />
       </main>
     </>
   );
