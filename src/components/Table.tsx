@@ -44,7 +44,7 @@ function Row({ children }: { children: ReactNode }) {
   return (
     <div
       role="row"
-      className="grid items-center gap-x-6 px-6 py-3 text-white hover:bg-black/50 transition border-b border-[#FFD700]/5"
+      className="grid items-center gap-x-6 px-6 py-3 text-white hover:bg-black/50 transition"
       style={{ gridTemplateColumns: columns }}>
       {children}
     </div>
@@ -67,7 +67,7 @@ function Body<T>({
   }
 
   return (
-    <section className="divide-y divide-gray-100">{data.map(render)}</section>
+    <section className="divide-y divide-[#FFD700]/5">{data.map(render)}</section>
   );
 }
 
