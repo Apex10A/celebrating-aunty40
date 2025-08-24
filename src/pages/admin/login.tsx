@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Eye, EyeOff, LockKeyholeIcon, UserCircle } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Credentials, Login } from "@/services/auth";
 import { useRouter } from "next/router";
 
@@ -10,28 +10,52 @@ const LoginForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const togglePassword = () => {
-    setShowPassword((curr) => !curr);
-  };
+  // Toast state (consistent with dashboard)
+  const [toast, setToast] = useState<{ show: boolean; message: string; type: "success" | "error" }>(
+    { show: false, message: "", type: "success" }
+  );
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function showToast(message: string, type: "success" | "error" = "success") {
+      console.log("Toast triggered:", message, type); // Debug
+    setToast({ show: true, message, type });
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
+  }
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
+  }, []);
+
+  const togglePassword = () => setShowPassword((curr) => !curr);
 
   const validateForm = () => {};
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+      console.log("Current credentials:", credentials);
+
     e.preventDefault();
+    // manual validation to ensure our toast can show even if fields are empty
+    if (!credentials?.email || !credentials?.password) {
+      showToast("Please enter email and password", "error");
+      return;
+    }
     setIsLoading(true);
     try {
-      if (!credentials) return;
       const data = await Login(credentials);
-      console.log(data);
 
       // Save the token
       const token = data.access_token;
       localStorage.setItem("token", token);
 
-      // Redirect after login
-      if (token) router.replace("/admin/dashboard");
-    } catch (err) {
-      alert("Login failed");
+      // Show success and give it time to display before redirect
+      showToast("Login successful", "success");
+      if (token) {
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+        router.replace("/admin/dashboard");
+      }
+    } catch (err: any) {
+      showToast(err?.response?.data?.message || "Login failed", "error");
     } finally {
       setIsLoading(false);
     }
@@ -48,7 +72,7 @@ const LoginForm: React.FC = () => {
         <div className="w-full max-w-md bg-black/50 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-[#FFD700]/10">
           <h2 className="font-decorative text-3xl md:text-4xl text-[#FFD700] text-center mb-2">Admin Login</h2>
           <div className="h-px w-24 mx-auto bg-gradient-to-r from-transparent via-[#FFD700] to-transparent mb-6"></div>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} noValidate>
             {/* Email Input */}
             <div className="mb-4">
               <label htmlFor="email" className="block text-[#FFD700] mb-2 text-sm md:text-base">
@@ -65,13 +89,7 @@ const LoginForm: React.FC = () => {
                   value={credentials ? credentials.email : ""}
                   className="w-full py-2 px-2 bg-transparent text-white placeholder:text-[#FFD700]/40 outline-none text-sm md:text-base"
                   onChange={(e) =>
-                    setCredentials(
-                      (curr) =>
-                        ({
-                          ...curr,
-                          email: e.target.value,
-                        } as Credentials)
-                    )
+                    setCredentials((curr) => ({ ...(curr || {}), email: e.target.value } as Credentials))
                   }
                   required
                 />
@@ -95,13 +113,7 @@ const LoginForm: React.FC = () => {
                   required
                   value={credentials ? credentials.password : ""}
                   onChange={(e) =>
-                    setCredentials(
-                      (curr) =>
-                        ({
-                          ...curr,
-                          password: e.target.value,
-                        } as Credentials)
-                    )
+                    setCredentials((curr) => ({ ...(curr || {}), password: e.target.value } as Credentials))
                   }
                 />
                 <button
@@ -125,6 +137,21 @@ const LoginForm: React.FC = () => {
           </form>
         </div>
       </div>
+
+      {/* Toast */}
+      {toast.show && (
+        <div className="fixed top-4 right-4 z-[50]">
+          <div
+            className={`px-4 py-3 rounded-md shadow-lg border ${
+              toast.type === "success"
+                ? "bg-black/70 border-emerald-500/40 text-emerald-300"
+                : "bg-black/70 border-rose-500/40 text-rose-300"
+            }`}
+          >
+            {toast.message}
+          </div>
+        </div>
+      )}
     </>
   );
 };

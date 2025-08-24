@@ -3,7 +3,7 @@
 export function LogoutButton() {
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login"; // redirect
+    window.location.href = "/admin/login"; // redirect
   };
 
   return (
