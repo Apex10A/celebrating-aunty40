@@ -12,7 +12,7 @@ const RSVPPage = () => {
   const [decline, setDecline] = useState<Decline>();
   const [attending, setAttending] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   const [modalStatus, setModalStatus] = useState<StatusType>("success");
   const [modalTitle, setModalTitle] = useState("");
   const [modalDesc, setModalDesc] = useState("");
