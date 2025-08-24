@@ -19,7 +19,7 @@ function Table({
       <div className="w-full overflow-x-auto">
         <div
           role="table"
-          className="border border-gray-200 bg-white rounded-lg text-sm min-w-max">
+          className="border border-[#FFD700]/10 bg-black/40 backdrop-blur-sm rounded-lg text-sm min-w-max text-white">
           {children}
         </div>
       </div>
@@ -32,7 +32,7 @@ function Header({ children }: { children: ReactNode }) {
   return (
     <header
       role="row"
-      className="grid items-center gap-x-6 px-6 py-4 uppercase tracking-wide font-semibold text-gray-600 bg-gray-50 border-b border-gray-100"
+      className="grid items-center gap-x-6 px-6 py-4 uppercase tracking-wide font-semibold text-[#FFD700]/90 bg-black/60 border-b border-[#FFD700]/10"
       style={{ gridTemplateColumns: columns }}>
       {children}
     </header>
@@ -44,7 +44,7 @@ function Row({ children }: { children: ReactNode }) {
   return (
     <div
       role="row"
-      className="grid items-center gap-x-6 px-6 py-3 text-gray-700 hover:bg-gray-50 transition"
+      className="grid items-center gap-x-6 px-6 py-3 text-white hover:bg-black/50 transition border-b border-[#FFD700]/5"
       style={{ gridTemplateColumns: columns }}>
       {children}
     </div>
@@ -74,7 +74,7 @@ function Body<T>({
 function Footer({ children }: { children: ReactNode }) {
   if (!children) return null;
   return (
-    <footer className="bg-gray-50 flex justify-center py-3">{children}</footer>
+    <footer className="bg-black/60 border-t border-[#FFD700]/10 flex justify-center py-3 text-white">{children}</footer>
   );
 }
 

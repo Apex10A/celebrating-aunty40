@@ -30,7 +30,7 @@ export default function DeclineTable({
             </div>
             <div>{item.message ? item.message : <em>No Message</em>}</div>
             <div className="flex flex-row items-center gap-6 justify-end">
-              <span className="hover:bg-red-100 p-2 rounded-full hover:text-red-600">
+              <span className="p-2 rounded-full text-rose-400 hover:bg-rose-900/30 transition-colors">
                 <Trash2Icon />
               </span>
             </div>

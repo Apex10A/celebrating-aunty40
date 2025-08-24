@@ -49,25 +49,25 @@ export default function ReservationsTable({
           <Table.Row key={item?._id}>
             <div>{item.invitationCode ? item.invitationCode : "-"}</div>
             <div className="flex flex-col gap-1">
-              <span>{item.name}</span>
-              <span>{item.email}</span>
+              <span>{item?.name}</span>
+              <span>{item?.email}</span>
             </div>
             <div>
-              <Tag type={item.status === "accepted" ? "green" : "yellow"}>
-                {item.status}
+              <Tag type={item?.status === "accepted" ? "green" : "yellow"}>
+                {item?.status}
               </Tag>
             </div>
-            <div>{item.numOfGuests}</div>
+            <div>{item?.numOfGuests}</div>
             <div className="flex flex-row items-center gap-6 justify-end">
-              {item.status === "pending" && (
+              {item?.status === "pending" && (
                 <span
-                  className="hover:bg-green-100 p-2 rounded-full hover:text-green-600"
+                  className="p-2 cursor-pointer rounded-full text-emerald-400 hover:bg-emerald-900/30 transition-colors"
                   onClick={() => accept(item._id)}>
                   <Check />
                 </span>
               )}
               <span
-                className="hover:bg-red-100 p-2 rounded-full hover:text-red-600"
+                className="p-2 cursor-pointer rounded-full text-rose-400 hover:bg-rose-900/30 transition-colors"
                 onClick={() => deleteItem(item._id)}>
                 <Trash2Icon />
               </span>
