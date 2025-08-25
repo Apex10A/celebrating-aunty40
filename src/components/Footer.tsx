@@ -72,19 +72,19 @@ export const Footer = () => {
               <div className="flex items-center gap-3 sm:gap-4">
                 <Mail className="text-[#FFD700] w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="text-sm sm:text-base text-[#FFD700]/70 font-light">
-                  funmbi@example.com
+                  bandelechristiana@gmail.com
                 </span>
               </div>
               <div className="flex items-center gap-3 sm:gap-4">
                 <Phone className="text-[#FFD700] w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="text-sm sm:text-base text-[#FFD700]/70 font-light">
-                  +234 123 456 7890
+                  +234 705 566 1758
                 </span>
               </div>
               <div className="flex items-center gap-3 sm:gap-4">
                 <MapPin className="text-[#FFD700] w-4 h-4 sm:w-5 sm:h-5" />
                 <span className="text-sm sm:text-base text-[#FFD700]/70 font-light">
-                  Surulere, Lagos
+                  Mayfair hall: Otunba jobi-fele way, Alausa, Ikeja.
                 </span>
               </div>
             </div>
@@ -99,11 +99,11 @@ export const Footer = () => {
             </p>
             <div className="flex items-center gap-4 sm:gap-6">
               <span className="text-sm sm:text-base text-[#FFD700]/60 font-light">
-                December 2025
+                December 27, 2025
               </span>
               <div className="w-1 h-1 bg-[#FFD700]/40 rounded-full"></div>
               <span className="text-sm sm:text-base text-[#FFD700]/60 font-light">
-                Lagos, Nigeria
+                Ikeja, Lagos. Nigeria
               </span>
             </div>
           </div>
