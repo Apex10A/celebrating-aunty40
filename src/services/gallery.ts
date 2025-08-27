@@ -11,8 +11,6 @@ function createFormData(data: Record<string, any>): FormData {
     }
   });
 
-  console.log(data.pictures);
-  console.log(data.pictures.length);
   // Handle pictures if present and is an array
   for (let i = 0; i < data.pictures.length; i++) {
     console.log(data.pictures[i], "This is ,,", i);
@@ -53,7 +51,7 @@ export async function postPicture(data: {
 export async function deletePicture(pictureId: string) {
   try {
     const res = await api.delete(`gallery/delete/${pictureId}`);
-    return res.data;
+    return res;
   } catch (error) {
     console.log(error);
   }

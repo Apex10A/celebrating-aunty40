@@ -64,10 +64,10 @@ export const HeroSection = () => {
             <div className="space-y-5 sm:space-y-6 animate-fade-in-delayed">
               <div className="space-y-2 sm:space-y-3">
                 <p className="text-base sm:text-lg lg:text-xl text-[#FFD700]/85 font-light tracking-wide max-w-md sm:max-w-lg mx-auto lg:mx-0">
-                  Celebrating Funmbi's 40th Birthday
+                  Celebrating Our 15 Years of Marriage
                 </p>
                 <p className="text-base sm:text-lg lg:text-xl text-[#FFD700]/80 font-light tracking-wide max-w-md sm:max-w-lg mx-auto lg:mx-0">
-                  & Our 15 Years of Marriage
+                  & Funmbi's 40th Birthday
                 </p>
               </div>
 
