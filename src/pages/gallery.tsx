@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Footer } from "../components/Footer";
 import { Camera, FileImageIcon, Upload, X } from "lucide-react";
-import { getPictures, postPicture } from "@/services/gallery";
+import { deletePicture, getPictures, postPicture } from "@/services/gallery";
 import { image } from "framer-motion/client";
 
 type Picture = Record<string, any>;
@@ -19,6 +19,11 @@ const GalleryPage = () => {
   const [uploadImage, setUploadImage] = useState<FileList | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token") || "");
+  }, [token])
 
   const possibleCategories = [
     "Celebrants-only",
@@ -83,6 +88,14 @@ const GalleryPage = () => {
       }
     }
   };
+
+  const handleDeletePicture = async (id: string) => {
+    console.log(id)
+    const res = await deletePicture(id)
+    console.log(res)
+    // if (res?.status==200) alert("Deleted successfully");
+    // else alert("Failed to delete");
+  }
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -240,15 +253,19 @@ const GalleryPage = () => {
             {/* Gallery Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {filteredImages.map((image) => (
+                <>
                 <div
                   key={image._id}
                   className="group relative aspect-square overflow-hidden rounded-xl cursor-pointer transform hover:scale-105 transition-all duration-500"
                   onClick={() => setSelectedImage(image)}>
+
+                    {token && <button onClick={() => handleDeletePicture(image._id)} className="text-white bg-slate-500 px-4 py-2 rounded absolute z-50 hover:bg-red-400">Delete</button>}
                   <img
                     src={image.url}
                     alt="image"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
+
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500">
                     <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -261,7 +278,9 @@ const GalleryPage = () => {
                     </div>
                   </div>
                 </div>
+                </>
               ))}
+
             </div>
 
             {/* Empty State */}
