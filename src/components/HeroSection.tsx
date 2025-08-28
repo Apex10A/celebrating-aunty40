@@ -116,7 +116,8 @@ export const HeroSection = () => {
               {/* Image Container */}
               <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[520px] lg:h-[520px] rounded-full overflow-hidden shadow-[0_0_60px_-15px_rgba(255,215,0,0.25)] border-4 border-[#FFD700]/20 cursor-pointer">
                 <img
-                  src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&crop=face"
+                  // src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&crop=face"
+                  src="/sixteen.jpg"
                   alt="Celebration portrait of Funmbi & Tope"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
