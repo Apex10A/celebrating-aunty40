@@ -139,7 +139,7 @@ export const GiftSection = () => {
             onClick={() => window.open('https://flutterwave.com/pay/geqbpo145yyd', '_blank')}
             className="relative w-full py-4 bg-[#FFD700] text-black rounded-xl font-semibold text-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group overflow-hidden"
           >
-            <span className="relative z-10">Send Anniversary & Birthday Gift 🎁</span>
+            <span className="relative z-10 text-md">Send Anniversary & Birthday Gift 🎁</span>
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-[#FFD700] via-white to-[#FFD700]"
               initial={{ x: '-100%' }}

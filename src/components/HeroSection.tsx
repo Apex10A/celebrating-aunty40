@@ -76,7 +76,7 @@ export const HeroSection = () => {
                 <div className="group w-full mx-auto sm:mx-0 sm:w-auto max-w-xs sm:max-w-none flex items-center justify-center sm:justify-start gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                   <Calendar className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300 min-w-[20px] sm:min-w-[24px]" size={20} />
                   <span className="text-sm sm:text-base lg:text-lg font-light text-[#FFD700]/90 tracking-wider whitespace-nowrap">
-                    December 27, 12:00pm
+                    December 27, 12:00 noon prompt
                   </span>
                 </div>
                 <div className="group w-full mx-auto sm:mx-0 sm:w-auto max-w-xs sm:max-w-none flex  justify-center sm:justify-start gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
@@ -114,15 +114,15 @@ export const HeroSection = () => {
           <div className="flex justify-center lg:justify-end animate-fade-in-delayed">
             <div className="relative group">
               {/* Image Container */}
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[520px] lg:h-[520px] rounded-full overflow-hidden shadow-[0_0_60px_-15px_rgba(255,215,0,0.25)] border-4 border-[#FFD700]/20 cursor-pointer">
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[520px] lg:h-[520px] overflow-hidden shadow-[0_0_60px_-15px_rgba(255,215,0,0.25)] border-4 border-[#FFD700]/20 cursor-pointer rounded-md">
                 <img
                   // src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&crop=face"
-                  src="/sixteen.jpg"
+                  src="/wedd.jpg"
                   alt="Celebration portrait of Funmbi & Tope"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 "
                 />
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#FFD700]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute rounded-md inset-0 bg-gradient-to-t from-[#FFD700]/25 via-transparent to-transparentopacity-100 transition-opacity duration-500" />
               </div>
 
               {/* Decorative Elements */}
