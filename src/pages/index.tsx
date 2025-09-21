@@ -18,8 +18,9 @@ const CelebrationWebsite = () => {
         <Navigation />
         <main className="relative">
           <HeroSection />
+           <GiftSection />
           <GallerySection />
-          <GiftSection />
+         
           <Footer />
         </main>
       </div>

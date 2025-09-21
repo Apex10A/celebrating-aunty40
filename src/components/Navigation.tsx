@@ -29,7 +29,7 @@ export const Navigation = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-30 blur-sm rounded-lg"></div>
               <div className="relative bg-black/50 backdrop-blur-lg px-3 py-1 rounded-lg border border-[#FFD700]/20">
                 <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#FFD700] to-[#DC143C] bg-clip-text text-transparent">
-                  TopFun@40
+                  FT4015
                 </span>
               </div>
             </div>
