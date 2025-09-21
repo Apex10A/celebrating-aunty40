@@ -20,7 +20,6 @@ const CelebrationWebsite = () => {
           <HeroSection />
            <GiftSection />
           <GallerySection />
-         
           <Footer />
         </main>
       </div>
