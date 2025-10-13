@@ -3,6 +3,7 @@ import { HeroSection } from '../components/HeroSection';
 import { GallerySection } from '../components/GallerySection';
 import { Footer } from '../components/Footer';
 import { Navigation } from '../components/Navigation';
+import  Location  from '@/components/Location';
 import { GiftSection } from '../components/GiftSection';
 import Head from 'next/head';
 
@@ -19,6 +20,7 @@ const CelebrationWebsite = () => {
         <main className="relative">
           <HeroSection />
            <GiftSection />
+           <Location/>
           <GallerySection />
           <Footer />
         </main>

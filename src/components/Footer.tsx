@@ -12,10 +12,11 @@ export const Footer = () => {
           {/* Main Info */}
           <div className="lg:col-span-2 space-y-6 sm:space-y-8">
             <div className="space-y-4 sm:space-y-6">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] font-serif">
+              {/* <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] font-serif">
                 40 & 15
-              </h3>
-              <div className="h-px w-16 sm:w-20 bg-gradient-to-r from-[#FFD700] to-transparent"></div>
+              </h3> */}
+               <img src="/ft.png" alt="Logo" className="md:w-28 md:h-28 w-20 h-20 object-contain"/>
+              {/* <div className="h-px w-16 sm:w-20 bg-gradient-to-r from-[#FFD700] to-transparent"></div> */}
               <p className="text-base sm:text-lg text-[#FFD700]/80 font-light leading-relaxed max-w-md">
                 Celebrating Funmbi's 40th Birthday and our 15 years of marriage. 
                 A journey of love, growth, and beautiful memories.

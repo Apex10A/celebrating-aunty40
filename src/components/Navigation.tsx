@@ -26,12 +26,14 @@ export const Navigation = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
             <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-30 blur-sm rounded-lg"></div>
+              <img src="/ft.png" alt="Logo" className="md:w-28 md:h-28 w-20 h-20 object-contain"/>
+
+              {/* <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-30 blur-sm rounded-lg"></div>
               <div className="relative bg-black/50 backdrop-blur-lg px-3 py-1 rounded-lg border border-[#FFD700]/20">
                 <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#FFD700] to-[#DC143C] bg-clip-text text-transparent">
                   FT4015
                 </span>
-              </div>
+              </div> */}
             </div>
           </Link>
 

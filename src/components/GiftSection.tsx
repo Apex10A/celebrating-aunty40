@@ -70,8 +70,12 @@ export const GiftSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-black relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden">
+    <section
+      className="py-16 md:py-24 relative inset-0 bg-cover bg-center overflow-hidden"
+      style={{ backgroundImage: "url('/cele.jpg')" }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/80" />
+      {/* <div className="absolute inset-0 overflow-hidden">
         {decorations.map((decoration, i) => (
           <motion.div
             key={i}
@@ -95,9 +99,9 @@ export const GiftSection = () => {
             {decoration.emoji}
           </motion.div>
         ))}
-      </div>
+      </div> */}
 
-      <div className="max-w-4xl mx-auto px-4 relative">
+      <div className="max-w-4xl mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

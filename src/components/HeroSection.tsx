@@ -5,13 +5,22 @@ import { GoldParticles } from './GoldParticles';
 export const HeroSection = () => {
   return (
     <section className="relative min-h-[90vh] sm:min-h-screen flex items-center overflow-hidden px-4 sm:px-6 md:px-8 pt-28 sm:pt-36 md:pt-40 pb-20">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a] to-black">
-        {/* Vignette */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(70% 50% at 50% 30%, rgba(255,215,0,0.07) 0%, rgba(255,215,0,0.03) 35%, rgba(0,0,0,0.65) 100%)'
-        }} />
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src="/wedd.jpg"
+          alt="Celebration portrait of Funmbi & Tope"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(70% 50% at 50% 30%, rgba(255,215,0,0.2) 0%, rgba(0,0,0,0.75) 100%)'
+          }}
+        />
       </div>
+      e9d28f
 
       <GoldParticles />
 
@@ -114,16 +123,7 @@ export const HeroSection = () => {
           <div className="flex justify-center lg:justify-end animate-fade-in-delayed">
             <div className="relative group">
               {/* Image Container */}
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[520px] lg:h-[520px] overflow-hidden shadow-[0_0_60px_-15px_rgba(255,215,0,0.25)] border-4 border-[#FFD700]/20 cursor-pointer rounded-md">
-                <img
-                  // src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&auto=format&fit=crop&crop=face"
-                  src="/wedd.jpg"
-                  alt="Celebration portrait of Funmbi & Tope"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 "
-                />
-                {/* Overlay */}
-                <div className="absolute rounded-md inset-0 bg-gradient-to-t from-[#FFD700]/25 via-transparent to-transparentopacity-100 transition-opacity duration-500" />
-              </div>
+              
 
               {/* Decorative Elements */}
               <div className="absolute -top-4 -right-4 w-8 h-8 bg-[#FFD700] rounded-full animate-pulse" />

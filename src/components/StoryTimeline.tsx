@@ -3,38 +3,42 @@ import { Heart, Calendar, MapPin, Users, Star, Sparkles } from 'lucide-react';
 
 const timelineEvents = [
   {
-    date: '2010',
-    title: 'The Beginning',
-    subtitle: 'Where It All Started',
-    description: 'Our love story began with a chance meeting that would change our lives forever. A simple hello led to endless conversations, shared dreams, and a connection that felt like destiny.',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&auto=format&fit=crop&crop=face',
-    icon: Heart,
+    date: '2009',
+    title: 'An Unexpected Encounter',
+    subtitle: 'Destiny in Our Neighborhood',
+    description:
+      'What began as an ordinary community event became the prologue to our love story. She arrived with friends, unaware that a brief hello in my childhood neighborhood would awaken a connection neither of us anticipated.',
+    image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop',
+    icon: MapPin,
     gradient: 'from-[#FFD700] to-[#DC143C]'
   },
   {
-    date: '2015',
-    title: 'The Wedding',
-    subtitle: 'Our Special Day',
-    description: 'We said "I do" in a beautiful ceremony surrounded by family and friends. The day was filled with love, laughter, and promises for a lifetime together.',
-    image: 'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&auto=format&fit=crop',
-    icon: Calendar,
+    date: '2010',
+    title: 'Hearts Drawn Closer',
+    subtitle: 'Conversations that Changed Everything',
+    description:
+      'That single encounter blossomed into late-night talks, shared prayers, and dreams of a future together. With every story we shared, our hearts found rhythm, grace, and purpose in one another.',
+    image: 'https://images.unsplash.com/photo-1496449903678-68ddcb189a24?w=600&auto=format&fit=crop',
+    icon: Heart,
     gradient: 'from-[#DC143C] to-[#FFD700]'
   },
   {
-    date: '2020',
-    title: 'Building Together',
-    subtitle: 'Five Years of Growth',
-    description: 'Five years of marriage, filled with love, growth, and beautiful memories. We learned to navigate life\'s challenges together and celebrated every small victory.',
-    image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&auto=format&fit=crop',
-    icon: Heart,
+    date: '2015',
+    title: 'A Covenant of Grace',
+    subtitle: 'Promises Beneath Open Skies',
+    description:
+      'Surrounded by family, friends, and the gentle glow of answered prayers, we said “I do.” Together, we promised to weather every storm and celebrate every sunrise with gratitude and faith.',
+    image: 'https://images.unsplash.com/photo-1520854221050-0f4caff449fb?w=600&auto=format&fit=crop',
+    icon: Calendar,
     gradient: 'from-[#FFD700] to-[#DC143C]'
   },
   {
     date: '2025',
-    title: 'Double Celebration',
-    subtitle: '40 & 15 Years',
-    description: 'Funmbi\'s 40th birthday and our 15th wedding anniversary - a milestone worth celebrating! Fifteen years of love, fifteen years of growth, and countless memories to cherish.',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&auto=format&fit=crop&crop=face',
+    title: 'Fifteen Years, One Heartbeat',
+    subtitle: 'Love Perfected by Destiny',
+    description:
+      'Today, our story spans fifteen beautiful years of love, laughter, and grace. We stand hand in hand—wiser, stronger, and more in love—celebrating a journey that began by chance but was perfected by destiny.',
+    image: 'https://images.unsplash.com/photo-1520854221050-0f4caff449fb?w=600&auto=format&fit=crop',
     icon: Users,
     gradient: 'from-[#DC143C] to-[#FFD700]'
   }
@@ -73,11 +77,19 @@ export const StoryTimeline = () => {
             <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-[#FFD700]"></div>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] mb-4 sm:mb-6 font-serif">
-            Our Journey Together
+            Our Story
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-[#FFD700]/80 max-w-3xl mx-auto font-light tracking-wide px-4">
-            Fifteen years of love, laughter, and beautiful memories. Every moment has been a blessing.
-          </p>
+          <div className="text-sm sm:text-base lg:text-lg xl:text-xl text-[#FFD700]/80 max-w-3xl mx-auto font-light tracking-wide px-4 space-y-4">
+            <p>
+              It all began in the most unexpected place, the very neighborhood where I grew up. She came there just for an event, in the company of another, never knowing destiny had its own plan. One brief encounter, a few exchanged words, and a beautiful journey began.
+            </p>
+            <p>
+              From that ordinary day sprang an extraordinary love, one that has weathered storms, celebrated highs, and grown deeper with every sunrise. Fifteen years later, our hearts still beat as one, stronger, wiser, and more in love than ever.
+            </p>
+            <p>
+              Join us as we celebrate 15 years of love, laughter, and grace, a story that began by chance but was perfected by destiny.
+            </p>
+          </div>
         </div>
         
         {/* Timeline - Mobile First Design */}
@@ -240,7 +252,7 @@ export const StoryTimeline = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-12 sm:mt-16 lg:mt-20 xl:mt-24">
+        {/* <div className="text-center mt-12 sm:mt-16 lg:mt-20 xl:mt-24">
           <div className="inline-block p-6 sm:p-8 lg:p-10 rounded-2xl border border-[#FFD700]/20 bg-black/30 backdrop-blur-sm">
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#FFD700] mb-3 sm:mb-4 font-serif">
               Join Our Celebration
@@ -256,7 +268,7 @@ export const StoryTimeline = () => {
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:scale-110" />
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
