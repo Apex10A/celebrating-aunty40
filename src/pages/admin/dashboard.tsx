@@ -22,6 +22,8 @@ export default function Index() {
   const [declines, setDeclines] = useState<Record<string, any>[]>([]);
   const [filter, setFilter] = useState<Status>("all-reservations");
   const [isLoading, setIsLoading] = useState(false);
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   // Toast state
   const [toast, setToast] = useState<{ show: boolean; message: string; type: ToastType }>({
@@ -61,6 +63,7 @@ export default function Index() {
       setIsLoading(true);
       const data = await getReservations();
       if (data) setReservations(data.data.reservations);
+      setLastUpdated(new Date());
       return true;
     } catch (error: any) {
       console.log(error);
@@ -95,6 +98,15 @@ export default function Index() {
     else showToast("Some data failed to refresh", "error");
   }
 
+  // Auto-refresh every 20s while toggle is on
+  useEffect(() => {
+    if (!autoRefresh) return;
+    const id = setInterval(() => {
+      handleRefresh();
+    }, 20000);
+    return () => clearInterval(id);
+  }, [autoRefresh]);
+
   useEffect(function () {
     fetchReservations();
     fetchDeclines();
@@ -111,8 +123,13 @@ export default function Index() {
         <meta name="description" content="Admin dashboard for reservations and declines" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <header className="bg-black px-6 py-4 flex justify-between items-center">
-        <h1 className="font-decorative text-2xl md:text-3xl text-[#FFD700]">Admin Panel</h1>
+      <header className="bg-black px-6 py-4 flex justify-between items-center border-b border-[#FFD700]/10">
+        <div className="flex items-center gap-3">
+          <h1 className="font-decorative text-2xl md:text-3xl text-[#FFD700]">Admin Panel</h1>
+          {lastUpdated && (
+            <span className="text-xs text-[#FFD700]/60">Updated {lastUpdated.toLocaleTimeString()}</span>
+          )}
+        </div>
         <div className="flex items-center gap-3">
           <span className="text-[#FFD700]/80">Admin</span>
           <LogoutButton />
@@ -126,7 +143,7 @@ export default function Index() {
             <StatsCard status="base" label="Total Reservations" value={reservations ? reservations?.length : 0} />
             <StatsCard status="accepted" label="Accepted Invitees" value={accepted ? accepted?.length : 0} />
             <StatsCard status="pending" label="Pending Reservations" value={pending ? pending?.length : 0} />
-            <StatsCard status="declined" label="We won't be present" value={declines ? declines?.length : 0} />
+            <StatsCard status="declined" label="Declined" value={declines ? declines?.length : 0} />
           </div>
 
           {/* Filters + Search */}
@@ -149,13 +166,19 @@ export default function Index() {
                   ))}
                 </select>
               </div>
-              <button
-                onClick={handleRefresh}
-                className="flex flex-row gap-2 items-center px-3 py-2 bg-[#FFD700] text-black rounded-md hover:bg-[#FFD700]/90 transition-colors"
-              >
-                <RefreshCcw className="w-4 h-4" />
-                <span>Refresh</span>
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleRefresh}
+                  className="flex flex-row gap-2 items-center px-3 py-2 bg-[#FFD700] text-black rounded-md hover:bg-[#FFD700]/90 transition-colors"
+                >
+                  <RefreshCcw className="w-4 h-4" />
+                  <span>Refresh</span>
+                </button>
+                <label className="flex items-center gap-2 text-xs md:text-sm text-[#FFD700]/80 select-none">
+                  <input type="checkbox" checked={autoRefresh} onChange={() => setAutoRefresh(v => !v)} className="accent-[#FFD700]" />
+                  Auto-refresh
+                </label>
+              </div>
             </div>
             {filter === "accepted" && <SearchBar value={search} setValue={setSearch} />}
           </div>
@@ -164,15 +187,23 @@ export default function Index() {
           <div className="overflow-x-auto bg-black/50 backdrop-blur-sm border border-[#FFD700]/10 rounded-xl">
             {!isLoading ? (
               filter !== "declined" ? (
-                <ReservationsTable
-                  refresh={handleRefresh}
-                  data={
-                    filter === "accepted" || filter === "all-reservations" ? filteredData : data
-                  }
-                  notify={showToast}
-                />
-              ) : (
+                reservations && reservations.length > 0 ? (
+                  <ReservationsTable
+                    refresh={handleRefresh}
+                    data={
+                      filter === "accepted" || filter === "all-reservations" ? filteredData : data
+                    }
+                    notify={showToast}
+                  />
+                ) : (
+                  <div className="p-8 text-center text-[#FFD700]/80">
+                    No reservations yet.
+                  </div>
+                )
+              ) : declines && declines.length > 0 ? (
                 <DeclineTable data={declines} />
+              ) : (
+                <div className="p-8 text-center text-[#FFD700]/80">No declines yet.</div>
               )
             ) : (
               <div className="p-6 text-center text-[#FFD700]">Loading...</div>
