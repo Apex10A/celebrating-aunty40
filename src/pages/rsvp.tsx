@@ -84,6 +84,7 @@ const RSVPPage = () => {
       setModalOpen(true);
     } finally {
       setIsSubmitting(false);
+      setUploadProgress(0);
     }
   };
 
@@ -112,6 +113,48 @@ const RSVPPage = () => {
       );
   };
 
+  // Success Modal Component
+  const SuccessModal = () => (
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-gradient-to-br from-black via-[#1a1a1a] to-black p-8 rounded-xl border border-[#FFD700]/20 max-w-md w-full text-center"
+      >
+        <div className="text-6xl mb-4">🎉</div>
+        <h2 className="font-decorative text-2xl text-[#FFD700] mb-4">
+          {formData.attending ? "You're All Set!" : "Thank You!"}
+        </h2>
+        
+        {formData.attending && guestCode && (
+          <div className="bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-lg p-4 mb-6">
+            <p className="text-[#FFD700] text-sm mb-2">Your Guest Code:</p>
+            <div className="bg-[#FFD700] text-black px-4 py-2 rounded font-bold text-lg tracking-wider">
+              {guestCode}
+            </div>
+            <p className="text-[#FFD700]/70 text-xs mt-2">
+              Save this code - you'll need it to enter the event!
+            </p>
+          </div>
+        )}
+        
+        <p className="text-gray-300 mb-6">
+          {formData.attending 
+            ? "A confirmation email with your guest code has been sent to you. We can't wait to celebrate with you!"
+            : "We understand and appreciate you letting us know. We'll miss you!"
+          }
+        </p>
+        
+        <button
+          onClick={() => setShowSuccess(false)}
+          className="bg-[#FFD700] text-black px-6 py-2 rounded-full hover:bg-[#FFD700]/90 transition-all"
+        >
+          Close
+        </button>
+      </motion.div>
+    </div>
+  );
+
   return (
     <>
       <Head>
@@ -122,6 +165,8 @@ const RSVPPage = () => {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+      
+      {showSuccess && <SuccessModal />}
       <div className="min-h-screen bg-gradient-to-b from-black via-[#1a1a1a] to-black">
         <Navigation />
         <div className="pt-44 md:pt-[250px] pb-16 md:pb-24 px-4">
@@ -299,6 +344,78 @@ const RSVPPage = () => {
                           placeholder="Any dietary restrictions or allergies?"
                         />
                       </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[#FFD700] mb-3 text-sm md:text-base">Transportation</label>
+                      <div className="flex items-center space-x-3">
+                        <input
+                          type="checkbox"
+                          id="hasDriver"
+                          name="hasDriver"
+                          checked={formData.hasDriver}
+                          onChange={handleInputChange}
+                          className="w-4 h-4 text-[#FFD700] bg-black/50 border-[#FFD700]/20 rounded focus:ring-[#FFD700] focus:ring-2"
+                        />
+                        <label htmlFor="hasDriver" className="text-white text-sm md:text-base">
+                          I'm coming with a driver
+                        </label>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[#FFD700] mb-3 text-sm md:text-base">
+                        Share Photos (Optional)
+                      </label>
+                      <p className="text-[#FFD700]/70 text-sm mb-4">
+                        Upload photos that might be used in the event gallery or slideshow
+                      </p>
+                      
+                      <div className="border-2 border-dashed border-[#FFD700]/30 rounded-lg p-6 text-center hover:border-[#FFD700]/50 transition-all">
+                        <input
+                          type="file"
+                          multiple
+                          accept="image/*"
+                          onChange={handleFileSelect}
+                          className="hidden"
+                          id="photo-upload"
+                        />
+                        <label htmlFor="photo-upload" className="cursor-pointer">
+                          <Camera className="w-8 h-8 text-[#FFD700] mx-auto mb-2" />
+                          <p className="text-[#FFD700] mb-1">Click to upload photos</p>
+                          <p className="text-[#FFD700]/70 text-sm">Max 5 photos, 5MB each</p>
+                        </label>
+                      </div>
+
+                      {selectedFiles.length > 0 && (
+                        <div className="mt-4 space-y-2">
+                          <p className="text-[#FFD700] text-sm">Selected Photos:</p>
+                          {selectedFiles.map((file, index) => (
+                            <div key={index} className="flex items-center justify-between bg-black/30 p-2 rounded">
+                              <span className="text-white text-sm truncate">{file.name}</span>
+                              <button
+                                type="button"
+                                onClick={() => removeFile(index)}
+                                className="text-red-400 hover:text-red-300 ml-2"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {uploadProgress > 0 && uploadProgress < 100 && (
+                        <div className="mt-4">
+                          <div className="bg-black/30 rounded-full h-2">
+                            <div 
+                              className="bg-[#FFD700] h-2 rounded-full transition-all duration-300"
+                              style={{ width: `${uploadProgress}%` }}
+                            />
+                          </div>
+                          <p className="text-[#FFD700] text-sm mt-1">Uploading photos... {Math.round(uploadProgress)}%</p>
+                        </div>
+                      )}
                     </div>
                   </>
                 )}

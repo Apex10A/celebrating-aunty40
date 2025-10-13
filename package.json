@@ -10,13 +10,17 @@
   },
   "dependencies": {
     "@prisma/client": "^6.10.1",
+    "@types/formidable": "^3.4.5",
     "@types/gsap": "^3.0.0",
     "axios": "^1.6.8",
     "cloudinary": "^2.6.1",
+    "firebase": "^12.1.0",
+    "formidable": "^3.5.4",
     "framer-motion": "^12.15.0",
     "gsap": "^3.13.0",
     "lucide-react": "^0.511.0",
     "next": "14.2.17",
+    "nodemailer": "^7.0.5",
     "prisma": "^6.10.1",
     "react": "^18",
     "react-dom": "^18"
