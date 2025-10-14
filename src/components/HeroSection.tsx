@@ -10,7 +10,7 @@ export const HeroSection = () => {
         <img
           src="/wedd.jpg"
           alt="Celebration portrait of Funmbi & Tope"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover block"
         />
         <div className="absolute inset-0 bg-black/60" />
         <div
@@ -26,9 +26,7 @@ export const HeroSection = () => {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 gap-x-8 lg:gap-x-12 items-center">
-          {/* Left: Text */}
           <div className="text-center lg:text-left space-y-6 sm:space-y-8">
-            {/* Big Title */}
             <div className="relative inline-block animate-fade-in">
               <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700] to-[#DC143C] opacity-25 blur-xl" />
               <h1 className="relative leading-tight">
@@ -40,8 +38,6 @@ export const HeroSection = () => {
                 </span>
               </h1>
             </div>
-
-            {/* Couple Names */}
             <div className="animate-fade-in-delayed">
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light font-serif flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-1.5 sm:gap-3 lg:gap-6">
                 <span className="relative">
