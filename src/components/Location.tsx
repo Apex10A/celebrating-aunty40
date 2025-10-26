@@ -72,9 +72,9 @@ const Location = () => {
            <div className="w-full mt-4">
             <div className="relative overflow-hidden rounded-3xl border border-[#FFD700]/20 shadow-[0_0_70px_-20px_rgba(255,215,0,0.45)]">
               <img
-                src="/mayfair.png"
-                alt="Evening view of MayFair Hall in Ikeja, Lagos"
-                className="h-[280px] w-full object-cover sm:h-[360px] lg:h-[420px]"
+                src="/mumoj.jpg"
+                alt="Funbi Bandele"
+                className="h-[380px] w-full object-cover sm:h-[460px] lg:h-[720px]"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
