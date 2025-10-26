@@ -13,6 +13,6 @@ export { GallerySection } from './GallerySection';
 export { GiftSection } from './GiftSection';
 export { Footer } from './Footer';
 export { Navigation } from './Navigation';
-export { StoryTimeline } from './StoryTimeline';
+// export { StoryTimeline } from './StoryTimeline';
 export { GoldParticles } from './GoldParticles';
 export { default as Location } from './Location';

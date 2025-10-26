@@ -56,7 +56,7 @@ const OurStory = () => {
               How It All Began
             </h2>
             <p className="text-gray-400 leading-relaxed">
-              It all started in the most unexpected place — the neighborhood
+              It all started in the most unexpected place, the neighborhood
               where I grew up. She came just for an event, never knowing destiny
               had a plan. One brief encounter, a few exchanged words, and a
               beautiful journey began.
@@ -77,7 +77,7 @@ const OurStory = () => {
               A Spark That Lasted
             </h2>
             <p className="text-gray-400 leading-relaxed">
-              From that ordinary day sprang an extraordinary love — one that has
+              From that ordinary day sprang an extraordinary love, one that has
               weathered storms, celebrated highs, and grown deeper with every
               sunrise. Together, they’ve built a bond anchored in faith and joy.
             </p>
@@ -107,7 +107,7 @@ const OurStory = () => {
               Through the Years
             </h2>
             <p className="text-gray-400 leading-relaxed">
-              Their love has stood the test of time — a testament to patience,
+              Their love has stood the test of time, a testament to patience,
               laughter, and grace. From quiet moments to great adventures, each
               chapter has deepened their connection.
             </p>
@@ -133,7 +133,7 @@ const OurStory = () => {
             </p>
           </div>
           <img
-            src="/family.jpg"
+            src="/fam2.jpg"
             alt="Today and always"
             className="w-full md:w-1/2 rounded-3xl border border-[#FFD700]/20 shadow-[0_0_60px_-10px_rgba(255,215,0,0.3)] object-cover"
           />
