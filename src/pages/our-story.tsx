@@ -1,5 +1,5 @@
 import React from 'react';
-import { StoryTimeline } from '../components/StoryTimeline';
+import  StoryTimeline  from '../components/StoryTimeline';
 import { Navigation } from '../components/Navigation';
 import Head from 'next/head';
 
