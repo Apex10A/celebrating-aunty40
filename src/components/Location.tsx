@@ -2,7 +2,7 @@ import React from 'react';
 import { MapPin, Navigation, ExternalLink } from 'lucide-react';
 
 const GOOGLE_MAPS_URL =
-  'https://maps.app.goo.gl/PTNcEFuz33hdU1FQ9';
+  'https://maps.app.goo.gl/2ifFeCkTfX9ssapd7';
   
 
 const Location = () => {
@@ -17,7 +17,7 @@ const Location = () => {
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
           {/* Text Column */}
           <div className="w-full lg:w-1/2 space-y-6 text-center lg:text-left">
@@ -30,14 +30,18 @@ const Location = () => {
               </div>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-semibold text-[#FFD700]">
-              We’ll see you at MayFair Hall, Ikeja
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-semibold text-[#FFD700] w-full">
+              Be our guest at FT4015 where we celebrate two milestones in one.
             </h2>
 
             <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-              Join us in the heart of Ikeja for an evening wrapped in golden light, joyful toasts, and
-              heartfelt memories. MayFair Hall brings everyone together under one elegant roof.
+              Venue: Mayfair hall: Otunba jobi-fele way, Alausa, Ikeja
+              <br />
+              <span className='text-[#FFD700]'>Time:</span> 12:00 noon
+              <br />
+              Colour of the day: Black & Gold.
             </p>
+          
 
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <a
@@ -68,7 +72,7 @@ const Location = () => {
            <div className="w-full mt-4">
             <div className="relative overflow-hidden rounded-3xl border border-[#FFD700]/20 shadow-[0_0_70px_-20px_rgba(255,215,0,0.45)]">
               <img
-                src="/six.jpg"
+                src="/mayfair.png"
                 alt="Evening view of MayFair Hall in Ikeja, Lagos"
                 className="h-[280px] w-full object-cover sm:h-[360px] lg:h-[420px]"
                 loading="lazy"

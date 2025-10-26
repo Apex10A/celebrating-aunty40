@@ -57,6 +57,12 @@ export const Navigation = () => {
             >
               Gallery
             </Link>
+             <Link 
+              href="/celebrant" 
+              className="text-[#FFD700]/80 hover:text-[#FFD700] transition-colors duration-300 font-light tracking-wider text-sm lg:text-base"
+            >
+              Celebrant
+            </Link>
             <Link 
               href="/rsvp" 
               className="bg-[#FFD700] text px-5 py-3 rounded-lg text-sm lg:text-base font-medium tracking-wider hover:scale-105 transition-transform duration-300"

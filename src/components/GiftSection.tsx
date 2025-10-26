@@ -71,6 +71,7 @@ export const GiftSection = () => {
 
   return (
     <section
+      id="gift"
       className="py-16 md:py-24 relative inset-0 bg-cover bg-center overflow-hidden"
       style={{ backgroundImage: "url('/cele.jpg')" }}
     >
