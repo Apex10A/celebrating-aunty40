@@ -11,19 +11,19 @@ export const GallerySection = () => {
   const galleryImages = [
     {
       id: 1,
-      src: '/one.jpg',
+      src: '/celer.jpg',
       alt: 'Wedding Day',
       category: 'Wedding',
     },
-    // {
-    //   id: 2,
-    //   src: '/two.jpg',
-    //   alt: 'Anniversary Celebration',
-    //   category: 'Anniversary',
-    // },
+    {
+      id: 2,
+      src: '/cele2.jpg',
+      alt: 'Anniversary Celebration',
+      category: 'Anniversary',
+    },
     {
       id: 3,
-      src: '/three.jpg',
+      src: '/cele3.jpg',
       alt: 'Family Moments',
       category: 'Family',
     },
@@ -45,12 +45,12 @@ export const GallerySection = () => {
     //   alt: 'Daily Life',
     //   category: 'Daily',
     // },
-    {
-      id: 7,
-      src: '/seven.jpg',
-      alt: 'New Beginnings',
-      category: 'New',
-    },
+    // {
+    //   id: 7,
+    //   src: '/seven.jpg',
+    //   alt: 'New Beginnings',
+    //   category: 'New',
+    // },
     // {
     //   id: 8,
     //   src: '/eight.jpg',
@@ -69,12 +69,12 @@ export const GallerySection = () => {
       alt: 'Timeless Moments',
       category: 'Timeless',
     },
-    // {
-    //   id: 11,
-    //   src: '/eleven.jpg',
-    //   alt: 'Eternal Love',
-    //   category: 'Love',
-    // },
+    {
+      id: 11,
+      src: '/cele4.jpg',
+      alt: 'Eternal Love',
+      category: 'Love',
+    },
     {
       id: 12,
       src: '/twelve.jpg',
@@ -87,12 +87,12 @@ export const GallerySection = () => {
       alt: 'Cherished Moments',
       category: 'Memories',
     },
-    // {
-    //   id: 14,
-    //   src: '/fouteen.jpg',
-    //   alt: 'Enduring Bonds',
-    //   category: 'Love',
-    // },
+    {
+      id: 14,
+      src: '/cele5.jpg',
+      alt: 'Enduring Bonds',
+      category: 'Love',
+    },
     // {
     //   id: 15,
     //   src: '/fifteen.jpg',
