@@ -5,7 +5,6 @@ import { GoldParticles } from './GoldParticles';
 export const HeroSection = () => {
   return (
     <section className="relative min-h-[90vh] sm:min-h-screen flex items-center overflow-hidden px-4 sm:px-6 md:px-8 pt-28 sm:pt-36 md:pt-40 pb-20">
-      {/* Background Image */}
       <div className="absolute inset-0">
         <img
           src="/wedd.jpg"
@@ -20,9 +19,7 @@ export const HeroSection = () => {
           }}
         />
       </div>
-      e9d28f
 
-      <GoldParticles />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 gap-x-8 lg:gap-x-12 items-center">
@@ -55,8 +52,6 @@ export const HeroSection = () => {
                 </span>
               </h2>
             </div>
-
-            {/* Subtitle */}
             <div className="space-y-3 sm:space-y-4 animate-fade-in-delayed">
               <div className="h-px w-24 sm:w-32 lg:w-40 mx-auto lg:mx-0 bg-gradient-to-r from-transparent via-[#FFD700] to-transparent" />
               <h3 className="text-lg sm:text-2xl lg:text-3xl font-light tracking-[0.18em] sm:tracking-[0.2em] text-[#FFD700]/90 uppercase">
@@ -64,8 +59,6 @@ export const HeroSection = () => {
               </h3>
               <div className="h-px w-24 sm:w-32 lg:w-40 mx-auto lg:mx-0 bg-gradient-to-r from-transparent via-[#FFD700] to-transparent" />
             </div>
-
-            {/* Supporting text */}
             <div className="space-y-5 sm:space-y-6 animate-fade-in-delayed">
               <div className="space-y-2 sm:space-y-3">
                 <p className="text-base sm:text-lg lg:text-xl text-[#FFD700]/85 font-light tracking-wide max-w-md sm:max-w-lg mx-auto lg:mx-0">
@@ -75,8 +68,6 @@ export const HeroSection = () => {
                  - Celebrating Funmbi's 40th Birthday
                 </p>
               </div>
-
-              {/* Info Pills */}
               <div className="flex flex-col items-stretch  lg:justify-start gap-3 sm:gap-4 lg:gap-6">
                 <div className="group w-full mx-auto sm:mx-0 sm:w-auto max-w-xs sm:max-w-none flex items-center justify-center sm:justify-start gap-2 sm:gap-3 bg-black/50 backdrop-blur-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg border border-[#FFD700]/20 hover:border-[#FFD700]/40 transition-all duration-500">
                   <Calendar className="text-[#FFD700] transition-transform group-hover:scale-110 duration-300 min-w-[20px] sm:min-w-[24px]" size={20} />
@@ -91,8 +82,6 @@ export const HeroSection = () => {
                   </span>
                 </div>
               </div>
-
-              {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start">
                 <a
                   href="/rsvp"
@@ -115,23 +104,9 @@ export const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right: Image */}
-          <div className="flex justify-center lg:justify-end animate-fade-in-delayed">
-            <div className="relative group">
-              {/* Image Container */}
-              
-
-              {/* Decorative Elements */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-[#FFD700] rounded-full animate-pulse" />
-              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-[#DC143C] rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-              <div className="absolute top-1/2 -right-8 w-4 h-4 bg-[#FFD700] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-              <div className="absolute top-1/2 -left-8 w-3 h-3 bg-[#DC143C] rounded-full animate-pulse" style={{ animationDelay: '1.5s' }} />
-            </div>
-          </div>
+         
         </div>
       </div>
-
-      {/* Scroll Indicator */}
       <div className="absolute bottom-5 sm:bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 animate-bounce">
         <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-[#FFD700]/30 rounded-full flex justify-center">
           <div className="w-1 h-2 sm:h-3 bg-[#FFD700] rounded-full mt-1 sm:mt-2 animate-pulse" />
