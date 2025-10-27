@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Navigation } from "../components/Navigation";
 import Head from "next/head";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Footer } from "../components/Footer";
-import { Camera, FileImageIcon, Upload, X } from "lucide-react";
+import { FileImageIcon, X } from "lucide-react";
 import { deletePicture, getPictures, postPicture } from "@/services/gallery";
-import { image } from "framer-motion/client";
 
 type Picture = Record<string, any>;
 type Category = "others" | "family" | "my-perspective";
@@ -20,10 +18,14 @@ const GalleryPage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [isFetching, setIsFetching] = useState(true);
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
+  const [deleteTarget, setDeleteTarget] = useState<Picture | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     setToken(localStorage.getItem("token") || "");
-  }, [token])
+  }, [])
 
   const possibleCategories = [
     "Celebrants-only",
@@ -43,33 +45,55 @@ const GalleryPage = () => {
 
   async function getAllImages() {
     try {
+      setIsFetching(true);
       const res = await getPictures();
       if (res) setImages(res.data.gallery);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsFetching(false);
     }
   }
 
-  const categories: string[] = images
-    ? images?.reduce(
-        (acc: string[], curr: Picture) => {
-          if (!acc?.includes(curr.category)) {
-            acc.push(curr.category);
-          }
-          return acc;
-        },
-        ["all"]
-      )
-    : [];
+  const categories = useMemo<string[]>(() => {
+    const base = ["all"];
+    images.forEach((img) => {
+      const category = String(img?.category ?? "").trim();
+      if (category && !base.includes(category)) {
+        base.push(category);
+      }
+    });
+    return base;
+  }, [images]);
 
   useEffect(function () {
     getAllImages();
   }, []);
 
-  const filteredImages =
-    selectedCategory === "all"
-      ? images
-      : images.filter((img) => img.category === selectedCategory);
+  useEffect(() => {
+    setLoadingMap((prev) => {
+      const next = { ...prev };
+      images.forEach((img) => {
+        if (img?._id && !(img._id in next)) {
+          next[img._id] = true;
+        }
+      });
+      return next;
+    });
+  }, [images]);
+
+  const filteredImages = useMemo(() => {
+    if (selectedCategory === "all") {
+      return images;
+    }
+    return images.filter((img) => img.category === selectedCategory);
+  }, [images, selectedCategory]);
+
+  const statusMessage = isFetching
+    ? "Loading images"
+    : filteredImages.length
+    ? `${filteredImages.length} images available`
+    : "No images available";
 
   const handleImageUpload = async () => {
     if (uploadImage) {
@@ -81,7 +105,6 @@ const GalleryPage = () => {
           getAllImages();
           setUploadImage(null);
         }
-        // else do something
       } catch (error) {
       } finally {
         setIsLoading(false);
@@ -89,13 +112,38 @@ const GalleryPage = () => {
     }
   };
 
-  const handleDeletePicture = async (id: string) => {
-    console.log(id)
-    const res = await deletePicture(id)
-    console.log(res)
-    // if (res?.status==200) alert("Deleted successfully");
-    // else alert("Failed to delete");
-  }
+  const handleImageLoad = (id: string) => {
+    setLoadingMap((prev) => ({ ...prev, [id]: false }));
+  };
+
+  const handleImageError = (id: string) => {
+    setLoadingMap((prev) => ({ ...prev, [id]: false }));
+  };
+
+  const handleDeletePicture = async () => {
+    if (!deleteTarget?._id) return;
+    const id = String(deleteTarget._id);
+    try {
+      setIsDeleting(true);
+      const res = await deletePicture(id);
+      if (res?.status === 200) {
+        setImages((prev) => prev.filter((img) => String(img._id) !== id));
+        setLoadingMap((prev) => {
+          const next = { ...prev };
+          delete next[id];
+          return next;
+        });
+        if (selectedImage?._id && String(selectedImage._id) === id) {
+          setSelectedImage(null);
+        }
+        setDeleteTarget(null);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -111,12 +159,12 @@ const GalleryPage = () => {
     e.preventDefault();
     setIsDragging(false);
     const files = e.dataTransfer.files;
-    if (files) {
+    if (files?.length) {
+      setUploadImage(files);
       Array.from(files).forEach((file) => {
         if (file.type.startsWith("image/")) {
           const reader = new FileReader();
           reader.onloadend = () => {
-            // Append a temporary Picture-like object for local preview
             const tempPicture: Picture = {
               _id: `local-${Date.now()}-${Math.random()}`,
               url: reader.result as string,
@@ -197,7 +245,14 @@ const GalleryPage = () => {
                 />
                 <label
                   htmlFor="image-upload"
-                  className="w-full py-3 md:py-4 border-dashed border-[#FFD700] border block mb-6 rounded-md bg-[#ddc74c34]">
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  className={`w-full py-3 md:py-4 border-dashed border block mb-6 rounded-md transition-colors duration-300 ${
+                    isDragging
+                      ? "border-[#FFD700] bg-[#ffd7001a]"
+                      : "border-[#FFD700] bg-[#ddc74c34]"
+                  }`}>
                   {(uploadImage?.length ?? 0) === 0 ? (
                     <div className="h-full w-full flex items-center justify-center flex-col gap-2">
                       <FileImageIcon className="text-[#FFD700] w-9 h-9" />
@@ -220,9 +275,16 @@ const GalleryPage = () => {
                   )}
                 </label>
                 <button
+                  type="button"
                   onClick={handleImageUpload}
-                  className="inline-block px-6 py-3 bg-[#FFD700] text-black rounded-full hover:bg-[#FFD700]/90 transition-all duration-300 cursor-pointer">
-                  {isLoading ? "loading" : "Upload image"}
+                  disabled={isLoading || !(uploadImage?.length ?? 0)}
+                  aria-busy={isLoading}
+                  className={`inline-block px-6 py-3 rounded-full transition-all duration-300 cursor-pointer ${
+                    isLoading || !(uploadImage?.length ?? 0)
+                      ? "bg-[#FFD700]/40 text-black/60 cursor-not-allowed"
+                      : "bg-[#FFD700] text-black hover:bg-[#FFD700]/90"
+                  }`}>
+                  {isLoading ? "Uploading" : "Upload image"}
                 </button>
               </div>
 
@@ -252,34 +314,72 @@ const GalleryPage = () => {
 
             {/* Gallery Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {filteredImages.map((image) => (
-                <>
-                <div
-                  key={image._id}
-                  className="group relative aspect-square overflow-hidden rounded-xl cursor-pointer transform hover:scale-105 transition-all duration-500"
-                  onClick={() => setSelectedImage(image)}>
-
-                    {token && <button onClick={() => handleDeletePicture(image._id)} className="text-white bg-slate-500 px-4 py-2 rounded absolute z-50 hover:bg-red-400">Delete</button>}
-                  <img
-                    src={image.url}
-                    alt="image"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500">
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <p className="text-[#FFD700] font-medium">
-                        Memory #{image._id}
-                      </p>
-                      <p className="text-[#FFD700]/70 text-sm">
-                        A precious moment captured forever
-                      </p>
+              {isFetching && !images.length
+                ? Array.from({ length: 6 }).map((_, index) => (
+                    <div
+                      key={`skeleton-${index}`}
+                      className="relative aspect-square overflow-hidden rounded-xl border border-[#FFD700]/10 bg-black/40"
+                    >
+                      <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-[#FFD700]/10 via-transparent to-[#FFD700]/5" />
                     </div>
-                  </div>
-                </div>
-                </>
-              ))}
+                  ))
+                : filteredImages.map((image) => {
+                    const id = String(image._id);
+                    const isLoaded = !loadingMap[id];
+                    return (
+                      <div
+                        key={id}
+                        className="group relative aspect-square overflow-hidden rounded-xl"
+                      >
+                        {token && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDeleteTarget(image);
+                            }}
+                            className="absolute top-3 right-3 z-10 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-red-500"
+                          >
+                            Delete
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => setSelectedImage(image)}
+                          className="group relative block h-full w-full overflow-hidden"
+                        >
+                          <div
+                            className={`absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300 ${
+                              isLoaded ? "opacity-0" : "opacity-100"
+                            }`}
+                            aria-hidden={isLoaded}
+                          >
+                            <span className="text-[#FFD700] text-sm">Loading image…</span>
+                          </div>
+                          <img
+                            src={image.url}
+                            alt={image?.alt || `Memory ${id}`}
+                            loading="lazy"
+                            onLoad={() => handleImageLoad(id)}
+                            onError={() => handleImageError(id)}
+                            className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 ${
+                              isLoaded ? "opacity-100" : "opacity-0"
+                            }`}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-0 transition-all duration-500 group-hover:opacity-100">
+                            <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
+                              <p className="text-[#FFD700] font-medium">
+                                Memory #{id}
+                              </p>
+                              <p className="text-[#FFD700]/70 text-sm">
+                                A precious moment captured forever
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                      </div>
+                    );
+                  })}
 
             </div>
 
@@ -299,16 +399,18 @@ const GalleryPage = () => {
 
         {/* Image Modal */}
         {selectedImage && (
-          <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true">
             <div className="relative max-w-4xl max-h-full">
               <button
+                type="button"
                 onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 text-white hover:text-[#FFD700] transition-colors">
+                className="absolute top-4 right-4 text-white hover:text-[#FFD700] transition-colors"
+                aria-label="Close image preview">
                 <X size={32} />
               </button>
               <img
                 src={selectedImage.url}
-                alt="Full size"
+                alt={selectedImage?.alt || "Full size memory"}
                 className="max-w-full max-h-full object-contain"
               />
             </div>
