@@ -312,13 +312,21 @@ const GalleryPage = () => {
               </div>
             </div>
 
+            <div className="sr-only" aria-live="polite" role="status">
+              {statusMessage}
+            </div>
             {/* Gallery Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+              role="list"
+              aria-busy={isFetching}
+            >
               {isFetching && !images.length
                 ? Array.from({ length: 6 }).map((_, index) => (
                     <div
                       key={`skeleton-${index}`}
                       className="relative aspect-square overflow-hidden rounded-xl border border-[#FFD700]/10 bg-black/40"
+                      aria-hidden="true"
                     >
                       <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-[#FFD700]/10 via-transparent to-[#FFD700]/5" />
                     </div>
@@ -330,6 +338,7 @@ const GalleryPage = () => {
                       <div
                         key={id}
                         className="group relative aspect-square overflow-hidden rounded-xl"
+                        role="listitem"
                       >
                         {token && (
                           <button
@@ -338,7 +347,9 @@ const GalleryPage = () => {
                               e.stopPropagation();
                               setDeleteTarget(image);
                             }}
-                            className="absolute top-3 right-3 z-10 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-red-500"
+                            className="absolute top-3 right-3 z-10 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                            aria-label="Delete image"
+                            aria-haspopup="dialog"
                           >
                             Delete
                           </button>
@@ -360,6 +371,7 @@ const GalleryPage = () => {
                             src={image.url}
                             alt={image?.alt || `Memory ${id}`}
                             loading="lazy"
+                            decoding="async"
                             onLoad={() => handleImageLoad(id)}
                             onError={() => handleImageError(id)}
                             className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 ${
@@ -384,7 +396,7 @@ const GalleryPage = () => {
             </div>
 
             {/* Empty State */}
-            {filteredImages.length === 0 && (
+            {!isFetching && filteredImages.length === 0 && (
               <div className="text-center py-12 sm:py-16">
                 <h3 className="text-2xl text-[#FFD700] mb-2">
                   The Gallery Awaits Your Memories
@@ -413,6 +425,63 @@ const GalleryPage = () => {
                 alt={selectedImage?.alt || "Full size memory"}
                 className="max-w-full max-h-full object-contain"
               />
+            </div>
+          </div>
+        )}
+
+        {deleteTarget && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-dialog-title"
+            aria-describedby="delete-dialog-description"
+            onClick={() => {
+              if (!isDeleting) {
+                setDeleteTarget(null);
+              }
+            }}
+          >
+            <div
+              className="w-full max-w-md rounded-2xl bg-black/90 p-6 text-white shadow-lg border border-[#FFD700]/20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 id="delete-dialog-title" className="text-xl font-semibold text-[#FFD700]">
+                Delete image?
+              </h2>
+              <p id="delete-dialog-description" className="mt-2 text-sm text-[#FFD700]/80">
+                This action cannot be undone. The selected memory will be removed from the gallery.
+              </p>
+              {deleteTarget?.url && (
+                <div className="mt-4 overflow-hidden rounded-lg border border-[#FFD700]/20">
+                  <img
+                    src={deleteTarget.url}
+                    alt={deleteTarget?.alt || "Preview of image to delete"}
+                    className="h-40 w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              )}
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  onClick={() => setDeleteTarget(null)}
+                  disabled={isDeleting}
+                  className="w-full sm:w-auto rounded-full border border-[#FFD700]/40 px-4 py-2 text-sm font-medium text-[#FFD700] transition-colors hover:border-[#FFD700] disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDeletePicture}
+                  disabled={isDeleting}
+                  aria-busy={isDeleting}
+                  className="w-full sm:w-auto rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {isDeleting ? "Deleting" : "Delete"}
+                </button>
+              </div>
             </div>
           </div>
         )}
