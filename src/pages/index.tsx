@@ -45,7 +45,7 @@ const CelebrationWebsite = () => {
                     Meet the Celebrant
                   </span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] font-serif">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#FFD700] font-serif">
                   Christianah Funmbi Bandele
                 </h2>
                 <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-[#FFD700]/75 leading-relaxed max-w-2xl">
@@ -53,7 +53,7 @@ const CelebrationWebsite = () => {
                 </p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-4">
                   <div className="flex items-center gap-4 p-4 rounded-2xl border border-[#FFD700]/20 bg-black/40 backdrop-blur-sm">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#FFD700] to-[#DC143C] flex items-center justify-center text-black font-serif text-xl">
+                    <div className="w-12 h-12 rounded-full text-[#FFD700] flex items-center justify-center font-serif text-xl">
                       40
                     </div>
                     <div>
@@ -66,7 +66,7 @@ const CelebrationWebsite = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 rounded-2xl border border-[#FFD700]/20 bg-black/40 backdrop-blur-sm">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#DC143C] to-[#FFD700] flex items-center justify-center text-black font-serif text-xl">
+                    <div className="w-12 h-12 rounded-full  text-[#FFD700] flex items-center justify-center font-serif text-xl">
                       15
                     </div>
                     <div>
@@ -82,7 +82,7 @@ const CelebrationWebsite = () => {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
                     href="#gift"
-                    className="group inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-md bg-gradient-to-r from-[#FFD700] to-[#DC143C] text-black text-sm sm:text-base font-semibold tracking-wider transform hover:scale-[1.03] transition-all duration-300"
+                    className="group inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-md bg-[#FFD700] text-sm sm:text-base font-semibold tracking-wider transform hover:scale-[1.03] transition-all duration-300"
                   >
                     <span>Send Wishes as Gift</span>
                     <span className="w-6 h-6 rounded-md bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition-colors duration-300">

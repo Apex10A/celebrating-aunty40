@@ -217,15 +217,13 @@ export const GallerySection = () => {
             <Camera className="text-[#FFD700] w-5 h-5 sm:w-6 sm:h-6" />
             <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-[#FFD700]" />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#DC143C] mb-3 sm:mb-5 font-serif">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#FFD700] mb-3 sm:mb-5 font-serif">
             Our Journey
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-[#FFD700]/80 max-w-2xl mx-auto font-light tracking-wide">
             A collection of precious moments from our 15 years of marriage and life together.
           </p>
         </div>
-
-        {/* Gallery Grid - smaller items on mobile */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
           {currentImages.map((image, index) => (
             <div
