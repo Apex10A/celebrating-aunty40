@@ -132,6 +132,7 @@ export default function Index() {
         </div>
         <div className="flex items-center gap-3">
           <span className="text-[#FFD700]/80">Admin</span>
+          
           <LogoutButton />
         </div>
       </header>

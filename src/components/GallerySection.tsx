@@ -71,7 +71,7 @@ export const GallerySection = () => {
     },
     {
       id: 11,
-      src: '/cele4.jpg',
+      src: '/cele4.JPG',
       alt: 'Eternal Love',
       category: 'Love',
     },
@@ -93,12 +93,12 @@ export const GallerySection = () => {
       alt: 'Enduring Bonds',
       category: 'Love',
     },
-    // {
-    //   id: 15,
-    //   src: '/fifteen.jpg',
-    //   alt: 'Timeless Love',
-    //   category: 'Love',
-    // },
+    {
+      id: 15,
+      src: '/tbwed.jpg',
+      alt: 'Timeless Love',
+      category: 'Love',
+    },
     {
       id: 16,
       src: '/sixteen.jpg',
