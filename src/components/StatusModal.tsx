@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, XCircle, X } from 'lucide-react';
-import Image from 'next/image';
-// import "@/styles/index.css"
 
 export type StatusType = 'success' | 'error';
 
@@ -33,6 +31,7 @@ export const StatusModal: React.FC<StatusModalProps> = ({
   }, [open, onClose]);
 
   const isSuccess = status === 'success';
+  const IconComponent = isSuccess ? CheckCircle2 : XCircle;
 
   return (
     <AnimatePresence>
@@ -71,32 +70,41 @@ export const StatusModal: React.FC<StatusModalProps> = ({
                 <X size={22} />
               </button>
 
-              <div className="px-6 pt-8 pb-6 text-center">
-                {/* Status GIF */}
-                <div className="flex items-center justify-center mb-2">
-                  <Image
-                    src={isSuccess ? '/success.gif' : '/ErrorGif.gif'}
-                    alt={isSuccess ? 'Success' : 'Error'}
-                    width={156}
-                    height={156}
-                    unoptimized
-                    priority
-                  />
+              <div className="px-6 pt-8 pb-6 text-center" aria-live="polite">
+                <div className="flex items-center justify-center mb-5">
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: 'spring', stiffness: 250, damping: 18 }}
+                    className={`relative h-24 w-24 rounded-full flex items-center justify-center ${
+                      isSuccess
+                        ? 'bg-gradient-to-br from-[#FFD700] via-[#f1d16d] to-[#b8860b]'
+                        : 'bg-gradient-to-br from-[#f87171] via-[#ef4444] to-[#7f1d1d]'
+                    }`}
+                  >
+                    <div
+                      className={`absolute inset-0 rounded-full blur-xl ${
+                        isSuccess ? 'bg-[#FFD700]/40' : 'bg-[#ef4444]/40'
+                      }`}
+                    />
+                    <IconComponent
+                      className={`relative z-10 h-12 w-12 ${
+                        isSuccess ? 'text-[#111111]' : 'text-white'
+                      }`}
+                    />
+                  </motion.div>
                 </div>
 
-                {/* Title */}
                 <p className="text-2xl font-bold text-[#FFD700] font-Montserrat pb-2">
                   {title}
                 </p>
 
-                {/* Description */}
                 {description && (
                   <p className="text-sm text-[#FFD700]/80 leading-relaxed">
                     {description}
                   </p>
                 )}
 
-                {/* Actions */}
                 <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
                   {primaryAction && (
                     <button

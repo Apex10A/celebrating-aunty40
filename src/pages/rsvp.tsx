@@ -8,9 +8,28 @@ import { makeReservation, Reservation } from "@/services/reservations";
 import { Decline, sendDecline } from "@/services/declines";
 import { StatusModal, StatusType } from "@/components/StatusModal";
 
+type ReservationFormState = Omit<Reservation, "numOfGuests"> & {
+  numOfGuests: number | "";
+};
+
+const createReservationState = (): ReservationFormState => ({
+  name: "",
+  email: "",
+  phoneNumber: "",
+  message: "",
+  restriction: "",
+  numOfGuests: "",
+});
+
+const createDeclineState = (): Decline => ({
+  name: "",
+  email: "",
+  message: "",
+});
+
 const RSVPPage = () => {
-  const [reservation, setReservation] = useState<Reservation>();
-  const [decline, setDecline] = useState<Decline>();
+  const [reservation, setReservation] = useState<ReservationFormState>(() => createReservationState());
+  const [decline, setDecline] = useState<Decline>(() => createDeclineState());
   const [attending, setAttending] = useState<boolean>(true);
   const [comingSolo, setComingSolo] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,73 +37,47 @@ const RSVPPage = () => {
   const [modalStatus, setModalStatus] = useState<StatusType>("success");
   const [modalTitle, setModalTitle] = useState("");
   const [modalDesc, setModalDesc] = useState("");
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-  function validateForm() {
-    // function to validate goes here praise
-    return true;
-  }
+  const getFieldClasses = (hasError: boolean) =>
+    `w-full px-4 py-2 bg-black/50 rounded-lg text-white transition-all text-sm md:text-base outline-none border ${
+      hasError
+        ? "border-red-500/70 focus:border-red-400 focus:ring-1 focus:ring-red-500/40"
+        : "border-[#FFD700]/20 focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700]/60 hover:border-[#FFD700]/40"
+    }`;
 
-  // Reset all form fields back to empty
-  function resetForm() {
-    setReservation(undefined);
-    setDecline(undefined);
-    setComingSolo(false);
-  }
+  const getSelectClasses = (hasError: boolean) =>
+    `appearance-none w-full px-4 py-2 pr-10 bg-black/50 rounded-lg text-white transition-all text-sm md:text-base outline-none border ${
+      hasError
+        ? "border-red-500/70 focus:border-red-400 focus:ring-1 focus:ring-red-500/40"
+        : "border-[#FFD700]/20 focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700]/60 hover:border-[#FFD700]/40"
+    } disabled:opacity-60 disabled:cursor-not-allowed`;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+  const clearFieldError = (field: string) =>
+    setFormErrors((prev) => {
+      if (!prev[field]) return prev;
+      const updated = { ...prev };
+      delete updated[field];
+      return updated;
+    });
 
-    try {
-      setIsSubmitting(true);
-      if (attending) {
-        const res = await makeReservation(reservation as Reservation);
-        if (res?.status === 201) {
-          setModalStatus("success");
-          setModalTitle("RSVP Submitted");
-          setModalDesc(
-            "We’ll review your RSVP. If accepted, you’ll receive an email with your invitation code and QR code."
-          );
-          resetForm();
-          setModalOpen(true);
-          return;
-        } else {
-          setModalStatus("error");
-          setModalTitle("Something went wrong");
-          setModalDesc("We couldn't submit your RSVP. Please try again.");
-          setModalOpen(true);
-          return;
-        }
-      } else {
-        const res = await sendDecline(decline as Decline);
-        if ((res as any)?.status === 201 || res) {
-          setModalStatus("success");
-          setModalTitle("Response Received");
-          setModalDesc(
-            "Thank you for letting us know. You'll be in our hearts."
-          );
-          resetForm();
-          setModalOpen(true);
-          return;
-        } else {
-          setModalStatus("error");
-          setModalTitle("Unable to send response");
-          setModalDesc("Please try again in a moment.");
-          setModalOpen(true);
-          return;
-        }
-      }
-    } catch (error) {
-      console.error("RSVP submission error:", error);
-      setModalStatus("error");
-      setModalTitle("Network or server error");
-      setModalDesc(
-        "There was an error submitting your RSVP. Please try again."
-      );
-      setModalOpen(true);
-    } finally {
-      setIsSubmitting(false);
-    }
+  const handleAttendingChange = (value: boolean) => {
+    setAttending(value);
+    setFormErrors({});
+  };
+
+  const handleSoloToggle = (checked: boolean) => {
+    setComingSolo(checked);
+    setReservation((prev) => ({
+      ...prev,
+      numOfGuests: checked ? 0 : "",
+    }));
+    setFormErrors((prev) => {
+      if (!prev.numOfGuests) return prev;
+      const updated = { ...prev };
+      delete updated.numOfGuests;
+      return updated;
+    });
   };
 
   const handleInputChange = (
@@ -93,23 +86,140 @@ const RSVPPage = () => {
     >
   ) => {
     const { name, value } = e.target;
-    const normalizedValue: any = name === "numOfGuests" ? Number(value) : value;
-    if (attending)
-      setReservation(
-        (prev) =>
-          ({
-            ...prev,
-            [name]: normalizedValue,
-          } as Reservation)
+    if (attending) {
+      if (name === "numOfGuests") {
+        setReservation((prev) => ({
+          ...prev,
+          numOfGuests: value === "" ? "" : Number(value),
+        }));
+      } else {
+        const fieldName = name as Exclude<keyof ReservationFormState, "numOfGuests">;
+        setReservation((prev) => ({
+          ...prev,
+          [fieldName]: value,
+        }));
+      }
+    } else {
+      const fieldName = name as keyof Decline;
+      setDecline((prev) => ({
+        ...prev,
+        [fieldName]: value,
+      }));
+    }
+    clearFieldError(name);
+  };
+
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (attending) {
+      const nameValue = reservation.name.trim();
+      const emailValue = reservation.email.trim();
+      if (!nameValue) errors.name = "Name is required.";
+      if (!emailValue) errors.email = "Email is required.";
+      else if (!emailPattern.test(emailValue)) errors.email = "Enter a valid email.";
+      if (!comingSolo) {
+        if (
+          reservation.numOfGuests === "" ||
+          (typeof reservation.numOfGuests === "number" && reservation.numOfGuests <= 0)
+        ) {
+          errors.numOfGuests = "Please select the number of guests.";
+        }
+      }
+      if (reservation.phoneNumber && reservation.phoneNumber.trim() && reservation.phoneNumber.trim().length < 7) {
+        errors.phoneNumber = "Enter a valid phone number.";
+      }
+    } else {
+      const nameValue = decline.name.trim();
+      const emailValue = decline.email.trim();
+      if (!nameValue) errors.name = "Name is required.";
+      if (!emailValue) errors.email = "Email is required.";
+      else if (!emailPattern.test(emailValue)) errors.email = "Enter a valid email.";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const resetForm = () => {
+    setReservation(createReservationState());
+    setDecline(createDeclineState());
+    setComingSolo(false);
+    setFormErrors({});
+  };
+
+  const openStatusModal = (status: StatusType, title: string, description: string) => {
+    setModalStatus(status);
+    setModalTitle(title);
+    setModalDesc(description);
+    setModalOpen(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    try {
+      setIsSubmitting(true);
+      if (attending) {
+        const sanitizedReservation: Reservation = {
+          name: reservation.name.trim(),
+          email: reservation.email.trim(),
+          phoneNumber: reservation.phoneNumber.trim(),
+          numOfGuests: comingSolo ? 0 : (reservation.numOfGuests as number),
+          restriction: reservation.restriction?.trim()
+            ? reservation.restriction.trim()
+            : undefined,
+          message: reservation.message?.trim() ? reservation.message.trim() : undefined,
+        };
+        const res = await makeReservation(sanitizedReservation);
+        if (res?.status === 201) {
+          openStatusModal(
+            "success",
+            "You're on the list!",
+            "Thanks for confirming. We'll send your invitation details to your inbox soon."
+          );
+          resetForm();
+          return;
+        }
+        openStatusModal(
+          "error",
+          "Submission failed",
+          "We couldn't submit your RSVP. Please try again."
+        );
+        return;
+      }
+      const sanitizedDecline: Decline = {
+        name: decline.name.trim(),
+        email: decline.email.trim(),
+        message: decline.message?.trim() ? decline.message.trim() : undefined,
+      };
+      const res = await sendDecline(sanitizedDecline);
+      if ((res as any)?.status === 201 || res) {
+        openStatusModal(
+          "success",
+          "Response saved",
+          "Thanks for letting us know. We'll be celebrating with you in spirit."
+        );
+        resetForm();
+        return;
+      }
+      openStatusModal(
+        "error",
+        "Unable to send response",
+        "Please try again in a moment."
       );
-    else
-      setDecline(
-        (prev) =>
-          ({
-            ...prev,
-            [name]: normalizedValue,
-          } as Decline)
+    } catch (error) {
+      console.error("RSVP submission error:", error);
+      openStatusModal(
+        "error",
+        "Network issue",
+        "We couldn't reach the server. Please try again shortly."
       );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -145,7 +255,9 @@ const RSVPPage = () => {
             <div className="flex justify-center mb-8 sm:mb-12">
               <div className="flex bg-black/30 backdrop-blur-lg rounded-full p-1 border border-[#FFD700]/20">
                 <button
-                  onClick={() => setAttending(true)}
+                  type="button"
+                  onClick={() => handleAttendingChange(true)}
+                  aria-pressed={attending}
                   className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm md:text-md ${
                     attending
                       ? "bg-[#FFD700] text-black"
@@ -155,7 +267,9 @@ const RSVPPage = () => {
                   I'll Be There!
                 </button>
                 <button
-                  onClick={() => setAttending(false)}
+                  type="button"
+                  onClick={() => handleAttendingChange(false)}
+                  aria-pressed={!attending}
                   className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm md:text-md ${
                     !attending
                       ? "bg-[#FFD700] text-black"
@@ -189,6 +303,7 @@ const RSVPPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               onSubmit={handleSubmit}
+              noValidate
               className="bg-black/50 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-[#FFD700]/10 mx-4 sm:mx-0"
             >
               <div className="space-y-6">
@@ -203,12 +318,19 @@ const RSVPPage = () => {
                     type="text"
                     id="name"
                     name="name"
-                    value={attending ? reservation?.name : decline?.name}
+                    value={attending ? reservation.name : decline.name}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#555454] focus:ring-1 focus:ring-[#000000] transition-all text-sm md:text-base outline-none"
+                    className={getFieldClasses(Boolean(formErrors.name))}
                     placeholder="Enter your full name"
+                    aria-invalid={Boolean(formErrors.name)}
+                    aria-describedby={formErrors.name ? "name-error" : undefined}
                     required
                   />
+                  {formErrors.name && (
+                    <p id="name-error" className="mt-1 text-xs text-red-400" role="alert">
+                      {formErrors.name}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -222,32 +344,46 @@ const RSVPPage = () => {
                     type="email"
                     id="email"
                     name="email"
-                    value={attending ? reservation?.email : decline?.email}
+                    value={attending ? reservation.email : decline.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#555454]focus:ring-1 focus:ring-[#FFD700] transition-all text-sm md:text-base"
+                    className={getFieldClasses(Boolean(formErrors.email))}
                     placeholder="Enter your email"
+                    aria-invalid={Boolean(formErrors.email)}
+                    aria-describedby={formErrors.email ? "email-error" : undefined}
                     required
                   />
+                  {formErrors.email && (
+                    <p id="email-error" className="mt-1 text-xs text-red-400" role="alert">
+                      {formErrors.email}
+                    </p>
+                  )}
                 </div>
 
                 {attending && (
                   <>
                     <div>
                       <label
-                        htmlFor="phone"
+                        htmlFor="phoneNumber"
                         className="block text-[#FFD700] mb-2 text-sm md:text-base"
                       >
                         Phone Number
                       </label>
                       <input
                         type="tel"
-                        id="phone"
+                        id="phoneNumber"
                         name="phoneNumber"
-                        value={reservation?.phoneNumber}
+                        value={reservation.phoneNumber}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#555454]focus:ring-1 focus:ring-[#FFD700] transition-all text-sm md:text-base"
+                        className={getFieldClasses(Boolean(formErrors.phoneNumber))}
                         placeholder="Enter your phone number"
+                        aria-invalid={Boolean(formErrors.phoneNumber)}
+                        aria-describedby={formErrors.phoneNumber ? "phoneNumber-error" : undefined}
                       />
+                      {formErrors.phoneNumber && (
+                        <p id="phoneNumber-error" className="mt-1 text-xs text-red-400" role="alert">
+                          {formErrors.phoneNumber}
+                        </p>
+                      )}
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -262,15 +398,23 @@ const RSVPPage = () => {
                           <select
                             id="numOfGuests"
                             name="numOfGuests"
-                            value={comingSolo ? 0 : reservation?.numOfGuests ?? ""}
+                            value={
+                              comingSolo
+                                ? "0"
+                                : reservation.numOfGuests === ""
+                                ? ""
+                                : String(reservation.numOfGuests)
+                            }
                             onChange={handleInputChange}
-                            className="appearance-none w-full px-4 py-2 pr-10 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700]/60 transition-all text-sm md:text-base hover:border-[#FFD700]/40 disabled:opacity-60 disabled:cursor-not-allowed"
+                            className={getSelectClasses(Boolean(formErrors.numOfGuests))}
                             disabled={comingSolo}
+                            aria-invalid={Boolean(formErrors.numOfGuests)}
+                            aria-describedby={formErrors.numOfGuests ? "numOfGuests-error" : undefined}
                           >
                             <option value="" disabled>
                               Select no of guests
                             </option>
-                            <option value={0}>0</option>
+                            <option value="0">0</option>
                             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                               <option key={num} value={num}>
                                 {num}
@@ -279,23 +423,40 @@ const RSVPPage = () => {
                           </select>
                           <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#FFD700]/70 group-focus-within:text-[#FFD700]" />
                         </div>
-                       
+                        {formErrors.numOfGuests && (
+                          <p id="numOfGuests-error" className="mt-1 text-xs text-red-400" role="alert">
+                            {formErrors.numOfGuests}
+                          </p>
+                        )}
+                        <div className="flex items-center gap-2 mt-2">
+                          <input
+                            id="comingSolo"
+                            name="comingSolo"
+                            type="checkbox"
+                            checked={comingSolo}
+                            onChange={(event) => handleSoloToggle(event.target.checked)}
+                            className="h-4 w-4 rounded border-[#FFD700]/40 bg-black/40 text-[#FFD700] focus:ring-[#FFD700]"
+                          />
+                          <label htmlFor="comingSolo" className="text-xs text-[#FFD700]/80">
+                            I'm coming alone
+                          </label>
+                        </div>
                       </div>
 
                       <div>
                         <label
-                          htmlFor="dietaryRestrictions"
+                          htmlFor="restriction"
                           className="block text-[#FFD700] mb-2 text-sm md:text-base"
                         >
-                          Dietary Restrictions 
+                          Dietary Restrictions
                         </label>
                         <input
                           type="text"
-                          id="dietaryRestrictions"
-                          name="restrictions"
-                          value={reservation?.restriction}
+                          id="restriction"
+                          name="restriction"
+                          value={reservation.restriction}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#555454]focus:ring-1 focus:ring-[#FFD700] transition-all text-sm md:text-base"
+                          className={getFieldClasses(false)}
                           placeholder="Any dietary restrictions or allergies?"
                         />
                       </div>
@@ -313,10 +474,10 @@ const RSVPPage = () => {
                   <textarea
                     id="message"
                     name="message"
-                    value={attending ? reservation?.message : decline?.message}
+                    value={attending ? reservation.message : decline.message ?? ""}
                     onChange={handleInputChange}
                     rows={4}
-                    className="w-full px-4 py-2 bg-black/50 border border-[#FFD700]/20 rounded-lg text-white focus:border-[#555454]focus:ring-1 focus:ring-[#FFD700] transition-all text-sm md:text-base"
+                    className={getFieldClasses(false)}
                     placeholder="Any special message or requests?"
                   />
                 </div>
@@ -324,7 +485,7 @@ const RSVPPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-[#FFD700] text-black rounded-xl hover:bg-[#FFD700]/90 transition-all duration-300 mt-8  disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-widest uppercase text-sm md:text-base"
+                  className="w-full py-3 bg-[#FFD700] text-black rounded-xl hover:bg-[#FFD700]/90 transition-all duration-300 mt-8 disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-widest uppercase text-sm md:text-base"
                 >
                   {isSubmitting ? "Submitting..." : "Submit RSVP"}
                 </button>
@@ -335,14 +496,12 @@ const RSVPPage = () => {
       </div>
       <Footer />
 
-      {/* Status Modal */}
       <StatusModal
         open={modalOpen}
         status={modalStatus}
         title={modalTitle}
         description={modalDesc}
         onClose={() => setModalOpen(false)}
-       
       />
     </>
   );
