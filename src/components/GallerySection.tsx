@@ -12,28 +12,31 @@ export const GallerySection = () => {
       {
       id: 12,
       src: '/twelve.jpg',
-      alt: 'Unconditional Support',
-      category: 'Support',
+      alt: 'wedding',
+      category: 'Wedding',
     },
      {
       id: 15,
       src: '/tbwed.jpg',
-      alt: 'Timeless Love',
-      category: 'Love',
+      alt: 'wedding',
+      category: 'Wedding',
     },
+    
     {
       id: 16,
       src: '/sixteen.jpg',
-      alt: 'Cherished Moments',
-      category: 'Memories',
+      alt: 'wedding',
+      category: 'Wedding',
     },
     {
       id: 20,
       src: '/twenty.jpg',
-      alt: 'Everlasting Love',
-      category: 'Love',
+      alt: 'wedding',
+      category: 'Wedding',
     },
   
+
+
     {
       id: 13,
       src: '/thirteen.jpg',
@@ -48,18 +51,7 @@ export const GallerySection = () => {
       alt: 'Wedding Day',
       category: 'Wedding',
     },
-    {
-      id: 2,
-      src: '/cele2.jpg',
-      alt: 'Anniversary Celebration',
-      category: 'Anniversary',
-    },
-    {
-      id: 3,
-      src: '/cele3.jpg',
-      alt: 'Family Moments',
-      category: 'Family',
-    },
+    
     // {
     //   id: 4,
     //   src: '/four.jpg',
@@ -100,9 +92,85 @@ export const GallerySection = () => {
     {
       id: 14,
       src: '/cele5.jpg',
-      alt: 'Enduring Bonds',
+      alt: 'newlyweds',
       category: 'Love',
     },
+
+      {
+      id: 14,
+      src: '/fam2.jpg',
+      alt: 'newlyweds',
+      category: 'Love',
+    },
+      {
+      id: 14,
+      src: '/fouty.jpg',
+      alt: 'newlyweds',
+      category: 'Love',
+    },
+      {
+      id: 14,
+      src: '/fama.jpg',
+      alt: 'newlyweds',
+      category: 'Love',
+    },
+
+     {
+      id: 14,
+      src: '/carry.jpg',
+      alt: 'family moments',
+      category: 'Love',
+    },
+
+      {
+      id: 14,
+      src: '/call.jpg',
+      alt: 'family moments',
+      category: 'Love',
+    },
+      {
+      id: 14,
+      src: '/fouty.jpg',
+      alt: 'family moments',
+      category: 'Love',
+    },
+      {
+      id: 14,
+      src: '/fama.jpg',
+      alt: 'family moments',
+      category: 'Love',
+    },
+    
+
+     {
+      id: 14,
+      src: '/carry.jpg',
+      alt: 'currently going',
+      category: 'Love',
+    },
+
+      {
+      id: 14,
+      src: '/call.jpg',
+      alt: 'currently going',
+      category: 'Love',
+    },
+      {
+      id: 14,
+      src: '/fouty.jpg',
+      alt: 'currently going',
+      category: 'Love',
+    },
+      {
+      id: 14,
+      src: '/fama.jpg',
+      alt: 'currently going',
+      category: 'Love',
+    },
+    
+
+
+
    
     // {
     //   id: 17,
@@ -125,14 +193,15 @@ export const GallerySection = () => {
     
   ];
 
-const weddingImages = galleryImages.slice(0, 5);
-const recentImages = galleryImages.slice(5);
+const weddingImages = galleryImages.filter(img => img.category === 'Wedding');
+const loveImages = galleryImages.filter(img => img.category === 'Love');
+const memoriesImages = galleryImages.filter(img => img.category === 'Memories');
+const supportImages = galleryImages.filter(img => img.category === 'Support');
+const currentlygoing = galleryImages.filter(img => img.alt?.toLowerCase() === 'currently going');
+const familyMoments = galleryImages.filter(img => img.alt?.toLowerCase() === 'family moments');
 
-  // Calculate pagination
-  const totalPages = Math.ceil(galleryImages.length / imagesPerPage);
-  const startIndex = (currentPage - 1) * imagesPerPage;
-  const endIndex = startIndex + imagesPerPage;
-  const currentImages = galleryImages.slice(startIndex, endIndex);
+
+
 
   // Handle image click
   const handleImageClick = (image: any) => {
@@ -221,120 +290,260 @@ const recentImages = galleryImages.slice(5);
             A collection of precious moments from our 15 years of marriage and life together.
           </p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
-          {currentImages.map((image, index) => (
-            <div
-              key={image.id}
-              className="group relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#FFD700]/20 bg-black/20 backdrop-blur-sm hover:border-[#FFD700]/40 transition-all duration-300 will-change-transform hover:scale-[1.02]"
-              style={{ animationDelay: `${index * 0.08}s` }}
-            >
-              {/* Image */}
-              <div 
-                className="aspect-square overflow-hidden relative cursor-pointer"
-                onClick={() => handleImageClick(image)}
+        
+
+        {/* The Wedding Section */}
+        <div className="mb-12">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#FFD700]/80 font-serif">The Wedding</h3>
+            {/* <p className="text-sm sm:text-base text-gray-600">Our special day - vows, celebrations, and forever begins</p> */}
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
+            {weddingImages.map((image, index) => (
+              <div
+                key={image.id}
+                className="group relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#FFD700]/20 bg-white/20 backdrop-blur-sm hover:border-[#FFD700]/40 transition-all duration-300 will-change-transform hover:scale-[1.02]"
+                // style={{ animationDelay: `${(index + beforeMarriage.length) * 0.08}s` }}
               >
-                <img
-                  src={image?.src}
-                  alt={image?.alt}
-                  loading="lazy"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                {/* Gradient overlay for readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Image */}
+                <div
+                  className="aspect-square overflow-hidden relative cursor-pointer"
+                  onClick={() => handleImageClick(image)}
+                >
+                  <img
+                    src={image?.src}
+                    alt={image?.alt}
+                    loading="lazy"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Gradient overlay for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/10 to-transparent opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                {/* Category badge */}
-                {/* <span className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-full text-[10px] sm:text-xs tracking-wide bg-black/50 border border-[#FFD700]/30 text-[#FFD700]">
-                  {image?.category}
-                </span> */}
-              </div>
-
-              {/* Content Overlay */}
-              {/* <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 translate-y-0 sm:translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <div className="space-y-1 sm:space-y-2">
-                  <h3 className="text-sm sm:text-lg font-semibold sm:font-bold text-[#FFD700] font-serif">
-                    {image.alt}
-                  </h3>
-                  <p className="hidden sm:block text-sm text-[#FFD700]/70 font-light">
-                    {image.category}
-                  </p>
+                  {/* Category badge */}
+                  {/* <span className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-full text-[10px] sm:text-xs tracking-wide bg-white/50 border border-[#FFD700]/30 text-gray-800">
+                    {image?.category}
+                  </span> */}
                 </div>
-              </div> */}
 
-              {/* Interactive Elements - show on larger screens */}
-              <button
-                onClick={(e) => toggleLike(image.id, e)}
-                className={`hidden sm:block absolute top-3 right-3 p-1 rounded-full transition-all duration-300 hover:scale-110 ${
-                  likedImages.has(image.id) 
-                    ? 'opacity-100 bg-[#DC143C]/20' 
-                    : 'opacity-0 group-hover:opacity-100 hover:bg-[#DC143C]/10'
-                }`}
-                title={likedImages.has(image.id) ? 'Unlike' : 'Like'}
-              >
-                <Heart 
-                  className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
-                    likedImages.has(image.id) ? 'text-[#DC143C] fill-[#DC143C]' : 'text-[#DC143C]'
-                  }`} 
-                />
-              </button>
-              <button
-                onClick={(e) => toggleRating(image.id, e)}
-                className={`hidden sm:block absolute top-3 left-3 p-1 rounded-full transition-all duration-300 hover:scale-110 ${
-                  imageRatings[image.id] 
-                    ? 'opacity-100 bg-[#FFD700]/20' 
-                    : 'opacity-0 group-hover:opacity-100 hover:bg-[#FFD700]/10'
-                }`}
-                style={{ transitionDelay: '0.1s' }}
-                title={imageRatings[image.id] ? 'Remove rating' : 'Rate 5 stars'}
-              >
-                <Star 
-                  className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
-                    imageRatings[image.id] ? 'text-[#FFD700] fill-[#FFD700]' : 'text-[#FFD700]'
-                  }`} 
-                />
-              </button>
-            </div>
-          ))}
+                {/* Content Overlay */}
+                {/* <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 translate-y-0 sm:translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <div className="space-y-1 sm:space-y-2">
+                    <h3 className="text-sm sm:text-lg font-semibold sm:font-bold text-gray-800 font-serif">
+                      {image.alt}
+                    </h3>
+                    <p className="hidden sm:block text-sm text-gray-600 font-light">
+                      {image.category}
+                    </p>
+                  </div>
+                </div> */}
+
+                {/* Interactive Elements - show on larger screens */}
+                <button
+                  onClick={(e) => toggleLike(image.id, e)}
+                  className={`hidden sm:block absolute top-3 right-3 p-1 rounded-full transition-all duration-300 hover:scale-110 ${
+                    likedImages.has(image.id)
+                      ? 'opacity-100 bg-[#DC143C]/20'
+                      : 'opacity-0 group-hover:opacity-100 hover:bg-[#DC143C]/10'
+                  }`}
+                  title={likedImages.has(image.id) ? 'Unlike' : 'Like'}
+                >
+                  <Heart
+                    className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
+                      likedImages.has(image.id) ? 'text-[#DC143C] fill-[#DC143C]' : 'text-[#DC143C]'
+                    }`}
+                  />
+                </button>
+                <button
+                  onClick={(e) => toggleRating(image.id, e)}
+                  className={`hidden sm:block absolute top-3 left-3 p-1 rounded-full transition-all duration-300 hover:scale-110 ${
+                    imageRatings[image.id]
+                      ? 'opacity-100 bg-[#FFD700]/20'
+                      : 'opacity-0 group-hover:opacity-100 hover:bg-[#FFD700]/10'
+                  }`}
+                  style={{ transitionDelay: '0.1s' }}
+                  title={imageRatings[image.id] ? 'Remove rating' : 'Rate 5 stars'}
+                >
+                  <Star
+                    className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
+                      imageRatings[image.id] ? 'text-[#FFD700] fill-[#FFD700]' : 'text-[#FFD700]'
+                    }`}
+                  />
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Pagination Controls */}
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2 sm:gap-4 mt-8 sm:mt-12">
-            <button
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] bg-black/30 backdrop-blur-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02]"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Previous</span>
-            </button>
-            
-            <div className="flex items-center gap-1 sm:gap-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full text-sm sm:text-base font-medium transition-all duration-300 ${
-                    currentPage === page
-                      ? 'bg-[#FFD700] text-black'
-                      : 'text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] bg-black/30 backdrop-blur-sm hover:scale-[1.02]'
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
-            </div>
-            
-            <button
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium text-[#FFD700] border border-[#FFD700]/30 hover:border-[#FFD700] bg-black/30 backdrop-blur-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02]"
-            >
-              <span className="hidden sm:inline">Next</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
+        
+        
+          {/* Newlyweds Section */}
+        <div className="mb-12">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#FFD700]/80 font-serif">How it is going</h3>
+            {/* <p className="text-sm sm:text-base text-gray-600">The early days of marriage - building our life together</p> */}
           </div>
-        )}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
+            {currentlygoing.map((image, index) => (
+              <div
+                key={image.id}
+                className="group relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#FFD700]/20 bg-white/20 backdrop-blur-sm hover:border-[#FFD700]/40 transition-all duration-300 will-change-transform hover:scale-[1.02]"
+                // style={{ animationDelay: `${(index + beforeMarriage.length + weddingImages.length) * 0.08}s` }}
+              >
+                {/* Image */}
+                <div
+                  className="aspect-square overflow-hidden relative cursor-pointer"
+                  onClick={() => handleImageClick(image)}
+                >
+                  <img
+                    src={image?.src}
+                    alt={image?.alt}
+                    loading="lazy"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Gradient overlay for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/10 to-transparent opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Category badge */}
+                  {/* <span className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-full text-[10px] sm:text-xs tracking-wide bg-white/50 border border-[#FFD700]/30 text-gray-800">
+                    {image?.category}
+                  </span> */}
+                </div>
+
+                {/* Content Overlay */}
+                {/* <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 translate-y-0 sm:translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <div className="space-y-1 sm:space-y-2">
+                    <h3 className="text-sm sm:text-lg font-semibold sm:font-bold text-gray-800 font-serif">
+                      {image.alt}
+                    </h3>
+                    <p className="hidden sm:block text-sm text-gray-600 font-light">
+                      {image.category}
+                    </p>
+                  </div>
+                </div> */}
+
+                {/* Interactive Elements - show on larger screens */}
+                <button
+                  onClick={(e) => toggleLike(image.id, e)}
+                  className={`hidden sm:block absolute top-3 right-3 p-1 rounded-full transition-all duration-300 hover:scale-110 ${
+                    likedImages.has(image.id)
+                      ? 'opacity-100 bg-[#DC143C]/20'
+                      : 'opacity-0 group-hover:opacity-100 hover:bg-[#DC143C]/10'
+                  }`}
+                  title={likedImages.has(image.id) ? 'Unlike' : 'Like'}
+                >
+                  <Heart
+                    className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
+                      likedImages.has(image.id) ? 'text-[#DC143C] fill-[#DC143C]' : 'text-[#DC143C]'
+                    }`}
+                  />
+                </button>
+                <button
+                  onClick={(e) => toggleRating(image.id, e)}
+                  className={`hidden sm:block absolute top-3 left-3 p-1 rounded-full transition-all duration-300 hover:scale-110 ${
+                    imageRatings[image.id]
+                      ? 'opacity-100 bg-[#FFD700]/20'
+                      : 'opacity-0 group-hover:opacity-100 hover:bg-[#FFD700]/10'
+                  }`}
+                  style={{ transitionDelay: '0.1s' }}
+                  title={imageRatings[image.id] ? 'Remove rating' : 'Rate 5 stars'}
+                >
+                  <Star
+                    className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
+                      imageRatings[image.id] ? 'text-[#FFD700] fill-[#FFD700]' : 'text-[#FFD700]'
+                    }`}
+                  />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Family Moments Section */}
+        <div className="mb-12">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#FFD700]/80 font-serif">Family Moments</h3>
+            {/* <p className="text-sm sm:text-base text-gray-600">Growing our family - children, home, and cherished bonds</p> */}
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
+            {familyMoments.map((image, index) => (
+              <div
+                key={image.id}
+                className="group relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#FFD700]/20 bg-white/20 backdrop-blur-sm hover:border-[#FFD700]/40 transition-all duration-300 will-change-transform hover:scale-[1.02]"
+                // style={{ animationDelay: `${(index + beforeMarriage.length + weddingImages.length + newlyweds.length) * 0.08}s` }}
+              >
+                {/* Image */}
+                <div
+                  className="aspect-square overflow-hidden relative cursor-pointer"
+                  onClick={() => handleImageClick(image)}
+                >
+                  <img
+                    src={image?.src}
+                    alt={image?.alt}
+                    loading="lazy"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Gradient overlay for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/10 to-transparent opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Category badge */}
+                  {/* <span className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-full text-[10px] sm:text-xs tracking-wide bg-white/50 border border-[#FFD700]/30 text-gray-800">
+                    {image?.category}
+                  </span> */}
+                </div>
+
+                {/* Content Overlay */}
+                {/* <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 translate-y-0 sm:translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <div className="space-y-1 sm:space-y-2">
+                    <h3 className="text-sm sm:text-lg font-semibold sm:font-bold text-gray-800 font-serif">
+                      {image.alt}
+                    </h3>
+                    <p className="hidden sm:block text-sm text-gray-600 font-light">
+                      {image.category}
+                    </p>
+                  </div>
+                </div> */}
+
+                {/* Interactive Elements - show on larger screens */}
+                <button
+                  onClick={(e) => toggleLike(image.id, e)}
+                  className={`hidden sm:block absolute top-3 right-3 p-1 rounded-full transition-all duration-300 hover:scale-110 ${
+                    likedImages.has(image.id)
+                      ? 'opacity-100 bg-[#DC143C]/20'
+                      : 'opacity-0 group-hover:opacity-100 hover:bg-[#DC143C]/10'
+                  }`}
+                  title={likedImages.has(image.id) ? 'Unlike' : 'Like'}
+                >
+                  <Heart
+                    className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
+                      likedImages.has(image.id) ? 'text-[#DC143C] fill-[#DC143C]' : 'text-[#DC143C]'
+                    }`}
+                  />
+                </button>
+                <button
+                  onClick={(e) => toggleRating(image.id, e)}
+                  className={`hidden sm:block absolute top-3 left-3 p-1 rounded-full transition-all duration-300 hover:scale-110 ${
+                    imageRatings[image.id]
+                      ? 'opacity-100 bg-[#FFD700]/20'
+                      : 'opacity-0 group-hover:opacity-100 hover:bg-[#FFD700]/10'
+                  }`}
+                  style={{ transitionDelay: '0.1s' }}
+                  title={imageRatings[image.id] ? 'Remove rating' : 'Rate 5 stars'}
+                >
+                  <Star
+                    className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
+                      imageRatings[image.id] ? 'text-[#FFD700] fill-[#FFD700]' : 'text-[#FFD700]'
+                    }`}
+                  />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+    
 
         {/* View More Button */}
         {/* <div className="text-center mt-10 sm:mt-14 lg:mt-18">
