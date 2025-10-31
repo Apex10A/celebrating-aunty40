@@ -6,8 +6,9 @@ import StatsCard from "@/components/StatsCard";
 import { useProtected } from "@/hooks/useProtected";
 import { getDeclines } from "@/services/declines";
 import { getReservations } from "@/services/reservations";
-import { RefreshCcw } from "lucide-react";
+import { Home, RefreshCcw } from "lucide-react";
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { StatusModal, type StatusType } from "@/components/StatusModal";
 
@@ -123,29 +124,43 @@ export default function Index() {
         <meta name="description" content="Admin dashboard for reservations and declines" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <header className="bg-black px-6 py-4 flex justify-between items-center border-b border-[#FFD700]/10">
-        <div className="flex items-center gap-3">
-          <h1 className="font-decorative text-2xl md:text-3xl text-[#FFD700]">Admin Panel</h1>
+      <header className="bg-black px-6 py-6 flex justify-between items-center border-b border-[#FFD700]/10">
+        <div className="flex flex-col gap-1">
+          <h1 className="font-decorative text-2xl md:text-3xl text-[#FFD700]">Admin Dashboard</h1>
+          <p className="text-sm text-[#FFD700]/70">Manage reservations and guest responses</p>
           {lastUpdated && (
-            <span className="text-xs text-[#FFD700]/60">Updated {lastUpdated.toLocaleTimeString()}</span>
+            <span className="text-xs text-[#FFD700]/60">Last updated: {lastUpdated.toLocaleTimeString()}</span>
           )}
         </div>
         <div className="flex items-center gap-3">
           <span className="text-[#FFD700]/80">Admin</span>
-          
+          <Link
+            href="/"
+            className="flex items-center gap-2 px-3 py-2 bg-[#FFD700]/10 hover:bg-[#FFD700]/20 border border-[#FFD700]/30 rounded-lg text-[#FFD700] transition-colors text-sm"
+          >
+            <Home className="w-4 h-4" />
+            Back to Website
+          </Link>
           <LogoutButton />
         </div>
       </header>
 
       <main className="min-h-screen bg-gradient-to-b from-black via-[#1a1a1a] to-black">
-        <div className="max-w-7xl mx-auto p-6">
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatsCard status="base" label="Total Reservations" value={reservations ? reservations?.length : 0} />
-            <StatsCard status="accepted" label="Accepted Invitees" value={accepted ? accepted?.length : 0} />
-            <StatsCard status="pending" label="Pending Reservations" value={pending ? pending?.length : 0} />
-            <StatsCard status="declined" label="Declined" value={declines ? declines?.length : 0} />
-          </div>
+        <div className="max-w-7xl mx-auto p-8">
+          {/* Overview Section */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-[#FFD700] mb-6">Overview</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatsCard status="base" label="Total Reservations" value={reservations ? reservations?.length : 0} />
+              <StatsCard status="accepted" label="Accepted Invitees" value={accepted ? accepted?.length : 0} />
+              <StatsCard status="pending" label="Pending Reservations" value={pending ? pending?.length : 0} />
+              <StatsCard status="declined" label="Declined" value={declines ? declines?.length : 0} />
+            </div>
+          </section>
+
+          {/* Data Management Section */}
+          <section>
+            <h2 className="text-xl font-semibold text-[#FFD700] mb-6">Reservations & Responses</h2>
 
           {/* Filters + Search */}
           <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
@@ -210,6 +225,7 @@ export default function Index() {
               <div className="p-6 text-center text-[#FFD700]">Loading...</div>
             )}
           </div>
+          </section>
         </div>
 
         {/* Toast */}
