@@ -9,6 +9,39 @@ export const GallerySection = () => {
   const [imageRatings, setImageRatings] = useState<Record<number, number>>({});
   const imagesPerPage = 8;
   const galleryImages = [
+      {
+      id: 12,
+      src: '/twelve.jpg',
+      alt: 'Unconditional Support',
+      category: 'Support',
+    },
+     {
+      id: 15,
+      src: '/tbwed.jpg',
+      alt: 'Timeless Love',
+      category: 'Love',
+    },
+    {
+      id: 16,
+      src: '/sixteen.jpg',
+      alt: 'Cherished Moments',
+      category: 'Memories',
+    },
+    {
+      id: 20,
+      src: '/twenty.jpg',
+      alt: 'Everlasting Love',
+      category: 'Love',
+    },
+  
+    {
+      id: 13,
+      src: '/thirteen.jpg',
+      alt: 'Cherished Moments',
+      category: 'Memories',
+    },
+      
+    
     {
       id: 1,
       src: '/celer.jpg',
@@ -63,48 +96,14 @@ export const GallerySection = () => {
     //   alt: 'Joyful Celebrations',
     //   category: 'Celebrations',
     // },
-    {
-      id: 10,
-      src: '/ten.jpg',
-      alt: 'Timeless Moments',
-      category: 'Timeless',
-    },
-    {
-      id: 11,
-      src: '/cele4.JPG',
-      alt: 'Eternal Love',
-      category: 'Love',
-    },
-    {
-      id: 12,
-      src: '/twelve.jpg',
-      alt: 'Unconditional Support',
-      category: 'Support',
-    },
-    {
-      id: 13,
-      src: '/thirteen.jpg',
-      alt: 'Cherished Moments',
-      category: 'Memories',
-    },
+ 
     {
       id: 14,
       src: '/cele5.jpg',
       alt: 'Enduring Bonds',
       category: 'Love',
     },
-    {
-      id: 15,
-      src: '/tbwed.jpg',
-      alt: 'Timeless Love',
-      category: 'Love',
-    },
-    {
-      id: 16,
-      src: '/sixteen.jpg',
-      alt: 'Cherished Moments',
-      category: 'Memories',
-    },
+   
     // {
     //   id: 17,
     //   src: '/seventeen.jpg',
@@ -123,13 +122,11 @@ export const GallerySection = () => {
     //   alt: 'Timeless Memories',
     //   category: 'Memories',
     // },
-    {
-      id: 20,
-      src: '/twenty.jpg',
-      alt: 'Everlasting Love',
-      category: 'Love',
-    }
+    
   ];
+
+const weddingImages = galleryImages.slice(0, 5);
+const recentImages = galleryImages.slice(5);
 
   // Calculate pagination
   const totalPages = Math.ceil(galleryImages.length / imagesPerPage);
