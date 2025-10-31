@@ -13,26 +13,26 @@ export const GallerySection = () => {
       id: 12,
       src: '/twelve.jpg',
       alt: 'wedding',
-      category: 'Support',
+      category: 'Wedding',
     },
      {
       id: 15,
       src: '/tbwed.jpg',
       alt: 'wedding',
-      category: 'Love',
+      category: 'Wedding',
     },
     
     {
       id: 16,
       src: '/sixteen.jpg',
       alt: 'wedding',
-      category: 'Memories',
+      category: 'Wedding',
     },
     {
       id: 20,
       src: '/twenty.jpg',
       alt: 'wedding',
-      category: 'Love',
+      category: 'Wedding',
     },
   
 
@@ -197,6 +197,9 @@ const weddingImages = galleryImages.filter(img => img.category === 'Wedding');
 const loveImages = galleryImages.filter(img => img.category === 'Love');
 const memoriesImages = galleryImages.filter(img => img.category === 'Memories');
 const supportImages = galleryImages.filter(img => img.category === 'Support');
+const currentlygoing = galleryImages.filter(img => img.alt?.toLowerCase() === 'currently going');
+const familyMoments = galleryImages.filter(img => img.alt?.toLowerCase() === 'family moments');
+
 
 
 
