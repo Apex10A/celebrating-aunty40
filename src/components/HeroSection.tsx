@@ -4,7 +4,7 @@ import { GoldParticles } from './GoldParticles';
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-[90vh] sm:min-h-screen flex items-center overflow-hidden px-4 sm:px-6 md:px-8 pt-28 sm:pt-36 md:pt-40 pb-20">
+    <section className="relative min-h-[90vh] sm:min-h-screen flex items-center overflow-hidden px-4 sm:px-6 md:px-8 pt-28 sm:pt-36 md:pt-40 pb-20 bg-[#FFF9F2]">
       <div className="absolute inset-0">
         <img
           src="/wedd.jpg"
