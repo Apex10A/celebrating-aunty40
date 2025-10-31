@@ -10,26 +10,26 @@ export const GallerySection = () => {
   const imagesPerPage = 8;
   const galleryImages = [
       {
-      id: 12,
+      id: 1,
       src: '/twelve.jpg',
       alt: 'wedding',
       category: 'Wedding',
     },
      {
-      id: 15,
+      id: 2,
       src: '/tbwed.jpg',
       alt: 'wedding',
       category: 'Wedding',
     },
     
     {
-      id: 16,
+      id: 3,
       src: '/sixteen.jpg',
       alt: 'wedding',
       category: 'Wedding',
     },
     {
-      id: 20,
+      id: 4,
       src: '/twenty.jpg',
       alt: 'wedding',
       category: 'Wedding',
@@ -37,19 +37,14 @@ export const GallerySection = () => {
   
 
 
-    {
-      id: 13,
-      src: '/thirteen.jpg',
-      alt: 'Cherished Moments',
-      category: 'Memories',
-    },
+   
       
     
     {
-      id: 1,
+      id: 5,
       src: '/celer.jpg',
-      alt: 'Wedding Day',
-      category: 'Wedding',
+      alt: 'currently going',
+      category: 'currently going',
     },
     
     // {
@@ -92,8 +87,8 @@ export const GallerySection = () => {
     {
       id: 14,
       src: '/cele5.jpg',
-      alt: 'newlyweds',
-      category: 'Love',
+      alt: 'currently going',
+      category: 'currently going',
     },
 
       {
@@ -117,28 +112,28 @@ export const GallerySection = () => {
 
      {
       id: 14,
-      src: '/carry.jpg',
+      src: '/thirtytwo.jpg',
       alt: 'family moments',
-      category: 'Love',
+      category: 'family moments',
     },
 
       {
       id: 14,
-      src: '/call.jpg',
+      src: '/fam3.jpg',
       alt: 'family moments',
-      category: 'Love',
+      category: 'family moments',
     },
       {
       id: 14,
       src: '/fouty.jpg',
       alt: 'family moments',
-      category: 'Love',
+      category: 'family moments',
     },
       {
       id: 14,
       src: '/fama.jpg',
       alt: 'family moments',
-      category: 'Love',
+      category: 'family moments',
     },
     
 
@@ -146,27 +141,17 @@ export const GallerySection = () => {
       id: 14,
       src: '/carry.jpg',
       alt: 'currently going',
-      category: 'Love',
+      category: 'currently going',
     },
 
       {
       id: 14,
       src: '/call.jpg',
       alt: 'currently going',
-      category: 'Love',
+      category: 'currently going',
     },
-      {
-      id: 14,
-      src: '/fouty.jpg',
-      alt: 'currently going',
-      category: 'Love',
-    },
-      {
-      id: 14,
-      src: '/fama.jpg',
-      alt: 'currently going',
-      category: 'Love',
-    },
+     
+    
     
 
 
