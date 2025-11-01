@@ -109,7 +109,23 @@ export const Footer = () => {
             </div>
           </div>
         </div>
+
+
       </div>
+         <div className="mt-6 mb-6 text-center">
+  <p className="text-xs sm:text-sm text-[#FFD700]/40">
+    Developed by{" "}
+    <a
+      href="https://praise-theta.vercel.app/"
+      className="text-[#FFD700]/60 hover:text-[#FFD700] transition-colors duration-300 underline"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Praise Afolabi
+    </a>
+  </p>
+</div>
+
     </footer>
   );
 }; 
