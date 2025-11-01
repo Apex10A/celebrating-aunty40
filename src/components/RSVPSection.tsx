@@ -121,7 +121,11 @@ export const RSVPSection = () => {
               </div>
               
               <div>
-                <label htmlFor="numberOfGuests" className={labelClasses}>Number of Guests</label>
+                <label htmlFor="numberOfGuests" className={labelClasses}>
+  Number of Guests <span className="text-[#FFD700]/60 text-sm">(Adults only)</span>
+</label>
+
+                {/* <label htmlFor="numberOfGuests" className={labelClasses}>Number of Guests</label> */}
                 <select
                   id="numberOfGuests"
                   value={formData.numberOfGuests}
