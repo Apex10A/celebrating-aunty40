@@ -392,7 +392,7 @@ const RSVPPage = () => {
                           htmlFor="numOfGuests"
                           className="block text-[#FFD700] mb-2 text-sm md:text-base"
                         >
-                          Number of Guests (put 0 if you're coming alone)
+                          Number of Guests  <span className="text-[#FFD700]/60 text-sm">(Adults only)</span>
                         </label>
                         <div className="relative group">
                           <select
@@ -412,10 +412,10 @@ const RSVPPage = () => {
                             aria-describedby={formErrors.numOfGuests ? "numOfGuests-error" : undefined}
                           >
                             <option value="" disabled>
-                              Select no of guests
+                              IV admits one guest
                             </option>
-                            <option value="0">0</option>
-                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                            {/* <option value="0">0</option> */}
+                            {[1].map((num) => (
                               <option key={num} value={num}>
                                 {num}
                               </option>
