@@ -30,7 +30,7 @@ export const GallerySection = () => {
     },
     {
       id: 4,
-      src: '/twenty.jpg',
+      src: '/thirty.jpg',
       alt: 'wedding',
       category: 'Wedding',
     },
@@ -146,7 +146,7 @@ export const GallerySection = () => {
 
       {
       id: 14,
-      src: '/call.jpg',
+      src: '/cele3.jpg',
       alt: 'currently going',
       category: 'currently going',
     },
@@ -280,7 +280,7 @@ const familyMoments = galleryImages.filter(img => img.alt?.toLowerCase() === 'fa
         {/* The Wedding Section */}
         <div className="mb-12">
           <div className="text-center mb-6">
-            <h3 className="text-2xl sm:text-3xl font-bold text-[#FFD700]/80 font-serif">The Wedding</h3>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#FFD700]/80 font-serif">How it started</h3>
             {/* <p className="text-sm sm:text-base text-gray-600">Our special day - vows, celebrations, and forever begins</p> */}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">

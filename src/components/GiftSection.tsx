@@ -113,8 +113,7 @@ export const GiftSection = () => {
             Celebrate With Us! 🎉
           </h2>
           <p className="text-gray-300 text-md md:text-lg max-w-2xl mx-auto">
-            Your presence is our greatest gift, but if you'd like to contribute to our celebration,
-            we've made it easy and fun!
+            Physical gifts can be a bit of a logistical adventure! But we’ve made celebrating with us super simple! Click the link below to share in the joy and thank you for your kindness and your show of love
           </p>
         </motion.div>
 

@@ -39,7 +39,7 @@ const Location = () => {
               <br />
               <span className='text-[#FFD700]'>Time:</span> 12:00 noon
               <br />
-              Colour of the day: Black & Gold.
+              Colour of the day: A touch of Gold.
             </p>
           
 
@@ -72,9 +72,9 @@ const Location = () => {
            <div className="w-full mt-4">
             <div className="relative overflow-hidden rounded-3xl border border-[#FFD700]/20 shadow-[0_0_70px_-20px_rgba(255,215,0,0.45)]">
               <img
-                src="/mumoj.jpg"
+                src="/call.jpg"
                 alt="Funbi Bandele"
-                className="h-[380px] w-full object-cover sm:h-[460px] lg:h-[720px]"
+                className="h-[380px] w-full object-top object-cover sm:h-[460px] xl:h-[620px]"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
