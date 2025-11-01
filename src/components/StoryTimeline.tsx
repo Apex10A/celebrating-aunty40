@@ -31,7 +31,7 @@ const OurStory = () => {
           transition={{ delay: 0.5, duration: 1 }}
           className="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-400"
         >
-          A love that began with a chance meeting and blossomed into a lifetime
+          A lifetime journey that began with a chance meeting has blossomed into a lifetime
           of laughter, faith, and togetherness.
         </motion.p>
       </div>
@@ -59,7 +59,11 @@ const OurStory = () => {
               It all started in the most unexpected place, the neighborhood
               where I grew up. She came just for an event, never knowing destiny
               had a plan. One brief encounter, a few exchanged words, and a
-              beautiful journey began.
+              beautiful journey began. <span className="text-[#FFD700] italic">——Temitope</span>
+            </p>
+            <p className="text-gray-400 leading-relaxed">
+              Love found me when I wasn’t even searching. The greatest gift and happiest moment was when I set my eyes on Temitope. Right there, I knew this is the man I would spend my whole life with.
+              <span className="text-[#FFD700] italic">——Oluwafunmbi</span>
             </p>
           </div>
         </motion.div>
@@ -77,9 +81,8 @@ const OurStory = () => {
               A Spark That Lasted
             </h2>
             <p className="text-gray-400 leading-relaxed">
-              From that ordinary day sprang an extraordinary love, one that has
-              weathered storms, celebrated highs, and grown deeper with every
-              sunrise. Together, they’ve built a bond anchored in faith and joy.
+              From that ordinary day sprang an extraordinary love, one that has weathered storms, celebrated highs, and grown deeper with every sunrise. Together, we have built a bond anchored in faith and joy.
+              <span className="text-[#FFD700] italic">——FunmbiTope (FT)</span>
             </p>
           </div>
           <img
@@ -107,9 +110,7 @@ const OurStory = () => {
               Through the Years
             </h2>
             <p className="text-gray-400 leading-relaxed">
-              Their love has stood the test of time, a testament to patience,
-              laughter, and grace. From quiet moments to great adventures, each
-              chapter has deepened their connection.
+              Our love has stood the test of time, a testament to patience, laughter, and grace. From quiet moments to great adventures, each chapter has deepened our connection.
             </p>
           </div>
         </motion.div>
@@ -127,9 +128,7 @@ const OurStory = () => {
               Today & Always
             </h2>
             <p className="text-gray-400 leading-relaxed">
-              Fifteen years later, their hearts still beat as one, stronger,
-              wiser, and more in love than ever. What began by chance was
-              perfected by destiny.
+              Fifteen years later, our hearts still beat as one, stronger, wiser, and more in love than ever. What began by chance was perfected by destiny.
             </p>
           </div>
           <img

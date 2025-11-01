@@ -46,7 +46,7 @@ const CelebrationWebsite = () => {
                   </span>
                 </div>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#FFD700] font-serif">
-                  Christiana Funmbi Bandele
+                  Christiana Oluwafunmbi Bandele
                 </h2>
                 <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-[#FFD700]/75 leading-relaxed max-w-2xl">
                   Radiant, kind, and full of joy, Funmbi has a way of brightening every room she walks into. As she turns 40 and celebrates 15 wonderful years of marriage, let’s join together to share our love, warm wishes, and cherished memories.
