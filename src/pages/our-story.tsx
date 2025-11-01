@@ -7,8 +7,8 @@ const OurStoryPage = () => {
   return (
     <>
       <Head>
-        <title>Our Story - 40 Years of Love</title>
-        <meta name="description" content="Journey through our 40 years of love, laughter, and beautiful memories together." />
+        <title>Our Story - 15 Years of Love</title>
+        <meta name="description" content="Journey through our 15 years of love, laughter, and beautiful memories together." />
       </Head>
       <div className="min-h-screen bg-[#0a0a0a]">
         <Navigation />

@@ -22,7 +22,7 @@ const OurStory = () => {
           transition={{ duration: 0.8 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-serif font-semibold text-[#FFD700]"
         >
-          Our Story — 40 Years of Love & Grace
+          Our Story — 15 Years of Love & Grace
         </motion.h1>
 
         <motion.p
