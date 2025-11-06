@@ -32,7 +32,7 @@ function Header({ children }: { children: ReactNode }) {
   return (
     <header
       role="row"
-      className="grid items-center gap-x-6 px-6 py-4 uppercase tracking-wide font-semibold text-[#FFD700]/90 bg-black/60 border-b border-[#FFD700]/10"
+      className="grid items-center gap-x-4 md:gap-x-6 px-4 md:px-6 py-4 uppercase tracking-wide font-semibold text-[#FFD700]/90 bg-black/60 border-b border-[#FFD700]/10 text-xs md:text-sm"
       style={{ gridTemplateColumns: columns }}>
       {children}
     </header>
@@ -44,7 +44,7 @@ function Row({ children }: { children: ReactNode }) {
   return (
     <div
       role="row"
-      className="grid items-center gap-x-6 px-6 py-3 text-white hover:bg-black/50 transition"
+      className="grid items-center gap-x-4 md:gap-x-6 px-4 md:px-6 py-3 text-white hover:bg-black/50 transition text-xs md:text-sm"
       style={{ gridTemplateColumns: columns }}>
       {children}
     </div>

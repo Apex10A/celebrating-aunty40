@@ -61,7 +61,7 @@ export default function ReservationsTable({
 
   return (
     <>
-      <Table columns="1fr 1fr 1fr 1fr 0.5fr">
+      <Table columns="1fr 2fr 1fr 1fr 0.5fr">
         <Table.Header>
           <div>Invitation Code</div>
           <div>Name</div>
@@ -82,20 +82,20 @@ export default function ReservationsTable({
                 <Tag type={item?.status === "accepted" ? "green" : "yellow"}>{item?.status}</Tag>
               </div>
               <div>{item?.numOfGuests}</div>
-              <div className="flex flex-row items-center gap-6 justify-end">
+              <div className="flex flex-row items-center gap-2 md:gap-6 justify-end">
                 {item?.status === "pending" && (
                   <span
-                    className="p-2 cursor-pointer rounded-full text-emerald-400 hover:bg-emerald-900/30 transition-colors"
+                    className="p-1 md:p-2 cursor-pointer rounded-full text-emerald-400 hover:bg-emerald-900/30 transition-colors"
                     onClick={() => accept(item._id)}
                   >
-                    <Check />
+                    <Check className="w-4 h-4 md:w-5 md:h-5" />
                   </span>
                 )}
                 <span
-                  className="p-2 cursor-pointer rounded-full text-rose-400 hover:bg-rose-900/30 transition-colors"
+                  className="p-1 md:p-2 cursor-pointer rounded-full text-rose-400 hover:bg-rose-900/30 transition-colors"
                   onClick={() => requestDelete(item._id)}
                 >
-                  <Trash2Icon />
+                  <Trash2Icon className="w-4 h-4 md:w-5 md:h-5" />
                 </span>
               </div>
             </Table.Row>
