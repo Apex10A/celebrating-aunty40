@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Eye, EyeOff, LockKeyholeIcon, UserCircle } from "lucide-react";
+import { Eye, EyeOff, Loader2, LockKeyholeIcon, UserCircle } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Credentials, Login } from "@/services/auth";
 import { useRouter } from "next/router";
@@ -130,9 +130,16 @@ const LoginForm: React.FC = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 bg-[#FFD700] text-black rounded-xl hover:bg-[#FFD700]/90 transition-all duration-300 mt-2 disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-widest uppercase text-sm md:text-base"
+              className="w-full py-3 bg-[#FFD700] text-black rounded-xl hover:bg-[#FFD700]/90 transition-all duration-300 mt-2 disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-widest uppercase text-sm md:text-base flex items-center justify-center gap-2"
             >
-              {isLoading ? "Loading..." : "Login"}
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                "Login"
+              )}
             </button>
           </form>
         </div>

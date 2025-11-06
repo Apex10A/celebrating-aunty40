@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Navigation } from "../components/Navigation";
 import Head from "next/head";
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 import { Footer } from "../components/Footer";
 import { makeReservation, Reservation } from "@/services/reservations";
 import { Decline, sendDecline } from "@/services/declines";
 import { StatusModal, StatusType } from "@/components/StatusModal";
+import { Toast } from "@/components/Toast";
 
 type ReservationFormState = Omit<Reservation, "numOfGuests"> & {
   numOfGuests: number | "";
@@ -38,6 +39,12 @@ const RSVPPage = () => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalDesc, setModalDesc] = useState("");
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [toast, setToast] = useState<{ show: boolean; message: string; type: "success" | "error" }>({
+    show: false,
+    message: "",
+    type: "success",
+  });
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const getFieldClasses = (hasError: boolean) =>
     `w-full px-4 py-2 bg-black/50 rounded-lg text-white transition-all text-sm md:text-base outline-none border ${
@@ -64,6 +71,22 @@ const RSVPPage = () => {
   const handleAttendingChange = (value: boolean) => {
     setAttending(value);
     setFormErrors({});
+  };
+
+  const showToast = (message: string, type: "success" | "error" = "success") => {
+    setToast({ show: true, message, type });
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = setTimeout(() => {
+      setToast((prev) => ({ ...prev, show: false }));
+    }, 3000);
+  };
+
+  const closeToast = () => {
+    setToast((prev) => ({ ...prev, show: false }));
+    if (toastTimerRef.current) {
+      clearTimeout(toastTimerRef.current);
+      toastTimerRef.current = null;
+    }
   };
 
   const handleSoloToggle = (checked: boolean) => {
@@ -183,11 +206,9 @@ const RSVPPage = () => {
           resetForm();
           return;
         }
-        openStatusModal(
-          "error",
-          "Submission failed",
-          "We couldn't submit your RSVP. Please try again."
-        );
+        const failureMessage =
+          (res as any)?.data?.message || "We couldn't submit your RSVP. Please try again.";
+        showToast(failureMessage, "error");
         return;
       }
       const sanitizedDecline: Decline = {
@@ -205,18 +226,16 @@ const RSVPPage = () => {
         resetForm();
         return;
       }
-      openStatusModal(
-        "error",
-        "Unable to send response",
-        "Please try again in a moment."
-      );
+      const failureMessage =
+        (res as any)?.data?.message || "Please try again in a moment.";
+      showToast(failureMessage, "error");
     } catch (error) {
       console.error("RSVP submission error:", error);
-      openStatusModal(
-        "error",
-        "Network issue",
-        "We couldn't reach the server. Please try again shortly."
-      );
+      const errorMessage =
+        (error as any)?.response?.data?.message ||
+        (error as Error)?.message ||
+        "We couldn't reach the server. Please try again shortly.";
+      showToast(errorMessage, "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -485,9 +504,16 @@ const RSVPPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-[#FFD700] text-black rounded-xl hover:bg-[#FFD700]/90 transition-all duration-300 mt-8 disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-widest uppercase text-sm md:text-base"
+                  className="w-full py-3 bg-[#FFD700] text-black rounded-xl hover:bg-[#FFD700]/90 transition-all duration-300 mt-8 disabled:opacity-50 disabled:cursor-not-allowed font-bold tracking-widest uppercase text-sm md:text-base flex items-center justify-center gap-2"
                 >
-                  {isSubmitting ? "Submitting..." : "Submit RSVP"}
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit RSVP"
+                  )}
                 </button>
               </div>
             </motion.form>
@@ -502,6 +528,13 @@ const RSVPPage = () => {
         title={modalTitle}
         description={modalDesc}
         onClose={() => setModalOpen(false)}
+      />
+
+      <Toast
+        show={toast.show}
+        type={toast.type}
+        message={toast.message}
+        onClose={closeToast}
       />
     </>
   );

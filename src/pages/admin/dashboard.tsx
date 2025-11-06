@@ -23,7 +23,6 @@ export default function Index() {
   const [declines, setDeclines] = useState<Record<string, any>[]>([]);
   const [filter, setFilter] = useState<Status>("all-reservations");
   const [isLoading, setIsLoading] = useState(false);
-  const [autoRefresh, setAutoRefresh] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   // Toast state
@@ -99,14 +98,7 @@ export default function Index() {
     else showToast("Some data failed to refresh", "error");
   }
 
-  // Auto-refresh every 20s while toggle is on
-  useEffect(() => {
-    if (!autoRefresh) return;
-    const id = setInterval(() => {
-      handleRefresh();
-    }, 20000);
-    return () => clearInterval(id);
-  }, [autoRefresh]);
+
 
   useEffect(function () {
     fetchReservations();
@@ -124,29 +116,29 @@ export default function Index() {
         <meta name="description" content="Admin dashboard for reservations and declines" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <header className="bg-black px-6 py-6 flex justify-between items-center border-b border-[#FFD700]/10">
+      <header className="bg-black px-4 md:px-6 py-4 md:py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#FFD700]/10">
         <div className="flex flex-col gap-1">
-          <h1 className="font-decorative text-2xl md:text-3xl text-[#FFD700]">Admin Dashboard</h1>
+          <h1 className="font-decorative text-xl md:text-2xl lg:text-3xl text-[#FFD700]">Admin Dashboard</h1>
           <p className="text-sm text-[#FFD700]/70">Manage reservations and guest responses</p>
           {lastUpdated && (
             <span className="text-xs text-[#FFD700]/60">Last updated: {lastUpdated.toLocaleTimeString()}</span>
           )}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           <span className="text-[#FFD700]/80">Admin</span>
           <Link
             href="/"
             className="flex items-center gap-2 px-3 py-2 bg-[#FFD700]/10 hover:bg-[#FFD700]/20 border border-[#FFD700]/30 rounded-lg text-[#FFD700] transition-colors text-sm"
           >
             <Home className="w-4 h-4" />
-            Back to Website
+            <span className="hidden sm:inline">Back to Website</span>
           </Link>
           <LogoutButton />
         </div>
       </header>
 
       <main className="min-h-screen bg-gradient-to-b from-black via-[#1a1a1a] to-black">
-        <div className="max-w-7xl mx-auto p-8">
+        <div className="max-w-7xl mx-auto p-4 md:p-8">
           {/* Overview Section */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-[#FFD700] mb-6">Overview</h2>
@@ -190,10 +182,6 @@ export default function Index() {
                   <RefreshCcw className="w-4 h-4" />
                   <span>Refresh</span>
                 </button>
-                <label className="flex items-center gap-2 text-xs md:text-sm text-[#FFD700]/80 select-none">
-                  <input type="checkbox" checked={autoRefresh} onChange={() => setAutoRefresh(v => !v)} className="accent-[#FFD700]" />
-                  Auto-refresh
-                </label>
               </div>
             </div>
             {filter === "accepted" && <SearchBar value={search} setValue={setSearch} />}
