@@ -53,9 +53,12 @@ export default function Index() {
   const data =
     filter === "all-reservations" ? reservations : filter === "accepted" ? accepted : pending;
   const filteredData = data?.filter((item) => {
-    if (item?.invitationCode)
-      return item.invitationCode.toLowerCase().includes(search.toLowerCase());
-    else return item;
+    if (!search) return true;
+    const searchLower = search.toLowerCase();
+    return (
+      (item?.invitationCode && item.invitationCode.toLowerCase().includes(searchLower)) ||
+      (item?.name && item.name.toLowerCase().includes(searchLower))
+    );
   });
 
   async function fetchReservations(): Promise<boolean> {
@@ -174,7 +177,7 @@ export default function Index() {
                   ))}
                 </select>
               </div>
-              <div className="flex items-center gap-3">
+              {/* <div className="flex items-center gap-3">
                 <button
                   onClick={handleRefresh}
                   className="flex flex-row gap-2 items-center px-3 py-2 bg-[#FFD700] text-black rounded-md hover:bg-[#FFD700]/90 transition-colors"
@@ -182,9 +185,9 @@ export default function Index() {
                   <RefreshCcw className="w-4 h-4" />
                   <span>Refresh</span>
                 </button>
-              </div>
+              </div> */}
             </div>
-            {filter === "accepted" && <SearchBar value={search} setValue={setSearch} />}
+            <SearchBar value={search} setValue={setSearch} />
           </div>
 
           {/* Reservations Table */}
@@ -194,9 +197,7 @@ export default function Index() {
                 reservations && reservations.length > 0 ? (
                   <ReservationsTable
                     refresh={handleRefresh}
-                    data={
-                      filter === "accepted" || filter === "all-reservations" ? filteredData : data
-                    }
+                    data={filteredData}
                     notify={showToast}
                   />
                 ) : (
