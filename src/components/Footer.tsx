@@ -5,7 +5,7 @@ export const Footer = () => {
   return (
     <footer className="relative bg-[#0a0a0a] border-t border-[#FFD700]/20 overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FFD700]/5 to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FFD700]/5 to-transparent pointer-events-none"></div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16">
@@ -115,14 +115,15 @@ export const Footer = () => {
          <div className="mt-6 mb-6 text-center">
   <p className="text-xs sm:text-sm text-[#FFD700]/40">
     Developed by{" "}
-    <a
-      href="https://praise-theta.vercel.app/"
-      className="text-[#FFD700]/60 hover:text-[#FFD700] transition-colors duration-300 underline"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Praise Afolabi
-    </a>
+<a
+  href="https://mail.google.com/mail/?view=cm&to=pafolabi740@gmail.com"
+  target="_blank"
+  className="text-[#FFD700]/60 hover:text-[#FFD700] transition-colors duration-300 underline cursor-pointer"
+>
+  Praise Afolabi
+</a>
+
+
   </p>
 </div>
 
