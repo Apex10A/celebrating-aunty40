@@ -13,7 +13,7 @@ export default function SearchBar({
       <Search className="text-[#FFD700]" />
       <input
         type="text"
-        placeholder="Search by Invitation code"
+        placeholder="Search by name or invitation code"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         className="focus:outline-none w-full bg-transparent placeholder:text-[#FFD700]/40"
