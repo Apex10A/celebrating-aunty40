@@ -7,8 +7,8 @@ export const GallerySection = () => {
   const [currentDrivePage, setCurrentDrivePage] = useState(1);
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [likedImages, setLikedImages] = useState<Set<number>>(new Set());
-  const [imageRatings, setImageRatings] = useState<Record<number, number>>({});
+  const [likedImages, setLikedImages] = useState<Set<number | string>>(new Set());
+  const [imageRatings, setImageRatings] = useState<Record<string | number, number>>({});
   const imagesPerPage = 8;
   const driveImagesPerPage = 8;
   const galleryImages = [
@@ -248,7 +248,7 @@ const paginateDrive = (pageNumber: number) => setCurrentDrivePage(pageNumber);
   };
 
   // Handle like/unlike functionality
-  const toggleLike = (imageId: number, e: React.MouseEvent) => {
+  const toggleLike = (imageId: number | string, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent opening modal when clicking heart
     setLikedImages(prev => {
       const newLiked = new Set(prev);
@@ -262,7 +262,7 @@ const paginateDrive = (pageNumber: number) => setCurrentDrivePage(pageNumber);
   };
 
   // Handle star rating functionality
-  const toggleRating = (imageId: number, e: React.MouseEvent) => {
+  const toggleRating = (imageId: number | string, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent opening modal when clicking star
     setImageRatings(prev => ({
       ...prev,
