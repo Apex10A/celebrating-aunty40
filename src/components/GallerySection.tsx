@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Camera, Heart, Star, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { driveImages } from '../data/driveImages';
 
 export const GallerySection = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentDrivePage, setCurrentDrivePage] = useState(1);
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [likedImages, setLikedImages] = useState<Set<number>>(new Set());
-  const [imageRatings, setImageRatings] = useState<Record<number, number>>({});
+  const [likedImages, setLikedImages] = useState<Set<number | string>>(new Set());
+  const [imageRatings, setImageRatings] = useState<Record<string | number, number>>({});
   const imagesPerPage = 8;
+  const driveImagesPerPage = 8;
   const galleryImages = [
       {
       id: 1,
@@ -182,8 +185,22 @@ const weddingImages = galleryImages.filter(img => img.category === 'Wedding');
 const loveImages = galleryImages.filter(img => img.category === 'Love');
 const memoriesImages = galleryImages.filter(img => img.category === 'Memories');
 const supportImages = galleryImages.filter(img => img.category === 'Support');
-const currentlygoing = galleryImages.filter(img => img.alt?.toLowerCase() === 'currently going');
+// const currentlygoing = galleryImages.filter(img => img.alt?.toLowerCase() === 'currently going');
+const currentlygoing = driveImages.map((img) => ({
+  id: img.id,
+  src: `https://lh3.googleusercontent.com/d/${img.id}`,
+  alt: 'How It Is Going',
+  category: 'How It Is Going'
+}));
 const familyMoments = galleryImages.filter(img => img.alt?.toLowerCase() === 'family moments');
+
+// Pagination logic for currentlygoing
+const indexOfLastDriveImage = currentDrivePage * driveImagesPerPage;
+const indexOfFirstDriveImage = indexOfLastDriveImage - driveImagesPerPage;
+const currentDriveImages = currentlygoing.slice(indexOfFirstDriveImage, indexOfLastDriveImage);
+const totalDrivePages = Math.ceil(currentlygoing.length / driveImagesPerPage);
+
+const paginateDrive = (pageNumber: number) => setCurrentDrivePage(pageNumber);
 
 
 
@@ -231,7 +248,7 @@ const familyMoments = galleryImages.filter(img => img.alt?.toLowerCase() === 'fa
   };
 
   // Handle like/unlike functionality
-  const toggleLike = (imageId: number, e: React.MouseEvent) => {
+  const toggleLike = (imageId: number | string, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent opening modal when clicking heart
     setLikedImages(prev => {
       const newLiked = new Set(prev);
@@ -245,7 +262,7 @@ const familyMoments = galleryImages.filter(img => img.alt?.toLowerCase() === 'fa
   };
 
   // Handle star rating functionality
-  const toggleRating = (imageId: number, e: React.MouseEvent) => {
+  const toggleRating = (imageId: number | string, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent opening modal when clicking star
     setImageRatings(prev => ({
       ...prev,
@@ -362,18 +379,17 @@ const familyMoments = galleryImages.filter(img => img.alt?.toLowerCase() === 'fa
 
         
         
-          {/* Newlyweds Section */}
+        {/* Newlyweds Section */}
         <div className="mb-12">
           <div className="text-center mb-6">
             <h3 className="text-2xl sm:text-3xl font-bold text-[#FFD700]/80 font-serif">How it is going</h3>
             {/* <p className="text-sm sm:text-base text-gray-600">The early days of marriage - building our life together</p> */}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
-            {currentlygoing.map((image, index) => (
+            {currentDriveImages.map((image, index) => (
               <div
                 key={image.id}
                 className="group relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#FFD700]/20 bg-white/20 backdrop-blur-sm hover:border-[#FFD700]/40 transition-all duration-300 will-change-transform hover:scale-[1.02]"
-                // style={{ animationDelay: `${(index + beforeMarriage.length + weddingImages.length) * 0.08}s` }}
               >
                 {/* Image */}
                 <div
@@ -389,24 +405,7 @@ const familyMoments = galleryImages.filter(img => img.alt?.toLowerCase() === 'fa
                   />
                   {/* Gradient overlay for readability */}
                   <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/10 to-transparent opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Category badge */}
-                  {/* <span className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-full text-[10px] sm:text-xs tracking-wide bg-white/50 border border-[#FFD700]/30 text-gray-800">
-                    {image?.category}
-                  </span> */}
                 </div>
-
-                {/* Content Overlay */}
-                {/* <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 translate-y-0 sm:translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <div className="space-y-1 sm:space-y-2">
-                    <h3 className="text-sm sm:text-lg font-semibold sm:font-bold text-gray-800 font-serif">
-                      {image.alt}
-                    </h3>
-                    <p className="hidden sm:block text-sm text-gray-600 font-light">
-                      {image.category}
-                    </p>
-                  </div>
-                </div> */}
 
                 {/* Interactive Elements - show on larger screens */}
                 <button
@@ -443,6 +442,29 @@ const familyMoments = galleryImages.filter(img => img.alt?.toLowerCase() === 'fa
               </div>
             ))}
           </div>
+          
+          {/* Pagination Controls */}
+          {totalDrivePages > 1 && (
+            <div className="flex justify-center items-center gap-4 mt-8">
+              <button
+                onClick={() => paginateDrive(currentDrivePage - 1)}
+                disabled={currentDrivePage === 1}
+                className="p-2 rounded-full bg-[#FFD700]/10 text-[#FFD700] disabled:opacity-50 hover:bg-[#FFD700]/20 transition-colors"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <span className="text-[#FFD700] font-medium">
+                Page {currentDrivePage} of {totalDrivePages}
+              </span>
+              <button
+                onClick={() => paginateDrive(currentDrivePage + 1)}
+                disabled={currentDrivePage === totalDrivePages}
+                className="p-2 rounded-full bg-[#FFD700]/10 text-[#FFD700] disabled:opacity-50 hover:bg-[#FFD700]/20 transition-colors"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Family Moments Section */}
