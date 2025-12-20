@@ -403,8 +403,7 @@ const paginateDrive = (pageNumber: number) => setCurrentDrivePage(pageNumber);
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Gradient overlay for readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/10 to-transparent opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
                 </div>
 
                 {/* Interactive Elements - show on larger screens */}
