@@ -65,3 +65,13 @@ export async function deleteReservation(reservationId: string) {
     console.log(error);
   }
 }
+
+export async function sendReminder(reservationId: string) {
+  try {
+    const res = await api.post(`/reservations/remind/${reservationId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

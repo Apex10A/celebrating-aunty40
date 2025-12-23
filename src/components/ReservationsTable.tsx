@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Check, Trash2Icon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Check, Trash2Icon, Bell, ChevronLeft, ChevronRight } from "lucide-react";
 import Table from "./Table";
 import Tag from "./Tag";
-import { acceptReservation, deleteReservation } from "@/services/reservations";
+import { acceptReservation, deleteReservation, sendReminder } from "@/services/reservations";
 import { AnniversaryModal } from "./AnniversaryModal";
 
 export default function ReservationsTable({
@@ -16,6 +16,25 @@ export default function ReservationsTable({
 }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [targetId, setTargetId] = useState<string | null>(null);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  
+  // Reset to page 1 when data length changes (e.g. filtering)
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [data.length]);
+
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentData = data.slice(startIndex, startIndex + itemsPerPage);
+
+  const goToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   async function accept(id: string) {
     try {
@@ -43,6 +62,20 @@ export default function ReservationsTable({
     }
   }
 
+  async function handleSendReminder(id: string) {
+    try {
+      const res = await sendReminder(id);
+      if (res?.status === 200) {
+        notify("Reminder sent successfully!", "success");
+      } else {
+        notify("Failed to send reminder.", "error");
+      }
+    } catch (error: any) {
+      console.error("Error sending reminder:", error);
+      notify(error.response?.data?.message || "Failed to send reminder.", "error");
+    }
+  }
+
   function requestDelete(id: string) {
     setTargetId(id);
     setConfirmOpen(true);
@@ -61,7 +94,7 @@ export default function ReservationsTable({
 
   return (
     <>
-      <Table columns="1fr 2fr 1fr 1fr 0.5fr">
+      <Table columns="1.5fr 2.5fr 1fr 0.8fr 1.2fr">
         <Table.Header>
           <div>Invitation Code</div>
           <div>Name</div>
@@ -70,7 +103,7 @@ export default function ReservationsTable({
           <div></div>
         </Table.Header>
         <Table.Body
-          data={data}
+          data={currentData}
           render={(item) => (
             <Table.Row key={item?._id}>
               <div>{item.invitationCode ? item.invitationCode : "-"}</div>
@@ -92,6 +125,13 @@ export default function ReservationsTable({
                   </span>
                 )}
                 <span
+                  className="p-1 md:p-2 cursor-pointer rounded-full text-blue-400 hover:bg-blue-900/30 transition-colors"
+                  onClick={() => handleSendReminder(item._id)}
+                  title="Resend Reminder"
+                >
+                  <Bell className="w-4 h-4 md:w-5 md:h-5" />
+                </span>
+                <span
                   className="p-1 md:p-2 cursor-pointer rounded-full text-rose-400 hover:bg-rose-900/30 transition-colors"
                   onClick={() => requestDelete(item._id)}
                 >
@@ -101,6 +141,29 @@ export default function ReservationsTable({
             </Table.Row>
           )}
         />
+        {totalPages > 1 && (
+          <Table.Footer>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => goToPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="p-1 rounded hover:bg-[#FFD700]/10 disabled:opacity-50 disabled:cursor-not-allowed text-[#FFD700]"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <span className="text-sm text-[#FFD700]/80">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => goToPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="p-1 rounded hover:bg-[#FFD700]/10 disabled:opacity-50 disabled:cursor-not-allowed text-[#FFD700]"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </Table.Footer>
+        )}
       </Table>
 
       {/* Confirm Delete Modal */}

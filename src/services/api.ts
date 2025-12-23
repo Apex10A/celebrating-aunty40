@@ -4,6 +4,7 @@ const api = axios.create({
   baseURL: "https://anniversary-backend-zm7u.onrender.com/api",
 });
 
+// https://localhost:3000/api
 // api.interceptors.request.use(
 //   (config) => {
 //     const token = JSON.parse(localStorage.getItem("session"))?.access_token;
