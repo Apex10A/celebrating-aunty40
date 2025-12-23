@@ -75,3 +75,13 @@ export async function sendReminder(reservationId: string) {
     throw error;
   }
 }
+
+export async function sendBulkReminders() {
+  try {
+    const res = await api.post("/reservations/remind-all");
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

@@ -5,8 +5,8 @@ import SearchBar from "@/components/SearchBar";
 import StatsCard from "@/components/StatsCard";
 import { useProtected } from "@/hooks/useProtected";
 import { getDeclines } from "@/services/declines";
-import { getReservations } from "@/services/reservations";
-import { Home, RefreshCcw } from "lucide-react";
+import { getReservations, sendBulkReminders } from "@/services/reservations";
+import { Home, RefreshCcw, Send } from "lucide-react";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -101,7 +101,21 @@ export default function Index() {
     else showToast("Some data failed to refresh", "error");
   }
 
-
+  async function handleSendBulkReminders() {
+    if (!confirm("Are you sure you want to send reminders to ALL accepted guests?")) return;
+    
+    try {
+      const res = await sendBulkReminders();
+      if (res?.status === 200) {
+        showToast(`Success! Sent ${res.data.sent} reminders.`, "success");
+      } else {
+        showToast("Failed to send reminders.", "error");
+      }
+    } catch (error: any) {
+      console.error("Error sending reminders:", error);
+      showToast(error.response?.data?.message || "Failed to send reminders.", "error");
+    }
+  }
 
   useEffect(function () {
     fetchReservations();
@@ -186,7 +200,17 @@ export default function Index() {
                   <span>Refresh</span>
                 </button>
               </div> */}
+              
             </div>
+            <div className="flex items-center gap-3">
+                <button
+                  onClick={handleSendBulkReminders}
+                  className="flex flex-row gap-2 items-center px-3 py-2 bg-[#FFD700] text-black rounded-md hover:bg-[#FFD700]/60 transition-colors text-sm"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Send Reminders to All</span>
+                </button>
+              </div>
             <SearchBar value={search} setValue={setSearch} />
           </div>
 
