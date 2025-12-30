@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Check, Trash2Icon, Bell, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, Trash2Icon, Bell, ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import Table from "./Table";
 import Tag from "./Tag";
-import { acceptReservation, deleteReservation, sendReminder } from "@/services/reservations";
+import { acceptReservation, deleteReservation, sendReminder, sendThankYouToUser } from "@/services/reservations";
 import { AnniversaryModal } from "./AnniversaryModal";
 
 export default function ReservationsTable({
@@ -76,6 +76,20 @@ export default function ReservationsTable({
     }
   }
 
+  async function handleSendThankYou(id: string) {
+    try {
+      const res = await sendThankYouToUser(id);
+      if (res?.status === 200) {
+        notify("Thank you email sent successfully!", "success");
+      } else {
+        notify("Failed to send thank you email.", "error");
+      }
+    } catch (error: any) {
+      console.error("Error sending thank you email:", error);
+      notify(error.response?.data?.message || "Failed to send thank you email.", "error");
+    }
+  }
+
   function requestDelete(id: string) {
     setTargetId(id);
     setConfirmOpen(true);
@@ -131,6 +145,15 @@ export default function ReservationsTable({
                 >
                   <Bell className="w-4 h-4 md:w-5 md:h-5" />
                 </span>
+                {item?.status === "accepted" && (
+                  <span
+                    className="p-1 md:p-2 cursor-pointer rounded-full text-pink-400 hover:bg-pink-900/30 transition-colors"
+                    onClick={() => handleSendThankYou(item._id)}
+                    title="Send Thank You Email"
+                  >
+                    <Heart className="w-4 h-4 md:w-5 md:h-5" />
+                  </span>
+                )}
                 <span
                   className="p-1 md:p-2 cursor-pointer rounded-full text-rose-400 hover:bg-rose-900/30 transition-colors"
                   onClick={() => requestDelete(item._id)}
