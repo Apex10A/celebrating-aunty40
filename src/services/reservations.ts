@@ -85,3 +85,13 @@ export async function sendBulkReminders() {
     throw error;
   }
 }
+export async function sendThankYou() {
+  try {
+    const res = await api.post("/reservations/send-thank-you");
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
