@@ -95,3 +95,13 @@ export async function sendThankYou() {
   }
 }
 
+export async function sendThankYouToUser(reservationId: string) {
+  try {
+    const res = await api.post(`/reservations/send-thank-you/${reservationId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
