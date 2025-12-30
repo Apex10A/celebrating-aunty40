@@ -5,7 +5,7 @@ import SearchBar from "@/components/SearchBar";
 import StatsCard from "@/components/StatsCard";
 import { useProtected } from "@/hooks/useProtected";
 import { getDeclines } from "@/services/declines";
-import { getReservations, sendBulkReminders } from "@/services/reservations";
+import { getReservations, sendBulkReminders, sendThankYou } from "@/services/reservations";
 import { Home, RefreshCcw, Send } from "lucide-react";
 import Head from "next/head";
 import Link from "next/link";
@@ -117,6 +117,22 @@ export default function Index() {
     }
   }
 
+  async function handleSendThankYou() {
+    if (!confirm("Are you sure you want to send thank you emails to ALL accepted guests?")) return;
+    
+    try {
+      const res = await sendThankYou();
+      if (res?.status === 200) {
+        showToast(`Success! Sent ${res.data.sent} thank you emails.`, "success");
+      } else {
+        showToast("Failed to send thank you emails.", "error");
+      }
+    } catch (error: any) {
+      console.error("Error sending thank you emails:", error);
+      showToast(error.response?.data?.message || "Failed to send thank you emails.", "error");
+    }
+  }
+
   useEffect(function () {
     fetchReservations();
     fetchDeclines();
@@ -202,13 +218,20 @@ export default function Index() {
               </div> */}
               
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
                 <button
                   onClick={handleSendBulkReminders}
                   className="flex flex-row gap-2 items-center px-3 py-2 bg-[#FFD700] text-black rounded-md hover:bg-[#FFD700]/60 transition-colors text-sm"
                 >
                   <Send className="w-4 h-4" />
                   <span>Send Reminders to All</span>
+                </button>
+                <button
+                  onClick={handleSendThankYou}
+                  className="flex flex-row gap-2 items-center px-3 py-2 bg-[#FFD700] text-black rounded-md hover:bg-[#FFD700]/60 transition-colors text-sm"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Send Thank You Emails</span>
                 </button>
               </div>
             <SearchBar value={search} setValue={setSearch} />
